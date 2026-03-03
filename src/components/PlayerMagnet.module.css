@@ -1,0 +1,161 @@
+.magnetWrapper {
+    width: 80px;
+    height: 90px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: var(--shadow-magnet);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    cursor: grab;
+    user-select: none;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    flex-shrink: 0;
+    /* flex container에서 찌그러지지 방지 */
+    margin: 4px;
+}
+
+.magnetWrapper:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-magnet-hover);
+}
+
+.magnetWrapper:active {
+    cursor: grabbing;
+    transform: scale(0.95);
+    box-shadow: var(--shadow-magnet);
+}
+
+.magnetTop {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* 컬러는 부모의 급수 클래스에 의해 덮어씌워짐 */
+    background-color: #333;
+}
+
+.tierBadge {
+    color: white;
+    font-weight: 800;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.magnetBottom {
+    flex: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.playerName {
+    color: #171717;
+    /* 더 진한 검정색으로 수정 */
+    font-weight: 800;
+    font-size: 1.15rem;
+    text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.1);
+}
+
+/* --- 각 급수별 테마 색상 (전역 CSS 변수 활용) --- */
+.tierA .magnetTop {
+    background-color: var(--badge-a);
+}
+
+.tierB .magnetTop {
+    background-color: var(--badge-b);
+}
+
+.tierC .magnetTop {
+    background-color: var(--badge-c);
+}
+
+.tierD .magnetTop {
+    background-color: var(--badge-d);
+}
+
+.tierE .magnetTop {
+    background-color: var(--badge-e);
+}
+
+/* --- 레트로 테마 오버라이드 --- */
+:global(.retro-theme) .magnetWrapper {
+    width: 80px;
+    height: 90px;
+    padding: 0 !important;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* NES.css 컨테이너 스타일 오버라이드 */
+:global(.retro-theme) .magnetWrapper.nes-container {
+    padding: 0 !important;
+    border: 4px solid #212529;
+}
+
+.retroContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100%;
+    width: 100%;
+}
+
+.retroTop {
+    height: 35% !important;
+    width: 100% !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 10px !important;
+    font-weight: bold;
+    border-bottom: 2px solid #212529;
+}
+
+.retroBottom {
+    height: 65% !important;
+    width: 100% !important;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+}
+
+.retroName {
+    font-size: 1rem !important;
+    font-weight: bold;
+    color: #212529 !important;
+    line-height: 1.2;
+    text-align: center;
+    word-break: keep-all;
+}
+
+/* 레트로 급수 색상 (클래식 컬러와 동기화) */
+.retroTierA {
+    background-color: var(--badge-a) !important;
+}
+
+.retroTierB {
+    background-color: var(--badge-b) !important;
+}
+
+.retroTierC {
+    background-color: var(--badge-c) !important;
+    color: white !important;
+}
+
+.retroTierD {
+    background-color: var(--badge-d) !important;
+}
+
+.retroTierE {
+    background-color: var(--badge-e) !important;
+    color: white !important;
+}

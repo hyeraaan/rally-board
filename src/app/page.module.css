@@ -1,0 +1,162 @@
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+.titleRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.themeToggleBtn {
+    background-color: var(--court-green);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.2s;
+    font-size: 14px;
+}
+
+.themeToggleBtn:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+}
+
+/* 아이콘 전용 토글 버튼 */
+.themeIconBtn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(4px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.themeIconBtn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+.contentWrapper {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    overflow: hidden;
+}
+
+.courtArea {
+    flex: 7;
+    /* 화면의 70% 차지 */
+    background-color: var(--court-green);
+    padding: 20px;
+    position: relative;
+    overflow-y: auto;
+    min-width: 600px;
+}
+
+.waitingArea {
+    flex: 3;
+    /* 화면의 30% 차지 */
+    background-color: var(--bg-primary);
+    border-left: 2px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    min-width: 300px;
+}
+
+/* 영역 타이틀 (기본 흰색) */
+.areaTitle {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin: 0;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* 레트로 테마 레이아웃 오버라이드 */
+.retroMain .courtArea,
+.retroMain .waitingArea {
+    background-color: transparent !important;
+    border-color: #212529 !important;
+}
+
+.retroMain .areaTitle {
+    color: #212529 !important;
+    text-shadow: none !important;
+}
+
+.retroMain .waitingArea {
+    border-left: 4px solid #212529 !important;
+}
+
+/* 오른쪽 하단 플로팅 버튼 그룹 */
+.floatingBtns {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 1000;
+}
+
+.floatBtn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.floatBtn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* 레트로 플로팅 버튼 */
+.retroFloating {
+    gap: 8px;
+}
+
+.retroFloatBtn {
+    font-size: 16px !important;
+    padding: 6px 10px !important;
+}
+
+/* 대기 명단 네임택 컨테이너 */
+.playerListContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-content: flex-start;
+    align-items: flex-start;
+    overflow-y: auto;
+    flex: 1;
+    /* 남은 공간 모두 차지 */
+    padding: 0;
+    /* waitingArea의 padding 안에서 정확히 시작 */
+}
