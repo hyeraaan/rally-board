@@ -62,6 +62,16 @@ button {
   border: none;
   cursor: pointer;
   font-family: inherit;
+  outline: none !important;
+}
+
+button:focus,
+button:active,
+button:focus-visible,
+.nes-btn:focus,
+.nes-btn:active,
+.nes-btn:focus-visible {
+  outline: none !important;
 }
 
 /* 클래식 테마 전역 설정 */
@@ -100,4 +110,9 @@ body.retro-theme .nes-container.with-title>.title {
   padding: 0 8px !important;
   /* 테두리 끊기는 효과 */
   font-size: 14px !important;
+}
+
+/* NES.css 버튼 테두리 점선 현상 픽스 */
+body.retro-theme .nes-btn {
+  border-image-repeat: stretch !important;
 }
