@@ -72,8 +72,12 @@ export default function BadmintonCourt({ courtNumber, players, status = 'waiting
             className={`${styles.courtWrapper} ${theme === 'retro' ? 'nes-container with-title' : ''}`}
             style={{
                 ...(theme === 'retro' ? { padding: '1.5rem', backgroundColor: 'transparent', border: '4px solid #212529', position: 'relative' } : { position: 'relative' }),
-                boxShadow: isOver ? '0 0 0 4px #3b82f6' : undefined,
-                transition: 'box-shadow 0.2s ease',
+                boxShadow: isOver
+                    ? (theme === 'retro' ? '0 0 0 6px #f59e0b' : '0 0 0 4px #3b82f6, 0 8px 24px rgba(59, 130, 246, 0.4)')
+                    : undefined,
+                transform: isOver ? 'scale(1.01)' : 'scale(1)',
+                transition: 'box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out',
+                zIndex: isOver ? 10 : 1,
             }}
         >
             {theme === 'retro' ? (
