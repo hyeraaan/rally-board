@@ -28,7 +28,8 @@ export default function Home() {
     deleteCourt,
     deletePlayer,
     addPlayer,
-    movePlayer // 아직 store엔 없지만 이어서 추가할 예정
+    movePlayer,
+    randomMatch
   } = useBoardStore();
 
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -146,10 +147,19 @@ export default function Home() {
 
           {/* 2. 오른쪽 영역 대기 명단 */}
           <aside className={styles.waitingArea} ref={setWaitingListRef}>
-            <div className={styles.titleRow}>
-              <h2 className={`${styles.areaTitle} ${theme === 'retro' ? 'nes-text is-primary' : ''}`}>
+            <div className={styles.titleRow} style={{ alignItems: 'center' }}>
+              <h2 className={`${styles.areaTitle} ${theme === 'retro' ? 'nes-text is-primary' : ''}`} style={{ flex: 1 }}>
                 {t.waitingList} ({waitingList.length})
               </h2>
+              <button
+                type="button"
+                className={theme === 'retro' ? 'nes-btn is-warning' : styles.themeToggleBtn}
+                style={theme === 'retro' ? { padding: '4px 8px', fontSize: '0.8rem' } : { backgroundColor: '#f59e0b', display: 'flex', gap: '6px', alignItems: 'center' }}
+                onClick={randomMatch}
+                title="빈 코트에 인원을 랜덤으로 채웁니다."
+              >
+                🎲 {theme === 'retro' ? '랜덤 매칭' : '랜덤 매칭'}
+              </button>
             </div>
             <div className={styles.playerListContainer}>
               <SortableContext items={waitingList.map((p) => p.id)} strategy={rectSortingStrategy}>
