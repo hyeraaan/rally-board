@@ -2,7 +2,7 @@ import styles from './PlayerMagnet.module.css';
 import { useTheme } from '@/providers/ThemeProvider';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { SquareArrowRightExit } from 'lucide-react';
+import { CircleMinus } from 'lucide-react';
 
 interface PlayerMagnetProps {
     id: string; // 고유 ID
@@ -63,7 +63,7 @@ export default function PlayerMagnet({ id, name, tier, onDelete, isEditMode }: P
         >
             {isEditMode && (
                 <div className={styles.deleteIconOverlay} title="삭제">
-                    <SquareArrowRightExit size={16} color="white" />
+                    <CircleMinus size={20} color="white" fill="#ef4444" />
                 </div>
             )}
             {theme === 'retro' ? (
