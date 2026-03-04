@@ -8,11 +8,12 @@ interface PlayerMagnetProps {
     id: string; // 고유 ID
     name: string; // 선수 이름 (예: 김배민)
     tier: 'A' | 'B' | 'C' | 'D' | 'E'; // 급수
+    matchCount?: number; // 매칭(경기) 횟수
     onDelete?: (id: string) => void;
     isEditMode?: boolean; // 삭제 모드 활성화 여부
 }
 
-export default function PlayerMagnet({ id, name, tier, onDelete, isEditMode }: PlayerMagnetProps) {
+export default function PlayerMagnet({ id, name, tier, matchCount = 0, onDelete, isEditMode }: PlayerMagnetProps) {
     const { theme } = useTheme();
     const {
         attributes,
@@ -77,6 +78,7 @@ export default function PlayerMagnet({ id, name, tier, onDelete, isEditMode }: P
                     </div>
                     <div className={styles.retroBottom}>
                         <span className={styles.retroName}>{name}</span>
+                        <span className={styles.retroMatchCount}>{matchCount}</span>
                     </div>
                 </div>
             ) : (
@@ -86,6 +88,7 @@ export default function PlayerMagnet({ id, name, tier, onDelete, isEditMode }: P
                     </div>
                     <div className={styles.magnetBottom}>
                         <span className={styles.playerName}>{name}</span>
+                        <span className={styles.matchCountBadge}>{matchCount}</span>
                     </div>
                 </>
             )}

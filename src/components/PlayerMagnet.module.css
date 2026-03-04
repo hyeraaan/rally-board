@@ -78,20 +78,37 @@
 .magnetBottom {
     flex: 2;
     display: flex;
+    flex-direction: column;
+    /* 이름과 하단 정보를 위한 방향 전환 */
     align-items: center;
     justify-content: center;
     background-color: white;
     border-top: 1px solid rgba(0, 0, 0, 0.05);
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
+    position: relative;
+    /* 뱃지 위치용 */
 }
 
 .playerName {
     color: #171717;
-    /* 더 진한 검정색으로 수정 */
     font-weight: 800;
-    font-size: 1.15rem;
+    font-size: 1.1rem;
+    /* 뱃지 공간 확보를 위해 살짝 축소 */
     text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.1);
+}
+
+.matchCountBadge {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    font-size: 10px;
+    background-color: #f1f5f9;
+    color: #64748b;
+    padding: 1px 4px;
+    border-radius: 4px;
+    font-weight: 700;
+    border: 1px solid #e2e8f0;
 }
 
 /* --- 각 급수별 테마 색상 (전역 CSS 변수 활용) --- */
@@ -160,15 +177,27 @@
     align-items: center;
     justify-content: center;
     padding: 4px;
+    position: relative;
+    /* 숫자 위치용 */
 }
 
 .retroName {
-    font-size: 1rem !important;
+    font-size: 0.9rem !important;
+    /* 숫자 공간 확보를 위해 미세 축소 */
     font-weight: bold;
     color: #212529 !important;
     line-height: 1.2;
     text-align: center;
     word-break: keep-all;
+}
+
+.retroMatchCount {
+    position: absolute;
+    bottom: 2px;
+    right: 4px;
+    font-size: 10px;
+    color: #7f8c8d;
+    font-family: inherit;
 }
 
 /* 레트로 급수 색상 (클래식 컬러와 동기화) */

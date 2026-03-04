@@ -6,6 +6,7 @@ export interface Player {
     id: string;
     name: string;
     tier: Tier;
+    matchCount: number;
 }
 
 export interface Court {
@@ -48,18 +49,18 @@ const initialCourts: Court[] = [
     {
         id: 1,
         players: [
-            { id: 'p1', name: '변우석', tier: 'A' },
-            { id: 'p2', name: '박보검', tier: 'A' },
-            { id: 'p3', name: '이재욱', tier: 'B' },
-            { id: 'p4', name: '남주혁', tier: 'B' },
+            { id: 'p1', name: '변우석', tier: 'A', matchCount: 0 },
+            { id: 'p2', name: '박보검', tier: 'A', matchCount: 0 },
+            { id: 'p3', name: '이재욱', tier: 'B', matchCount: 0 },
+            { id: 'p4', name: '남주혁', tier: 'B', matchCount: 0 },
         ],
         status: 'waiting',
     },
     {
         id: 2,
         players: [
-            { id: 'p5', name: '차은우', tier: 'C' },
-            { id: 'p6', name: '송강', tier: 'C' },
+            { id: 'p5', name: '차은우', tier: 'C', matchCount: 0 },
+            { id: 'p6', name: '송강', tier: 'C', matchCount: 0 },
         ],
         status: 'waiting',
     },
@@ -67,20 +68,20 @@ const initialCourts: Court[] = [
 ];
 
 const initialWaitingList: Player[] = [
-    { id: 'w1', name: '로운', tier: 'A' },
-    { id: 'w2', name: '이도현', tier: 'B' },
-    { id: 'w3', name: '안효섭', tier: 'A' },
-    { id: 'w4', name: '배인혁', tier: 'C' },
-    { id: 'w5', name: '최현욱', tier: 'B' },
-    { id: 'w6', name: '김영대', tier: 'A' },
-    { id: 'w7', name: '김지원', tier: 'A' },
-    { id: 'w8', name: '한소희', tier: 'B' },
-    { id: 'w9', name: '고윤정', tier: 'B' },
-    { id: 'w10', name: '김유정', tier: 'C' },
-    { id: 'w11', name: '조이현', tier: 'A' },
-    { id: 'w12', name: '박은빈', tier: 'A' },
-    { id: 'w13', name: '문가영', tier: 'C' },
-    { id: 'w14', name: '노윤서', tier: 'D' },
+    { id: 'w1', name: '로운', tier: 'A', matchCount: 0 },
+    { id: 'w2', name: '이도현', tier: 'B', matchCount: 0 },
+    { id: 'w3', name: '안효섭', tier: 'A', matchCount: 0 },
+    { id: 'w4', name: '배인혁', tier: 'C', matchCount: 0 },
+    { id: 'w5', name: '최현욱', tier: 'B', matchCount: 0 },
+    { id: 'w6', name: '김영대', tier: 'A', matchCount: 0 },
+    { id: 'w7', name: '김지원', tier: 'A', matchCount: 0 },
+    { id: 'w8', name: '한소희', tier: 'B', matchCount: 0 },
+    { id: 'w9', name: '고윤정', tier: 'B', matchCount: 0 },
+    { id: 'w10', name: '김유정', tier: 'C', matchCount: 0 },
+    { id: 'w11', name: '조이현', tier: 'A', matchCount: 0 },
+    { id: 'w12', name: '박은빈', tier: 'A', matchCount: 0 },
+    { id: 'w13', name: '문가영', tier: 'C', matchCount: 0 },
+    { id: 'w14', name: '노윤서', tier: 'D', matchCount: 0 },
 ];
 
 export const useBoardStore = create<BoardState>((set) => ({
@@ -113,7 +114,7 @@ export const useBoardStore = create<BoardState>((set) => ({
     addPlayer: (name, tier) =>
         set((state) => {
             const newId = `w${Date.now()}`;
-            return { waitingList: [...state.waitingList, { id: newId, name, tier }] };
+            return { waitingList: [...state.waitingList, { id: newId, name, tier, matchCount: 0 }] };
         }),
 
     deletePlayer: (playerId) =>
@@ -260,12 +261,19 @@ export const useBoardStore = create<BoardState>((set) => ({
                 startTimeStr: timeStr,
             };
 
+            const updatedCourts = state.courts.map((c) =>
+                c.id === courtId
+                    ? {
+                        ...c,
+                        status: 'playing' as const,
+                        startTime: Date.now(),
+                        players: c.players.map(p => ({ ...p, matchCount: p.matchCount + 1 }))
+                    }
+                    : c
+            );
+
             return {
-                courts: state.courts.map((c) =>
-                    c.id === courtId
-                        ? { ...c, status: 'playing', startTime: Date.now() }
-                        : c
-                ),
+                courts: updatedCourts,
                 matchHistory: [newRecord, ...state.matchHistory],
             };
         }),

@@ -10,7 +10,7 @@ import { useBoardStore } from '@/store/useBoardStore';
 
 interface BadmintonCourtProps {
     courtNumber: number;
-    players: { id: string; name: string; tier: any }[];
+    players: { id: string; name: string; tier: any; matchCount: number }[];
     status?: 'waiting' | 'playing';
     startTime?: number;
     onDelete?: (id: number) => void;
@@ -188,6 +188,7 @@ export default function BadmintonCourt({ courtNumber, players, status = 'waiting
                                 id={player.id}
                                 name={player.name}
                                 tier={player.tier}
+                                matchCount={player.matchCount}
                                 onDelete={onDeletePlayer}
                                 isEditMode={isEditMode}
                             />

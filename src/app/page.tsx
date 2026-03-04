@@ -184,6 +184,7 @@ export default function Home() {
                     id={player.id}
                     name={player.name}
                     tier={player.tier}
+                    matchCount={player.matchCount}
                     onDelete={deletePlayer}
                     isEditMode={isEditMode}
                   />
@@ -200,6 +201,7 @@ export default function Home() {
               id={activePlayer.id}
               name={activePlayer.name}
               tier={activePlayer.tier}
+              matchCount={activePlayer.matchCount}
               isEditMode={isEditMode}
             />
           ) : null}
