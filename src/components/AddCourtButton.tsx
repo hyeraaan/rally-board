@@ -2,6 +2,7 @@
 
 import styles from './AddCourtButton.module.css';
 import { useTheme } from '@/providers/ThemeProvider';
+import { Plus } from 'lucide-react';
 
 interface AddCourtButtonProps {
     onClick: () => void;
@@ -22,7 +23,9 @@ export default function AddCourtButton({ onClick }: AddCourtButtonProps) {
             aria-label="코트 추가"
         >
             <div className={styles.addIcon}>
-                <span className={styles.plusSign}>＋</span>
+                <span className={styles.plusSign}>
+                    {theme === 'retro' ? '＋' : <Plus size={28} />}
+                </span>
                 <span className={styles.addLabel}>
                     {theme === 'retro' ? 'ADD COURT' : '코트 추가'}
                 </span>

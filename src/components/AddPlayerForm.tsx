@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import styles from './AddPlayerForm.module.css';
 import { useTheme } from '@/providers/ThemeProvider';
+import { Plus, Check, X } from 'lucide-react';
 
 type Tier = 'A' | 'B' | 'C' | 'D' | 'E';
 
@@ -39,8 +40,9 @@ export default function AddPlayerForm({ onAdd }: AddPlayerFormProps) {
                 className={theme === 'retro' ? `nes-btn ${styles.addBtnRetro}` : styles.addBtn}
                 onClick={() => setOpen(true)}
                 aria-label="선수 추가"
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
             >
-                ＋
+                {theme === 'retro' ? '＋' : <Plus size={24} />}
             </button>
         );
     }
@@ -75,16 +77,18 @@ export default function AddPlayerForm({ onAdd }: AddPlayerFormProps) {
                     className={`${theme === 'retro' ? `nes-btn is-success ${styles.btnRetro} ${styles.confirmRetro}` : styles.confirmBtn}`}
                     onClick={handleSubmit}
                     title={theme === 'retro' ? 'OK' : '추가'}
+                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}
                 >
-                    {theme === 'retro' ? 'O' : '추가'}
+                    {theme === 'retro' ? 'O' : <Check size={16} />} {theme === 'retro' ? '' : '추가'}
                 </button>
                 <button
                     type="button"
                     className={`${theme === 'retro' ? `nes-btn ${styles.btnRetro}` : styles.cancelBtn}`}
                     onClick={() => setOpen(false)}
                     title={theme === 'retro' ? 'X' : '취소'}
+                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}
                 >
-                    {theme === 'retro' ? 'X' : '취소'}
+                    {theme === 'retro' ? 'X' : <X size={16} />} {theme === 'retro' ? '' : '취소'}
                 </button>
             </div>
         </div>

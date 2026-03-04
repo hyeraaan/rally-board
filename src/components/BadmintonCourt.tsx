@@ -5,6 +5,7 @@ import { useTheme } from '@/providers/ThemeProvider';
 import { useLanguage } from '@/providers/LanguageProvider';
 import { useDroppable } from '@dnd-kit/core';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
+import { Play, Square, Trash2, Timer } from 'lucide-react';
 import { useBoardStore } from '@/store/useBoardStore';
 
 interface BadmintonCourtProps {
@@ -97,8 +98,8 @@ export default function BadmintonCourt({ courtNumber, players, status = 'waiting
                         )}
                         {status === 'playing' && (
                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                <span style={{ fontWeight: 800, color: timeLeft <= 60 ? 'red' : 'inherit' }}>
-                                    ⏱️ {formatTime(timeLeft)}
+                                <span style={{ fontWeight: 800, color: timeLeft <= 60 ? 'red' : 'inherit', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                    <Timer size={14} strokeWidth={theme === 'retro' ? 3 : 2} /> {formatTime(timeLeft)}
                                 </span>
                                 <button
                                     className="nes-btn is-warning"
@@ -131,18 +132,19 @@ export default function BadmintonCourt({ courtNumber, players, status = 'waiting
                                     onClick={() => startGame(courtNumber)}
                                     style={{
                                         backgroundColor: '#10b981', color: 'white', border: 'none', borderRadius: '6px',
-                                        padding: '4px 12px', fontWeight: 600, cursor: 'pointer', fontSize: '0.9rem'
+                                        padding: '4px 12px', fontWeight: 600, cursor: 'pointer', fontSize: '0.9rem',
+                                        display: 'flex', alignItems: 'center', gap: '4px'
                                     }}
                                 >
-                                    ▶ 시작
+                                    <Play size={14} strokeWidth={theme === 'retro' ? 3 : 2} /> 시작
                                 </button>
                             ) : (
                                 <span className={styles.playerCount}>{players.length} / 4 명</span>
                             )
                         ) : (
                             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', backgroundColor: 'rgba(0,0,0,0.5)', padding: '4px 12px', borderRadius: '20px' }}>
-                                <span style={{ color: timeLeft <= 60 ? '#ef4444' : '#fff', fontWeight: 700, fontSize: '0.9rem' }}>
-                                    ⏱ {formatTime(timeLeft)}
+                                <span style={{ color: timeLeft <= 60 ? '#ef4444' : '#fff', fontWeight: 700, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                    <Timer size={14} strokeWidth={theme === 'retro' ? 3 : 2} /> {formatTime(timeLeft)}
                                 </span>
                                 <button
                                     onClick={() => endGame(courtNumber)}
@@ -162,8 +164,9 @@ export default function BadmintonCourt({ courtNumber, players, status = 'waiting
                                 onClick={() => onDelete(courtNumber)}
                                 className={styles.deleteBtn}
                                 title="코트 삭제"
+                                style={{ display: 'flex', alignItems: 'center' }}
                             >
-                                🗑️
+                                <Trash2 size={18} strokeWidth={theme === 'retro' ? 3 : 2} />
                             </button>
                         )}
                     </div>

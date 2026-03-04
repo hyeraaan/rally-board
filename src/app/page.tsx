@@ -14,6 +14,7 @@ import {
   DragOverlay, useSensors, useSensor, PointerSensor, closestCorners
 } from '@dnd-kit/core';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
+import { Shuffle, Eraser, Globe, Monitor, Gamepad2, History } from 'lucide-react';
 
 import { useBoardStore, Tier, Player } from '@/store/useBoardStore';
 
@@ -103,7 +104,9 @@ export default function Home() {
                     onClick={randomMatch}
                     title="빈 코트에 인원을 랜덤으로 채웁니다."
                   >
-                    🎲 랜덤 매칭
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      <Shuffle size={16} strokeWidth={theme === 'retro' ? 3 : 2} /> {t.randomMatchBtn}
+                    </div>
                   </button>
                   <button
                     type="button"
@@ -112,37 +115,39 @@ export default function Home() {
                     onClick={() => setIsHistoryModalOpen(true)}
                     title="오늘 하루 게임을 진행한 매칭 기록을 확인합니다."
                   >
-                    📜 기록 ({matchHistory.length})
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      <History size={16} strokeWidth={theme === 'retro' ? 3 : 2} /> {t.historyBtn} ({matchHistory.length})
+                    </div>
                   </button>
                   <button
                     type="button"
-                    className={theme === 'retro' ? `nes-btn ${isEditMode ? 'is-error' : ''} ${styles.retroFloatBtn}` : `${styles.floatBtn} ${isEditMode ? styles.editActiveBtn : ''}`}
+                    className={theme === 'retro' ? `nes-btn ${isEditMode ? 'is-error' : ''} ${styles.retroFloatBtn}` : `${styles.themeIconBtn} ${isEditMode ? styles.editActiveBtn : ''}`}
                     onClick={toggleEditMode}
-                    style={{ width: '36px', height: '36px', fontSize: '16px', padding: 0, backgroundColor: isEditMode && theme !== 'retro' ? '#ef4444' : undefined, color: isEditMode && theme !== 'retro' ? 'white' : undefined }}
+                    style={{ width: '36px', height: '36px', fontSize: theme === 'retro' ? '16px' : undefined, padding: 0, backgroundColor: isEditMode && theme !== 'retro' ? '#ef4444' : undefined, color: isEditMode && theme !== 'retro' ? 'white' : undefined, display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                     title="선수 삭제 모드"
                     aria-label="선수 삭제 모드"
                   >
-                    {isEditMode ? '지우개' : '✏️'}
+                    <Eraser size={20} strokeWidth={theme === 'retro' ? 3 : 2} />
                   </button>
                   <button
                     type="button"
-                    className={theme === 'retro' ? `nes-btn ${styles.retroFloatBtn}` : styles.floatBtn}
+                    className={theme === 'retro' ? `nes-btn ${styles.retroFloatBtn}` : styles.themeIconBtn}
                     onClick={toggleLang}
-                    style={{ width: '36px', height: '36px', fontSize: '16px', padding: 0 }}
+                    style={{ width: '36px', height: '36px', fontSize: theme === 'retro' ? '16px' : undefined, padding: 0, display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                     title={lang === 'ko' ? 'Switch to English' : '한국어로 전환'}
                     aria-label={lang === 'ko' ? 'Switch to English' : '한국어로 전환'}
                   >
-                    {lang === 'ko' ? '🇺🇸' : '🇰🇷'}
+                    <Globe size={20} strokeWidth={theme === 'retro' ? 3 : 2} />
                   </button>
                   <button
                     type="button"
-                    className={theme === 'retro' ? `nes-btn ${styles.retroFloatBtn}` : styles.floatBtn}
+                    className={theme === 'retro' ? `nes-btn ${styles.retroFloatBtn}` : styles.themeIconBtn}
                     onClick={toggleTheme}
-                    style={{ width: '36px', height: '36px', fontSize: '16px', padding: 0 }}
+                    style={{ width: '36px', height: '36px', fontSize: theme === 'retro' ? '16px' : undefined, padding: 0, display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                     title={theme === 'retro' ? '클래식 모드로 전환' : '레트로 모드로 전환'}
                     aria-label={theme === 'retro' ? '클래식 모드로 전환' : '레트로 모드로 전환'}
                   >
-                    {theme === 'retro' ? '🖥️' : '🕹️'}
+                    {theme === 'retro' ? <Monitor size={20} strokeWidth={3} /> : <Gamepad2 size={20} />}
                   </button>
                 </div>
               </div>

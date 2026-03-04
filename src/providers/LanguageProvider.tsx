@@ -12,6 +12,8 @@ const translations = {
         waiting: '대기중',
         switchToRetro: '레트로 모드로 전환',
         switchToClassic: '클래식 모드로 전환',
+        randomMatchBtn: '랜덤 매칭',
+        historyBtn: '기록',
         playerCount: (count: number, max: number) => `${count}/${max}`,
     },
     en: {
@@ -21,6 +23,8 @@ const translations = {
         waiting: 'Open',
         switchToRetro: 'Switch to Retro',
         switchToClassic: 'Switch to Classic',
+        randomMatchBtn: 'Random',
+        historyBtn: 'History',
         playerCount: (count: number, max: number) => `${count}/${max}`,
     },
 };
