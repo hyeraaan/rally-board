@@ -123,7 +123,7 @@ export default function Home() {
                     type="button"
                     className={theme === 'retro' ? `nes-btn ${isEditMode ? 'is-error' : ''} ${styles.retroFloatBtn}` : `${styles.themeIconBtn} ${isEditMode ? styles.editActiveBtn : ''}`}
                     onClick={toggleEditMode}
-                    style={{ width: theme === 'retro' ? '44px' : '36px', height: theme === 'retro' ? '44px' : '36px', fontSize: theme === 'retro' ? '16px' : undefined, padding: 0, backgroundColor: isEditMode && theme !== 'retro' ? '#ef4444' : undefined, color: isEditMode && theme !== 'retro' ? 'white' : undefined, display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                    style={{ width: '36px', height: '36px', fontSize: theme === 'retro' ? '16px' : undefined, padding: 0, backgroundColor: isEditMode && theme !== 'retro' ? '#ef4444' : undefined, color: isEditMode && theme !== 'retro' ? 'white' : undefined, display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                     title="선수 삭제 모드"
                     aria-label="선수 삭제 모드"
                   >
@@ -133,7 +133,7 @@ export default function Home() {
                     type="button"
                     className={theme === 'retro' ? `nes-btn ${styles.retroFloatBtn}` : styles.themeIconBtn}
                     onClick={toggleLang}
-                    style={{ width: theme === 'retro' ? '44px' : '36px', height: theme === 'retro' ? '44px' : '36px', fontSize: theme === 'retro' ? '16px' : undefined, padding: 0, display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                    style={{ width: '36px', height: '36px', fontSize: theme === 'retro' ? '16px' : undefined, padding: 0, display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                     title={lang === 'ko' ? 'Switch to English' : '한국어로 전환'}
                     aria-label={lang === 'ko' ? 'Switch to English' : '한국어로 전환'}
                   >
@@ -143,7 +143,7 @@ export default function Home() {
                     type="button"
                     className={theme === 'retro' ? `nes-btn ${styles.retroFloatBtn}` : styles.themeIconBtn}
                     onClick={toggleTheme}
-                    style={{ width: theme === 'retro' ? '44px' : '36px', height: theme === 'retro' ? '44px' : '36px', fontSize: theme === 'retro' ? '16px' : undefined, padding: 0, display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                    style={{ width: '36px', height: '36px', fontSize: theme === 'retro' ? '16px' : undefined, padding: 0, display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                     title={theme === 'retro' ? '클래식 모드로 전환' : '레트로 모드로 전환'}
                     aria-label={theme === 'retro' ? '클래식 모드로 전환' : '레트로 모드로 전환'}
                   >
