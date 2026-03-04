@@ -180,7 +180,7 @@ export default function Home() {
                 {t.waitingList} ({waitingList.length})
               </h2>
             </div>
-            <div className={styles.playerListContainer}>
+            <div className={styles.playerListContainer} style={{ marginTop: theme === 'retro' ? '40px' : 0 }}>
               <SortableContext items={waitingList.map((p) => p.id)} strategy={rectSortingStrategy}>
                 {waitingList.map((player) => (
                   <PlayerMagnet
