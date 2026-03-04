@@ -176,12 +176,12 @@
     /* 남은 공간 모두 차지 */
     padding: 16px 4px 4px 4px;
     /* 위쪽 잘림 방지 16px 패딩 */
-    margin: -16px -4px -4px -4px;
-    /* 늘어난 패딩만큼 위로 당겨서 titleRow와의 20px 간격을 왼쪽 코트와 똑같이 맞춤 보정 */
+    margin: -4px;
+    /* (-16px 보정 대신 기본값 유지, 아래 12px 오프셋 반영용) */
 }
 
-/* 레트로 모드에서는 NES 타이틀 마진 등으로 인해 코트 쪽보다 덜 내려오는 현상이 있으므로 
-   마진 위쪽 보정(-16px)을 풀고 오히려 12px 살짝 더 내려 좌측 코트와 정확히 라인을 일치시킴 */
-.retroMain .playerListContainer {
+/* 레트로/클래식 공통: 왼쪽 코트 시작 높이와 우측 대기명단의 시각적 라인을 정확히 일치시키기 위해
+   대기명단 전체 그룹을 아래로 12px 여유 있게 밀어냄 */
+.playerListContainer {
     margin-top: 12px !important;
 }
