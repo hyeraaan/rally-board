@@ -99,7 +99,7 @@ export default function Home() {
                 <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                   <button
                     type="button"
-                    className={theme === 'retro' ? 'nes-btn is-warning' : styles.themeToggleBtn}
+                    className={theme === 'retro' ? 'nes-btn' : styles.themeToggleBtn}
                     style={theme === 'retro' ? { display: 'flex', gap: '6px', alignItems: 'center', padding: '4px 8px', fontSize: '12px', height: '36px' } : undefined}
                     onClick={randomMatch}
                     title="빈 코트에 인원을 랜덤으로 채웁니다."
@@ -108,7 +108,7 @@ export default function Home() {
                   </button>
                   <button
                     type="button"
-                    className={theme === 'retro' ? 'nes-btn is-primary' : styles.themeToggleBtn}
+                    className={theme === 'retro' ? 'nes-btn' : styles.themeToggleBtn}
                     style={theme === 'retro' ? { display: 'flex', gap: '6px', alignItems: 'center', padding: '4px 8px', fontSize: '12px', height: '36px' } : undefined}
                     onClick={() => setIsHistoryModalOpen(true)}
                     title="오늘 하루 게임을 진행한 매칭 기록을 확인합니다."
