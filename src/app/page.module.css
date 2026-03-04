@@ -87,7 +87,7 @@
 .areaTitle {
     font-size: 1.5rem;
     font-weight: 800;
-    margin: 0;
+    margin: 0 !important;
     color: white;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
@@ -167,7 +167,7 @@
     flex: 1;
     /* 남은 공간 모두 차지 */
     padding: 16px 4px 4px 4px;
-    /* 기존 6px에서 첫 줄 여유 확보를 위해 16px로 확장 */
-    /* 플로팅 아이콘 및 호버 애니메이션 시 윗부분 잘림 완벽 차단 */
-    margin: -4px;
+    /* 위쪽 잘림 방지 16px 패딩 */
+    margin: -16px -4px -4px -4px;
+    /* 늘어난 패딩만큼 위로 당겨서 titleRow와의 20px 간격을 왼쪽 코트와 똑같이 맞춤 보정 */
 }
