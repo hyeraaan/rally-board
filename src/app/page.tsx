@@ -152,7 +152,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', alignItems: 'flex-start', flex: 1, alignContent: 'flex-start' }}>
+            <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', alignItems: 'flex-start', flex: 1, alignContent: 'flex-start', marginTop: theme === 'retro' ? '40px' : 0 }}>
               {courts.map((court) => (
                 <div key={court.id} style={{ flex: '0 0 calc(50% - 12px)', maxWidth: 'calc(50% - 12px)' }}>
                   <BadmintonCourt
