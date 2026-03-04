@@ -147,7 +147,7 @@ export default function Home() {
                     title={theme === 'retro' ? '클래식 모드로 전환' : '레트로 모드로 전환'}
                     aria-label={theme === 'retro' ? '클래식 모드로 전환' : '레트로 모드로 전환'}
                   >
-                    {theme === 'retro' ? <Monitor size={20} /> : <Gamepad2 size={20} />}
+                    <Gamepad2 size={20} />
                   </button>
                 </div>
               </div>
