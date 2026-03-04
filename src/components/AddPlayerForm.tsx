@@ -42,7 +42,7 @@ export default function AddPlayerForm({ onAdd }: AddPlayerFormProps) {
                 aria-label="선수 추가"
                 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
             >
-                {theme === 'retro' ? '＋' : <Plus size={24} />}
+                <Plus size={24} />
             </button>
         );
     }
@@ -79,7 +79,7 @@ export default function AddPlayerForm({ onAdd }: AddPlayerFormProps) {
                     title={theme === 'retro' ? 'OK' : '추가'}
                     style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}
                 >
-                    {theme === 'retro' ? 'O' : <Check size={16} />} {theme === 'retro' ? '' : '추가'}
+                    <Check size={16} /> 추가
                 </button>
                 <button
                     type="button"
@@ -88,7 +88,7 @@ export default function AddPlayerForm({ onAdd }: AddPlayerFormProps) {
                     title={theme === 'retro' ? 'X' : '취소'}
                     style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}
                 >
-                    {theme === 'retro' ? 'X' : <X size={16} />} {theme === 'retro' ? '' : '취소'}
+                    <X size={16} /> 취소
                 </button>
             </div>
         </div>

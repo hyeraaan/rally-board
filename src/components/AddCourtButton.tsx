@@ -24,10 +24,10 @@ export default function AddCourtButton({ onClick }: AddCourtButtonProps) {
         >
             <div className={styles.addIcon}>
                 <span className={styles.plusSign}>
-                    {theme === 'retro' ? '＋' : <Plus size={28} />}
+                    <Plus size={28} />
                 </span>
                 <span className={styles.addLabel}>
-                    {theme === 'retro' ? 'ADD COURT' : '코트 추가'}
+                    코트 추가
                 </span>
             </div>
         </button>
