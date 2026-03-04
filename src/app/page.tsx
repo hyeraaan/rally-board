@@ -147,9 +147,9 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+            <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', alignItems: 'flex-start', flex: 1, alignContent: 'flex-start' }}>
               {courts.map((court) => (
-                <div key={court.id} style={{ flex: '1 1 400px', maxWidth: '500px' }}>
+                <div key={court.id} style={{ flex: '0 1 420px', maxWidth: '100%' }}>
                   <BadmintonCourt
                     courtNumber={court.id}
                     players={court.players}
@@ -163,7 +163,9 @@ export default function Home() {
               ))}
             </div>
             {/* 하단 전체 가로를 차지하는 코트 추가 버튼 */}
-            <AddCourtButton onClick={addCourt} />
+            <div style={{ marginTop: 'auto', paddingTop: '24px' }}>
+              <AddCourtButton onClick={addCourt} />
+            </div>
           </section>
 
           {/* 2. 오른쪽 영역 대기 명단 */}

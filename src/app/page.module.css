@@ -66,6 +66,8 @@
     position: relative;
     overflow-y: auto;
     min-width: 600px;
+    display: flex;
+    flex-direction: column;
 }
 
 .waitingArea {
