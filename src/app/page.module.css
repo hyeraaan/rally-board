@@ -151,6 +151,11 @@
     padding: 6px 10px !important;
 }
 
+/* 레트로 헤더 전용 유틸 아이콘 버튼 (패딩 여백 제거) */
+.retroHeaderBtn {
+    padding: 0 !important;
+}
+
 /* 대기 명단 네임택 컨테이너 */
 .playerListContainer {
     display: flex;
