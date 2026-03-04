@@ -179,3 +179,9 @@
     margin: -16px -4px -4px -4px;
     /* 늘어난 패딩만큼 위로 당겨서 titleRow와의 20px 간격을 왼쪽 코트와 똑같이 맞춤 보정 */
 }
+
+/* 레트로 모드에서는 NES 타이틀 마진 등으로 인해 코트 쪽보다 덜 내려오는 현상이 있으므로 
+   마진 위쪽 보정(-16px)을 풀고 오히려 살짝 더 내려 좌측 코트와 정확히 라인을 일치시킴 */
+.retroMain .playerListContainer {
+    margin-top: 0px !important;
+}
