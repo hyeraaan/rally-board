@@ -11,6 +11,8 @@ export interface Player {
 export interface Court {
     id: number;
     players: Player[];
+    status: 'waiting' | 'playing';
+    startTime?: number;
 }
 
 interface BoardState {
@@ -29,6 +31,8 @@ interface BoardState {
     addPlayer: (name: string, tier: Tier) => void;
     deletePlayer: (playerId: string) => void;
     movePlayer: (playerId: string, toId: string | number) => void;
+    startGame: (courtId: number) => void;
+    endGame: (courtId: number) => void;
 }
 
 const initialCourts: Court[] = [
@@ -40,6 +44,7 @@ const initialCourts: Court[] = [
             { id: 'p3', name: '이재욱', tier: 'B' },
             { id: 'p4', name: '남주혁', tier: 'B' },
         ],
+        status: 'waiting',
     },
     {
         id: 2,
@@ -47,8 +52,9 @@ const initialCourts: Court[] = [
             { id: 'p5', name: '차은우', tier: 'C' },
             { id: 'p6', name: '송강', tier: 'C' },
         ],
+        status: 'waiting',
     },
-    { id: 3, players: [] },
+    { id: 3, players: [], status: 'waiting' },
 ];
 
 const initialWaitingList: Player[] = [
@@ -80,7 +86,7 @@ export const useBoardStore = create<BoardState>((set) => ({
     addCourt: () =>
         set((state) => {
             const newId = state.courts.length > 0 ? Math.max(...state.courts.map((c) => c.id)) + 1 : 1;
-            return { courts: [...state.courts, { id: newId, players: [] }] };
+            return { courts: [...state.courts, { id: newId, players: [], status: 'waiting' }] };
         }),
 
     deleteCourt: (courtId) =>
@@ -222,6 +228,33 @@ export const useBoardStore = create<BoardState>((set) => ({
             return {
                 courts: newCourts,
                 waitingList: newWaitingList,
+            };
+        }),
+
+    startGame: (courtId) =>
+        set((state) => ({
+            courts: state.courts.map((c) =>
+                c.id === courtId && c.players.length === 4
+                    ? { ...c, status: 'playing', startTime: Date.now() }
+                    : c
+            ),
+        })),
+
+    endGame: (courtId) =>
+        set((state) => {
+            const targetCourt = state.courts.find((c) => c.id === courtId);
+            if (!targetCourt || targetCourt.status !== 'playing') return state;
+
+            // 게임에 참여했던 4명의 선수를 추출하여 대기 명단 끝으로 이동
+            const finishedPlayers = targetCourt.players;
+
+            return {
+                courts: state.courts.map((c) =>
+                    c.id === courtId
+                        ? { ...c, players: [], status: 'waiting', startTime: undefined }
+                        : c
+                ),
+                waitingList: [...state.waitingList, ...finishedPlayers],
             };
         }),
 }));

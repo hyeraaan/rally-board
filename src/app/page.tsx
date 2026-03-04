@@ -131,6 +131,8 @@ export default function Home() {
                   <BadmintonCourt
                     courtNumber={court.id}
                     players={court.players}
+                    status={court.status}
+                    startTime={court.startTime}
                     onDelete={deleteCourt}
                     onDeletePlayer={deletePlayer}
                     isEditMode={isEditMode}
