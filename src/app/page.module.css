@@ -166,6 +166,8 @@
     overflow-y: auto;
     flex: 1;
     /* 남은 공간 모두 차지 */
-    padding: 0;
-    /* waitingArea의 padding 안에서 정확히 시작 */
+    padding: 6px 4px 4px 4px;
+    /* 플로팅 아이콘 및 호버 애니메이션(위로 솟음) 시 잘림 방지 (상하좌우 여백) */
+    margin: -4px;
+    /* 부모 flex 갭과 상쇄되도록 맞춤 */
 }
