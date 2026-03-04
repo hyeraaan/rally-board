@@ -100,30 +100,26 @@ export default function Home() {
                   <button
                     type="button"
                     className={theme === 'retro' ? 'nes-btn is-warning' : styles.themeToggleBtn}
-                    style={theme === 'retro' ? { padding: '4px 8px', fontSize: '12px', height: '36px' } : { backgroundColor: '#f59e0b', display: 'flex', gap: '6px', alignItems: 'center', height: '36px', padding: '0 12px' }}
+                    style={theme === 'retro' ? { display: 'flex', gap: '6px', alignItems: 'center', padding: '4px 8px', fontSize: '12px', height: '36px' } : undefined}
                     onClick={randomMatch}
                     title="빈 코트에 인원을 랜덤으로 채웁니다."
                   >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <Shuffle size={theme === 'retro' ? 20 : 16} /> {t.randomMatchBtn}
-                    </div>
+                    <Shuffle size={theme === 'retro' ? 20 : 16} /> {t.randomMatchBtn}
                   </button>
                   <button
                     type="button"
                     className={theme === 'retro' ? 'nes-btn is-primary' : styles.themeToggleBtn}
-                    style={theme === 'retro' ? { padding: '4px 8px', fontSize: '12px', height: '36px' } : { backgroundColor: '#3b82f6', display: 'flex', gap: '6px', alignItems: 'center', height: '36px', padding: '0 12px' }}
+                    style={theme === 'retro' ? { display: 'flex', gap: '6px', alignItems: 'center', padding: '4px 8px', fontSize: '12px', height: '36px' } : undefined}
                     onClick={() => setIsHistoryModalOpen(true)}
                     title="오늘 하루 게임을 진행한 매칭 기록을 확인합니다."
                   >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <History size={theme === 'retro' ? 20 : 16} /> {t.historyBtn} ({matchHistory.length})
-                    </div>
+                    <History size={theme === 'retro' ? 20 : 16} /> {t.historyBtn} ({matchHistory.length})
                   </button>
                   <button
                     type="button"
                     className={theme === 'retro' ? `nes-btn ${isEditMode ? 'is-error' : ''} ${styles.retroHeaderBtn}` : `${styles.themeIconBtn} ${isEditMode ? styles.editActiveBtn : ''}`}
                     onClick={toggleEditMode}
-                    style={{ width: '36px', height: '36px', fontSize: theme === 'retro' ? '16px' : undefined, padding: 0, backgroundColor: isEditMode && theme !== 'retro' ? '#ef4444' : undefined, color: isEditMode && theme !== 'retro' ? 'white' : undefined, display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                    style={theme === 'retro' ? { width: '36px', height: '36px', fontSize: '16px', padding: 0, display: 'flex', justifyContent: 'center', alignItems: 'center' } : undefined}
                     title="선수 삭제 모드"
                     aria-label="선수 삭제 모드"
                   >
@@ -133,7 +129,7 @@ export default function Home() {
                     type="button"
                     className={theme === 'retro' ? `nes-btn ${styles.retroHeaderBtn}` : styles.themeIconBtn}
                     onClick={toggleLang}
-                    style={{ width: '36px', height: '36px', fontSize: theme === 'retro' ? '16px' : undefined, padding: 0, display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                    style={theme === 'retro' ? { width: '36px', height: '36px', fontSize: '16px', padding: 0, display: 'flex', justifyContent: 'center', alignItems: 'center' } : undefined}
                     title={lang === 'ko' ? 'Switch to English' : '한국어로 전환'}
                     aria-label={lang === 'ko' ? 'Switch to English' : '한국어로 전환'}
                   >
@@ -143,7 +139,7 @@ export default function Home() {
                     type="button"
                     className={theme === 'retro' ? `nes-btn ${styles.retroHeaderBtn}` : styles.themeIconBtn}
                     onClick={toggleTheme}
-                    style={{ width: '36px', height: '36px', fontSize: theme === 'retro' ? '16px' : undefined, padding: 0, display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                    style={theme === 'retro' ? { width: '36px', height: '36px', fontSize: '16px', padding: 0, display: 'flex', justifyContent: 'center', alignItems: 'center' } : undefined}
                     title={theme === 'retro' ? '클래식 모드로 전환' : '레트로 모드로 전환'}
                     aria-label={theme === 'retro' ? '클래식 모드로 전환' : '레트로 모드로 전환'}
                   >

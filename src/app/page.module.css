@@ -14,31 +14,34 @@
 }
 
 .themeToggleBtn {
-    background-color: var(--court-green);
+    background-color: transparent;
     color: white;
-    padding: 8px 16px;
-    border-radius: 8px;
-    font-weight: 600;
+    padding: 0 12px;
+    border-radius: 6px;
+    font-weight: 500;
     transition: all 0.2s;
     font-size: 14px;
-    border: none;
+    border: 1px solid rgba(255, 255, 255, 0.3);
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 36px;
 }
 
 .themeToggleBtn:hover {
-    filter: brightness(1.1);
-    transform: translateY(-1px);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
 }
 
 /* 아이콘 전용 토글 버튼 */
 .themeIconBtn {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(4px);
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    font-size: 22px;
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -48,9 +51,14 @@
 }
 
 .themeIconBtn:hover {
-    background-color: rgba(255, 255, 255, 0.3);
-    transform: scale(1.1);
-    border-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.editActiveBtn {
+    background-color: rgba(239, 68, 68, 0.8) !important;
+    border-color: #ef4444 !important;
+    color: white !important;
 }
 
 .contentWrapper {
