@@ -11,6 +11,8 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    min-height: 48px;
+    /* 테마 전환 시 버튼 렌더링 규격 차이에 따른 레이아웃 점프업 현상 방지 */
 }
 
 .themeToggleBtn {
@@ -184,10 +186,4 @@
    대기명단 전체 그룹을 아래로 12px 여유 있게 밀어냄 */
 .playerListContainer {
     margin-top: 12px !important;
-}
-
-/* 클래식 모드 추가 보정 (왼쪽 코트 상단 여백 추가 확보) */
-body.classic-theme .courtArea>div:nth-child(2) {
-    margin-top: 28px !important;
-    /* TSX의 기본 16px보다 더 늘려서 타이틀과 거리를 둡니다. */
 }

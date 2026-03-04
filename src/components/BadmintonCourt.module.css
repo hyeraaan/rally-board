@@ -9,6 +9,12 @@
     gap: 12px;
 }
 
+/* 클래식 테마에서도 레트로 테마(nes-container 2rem 마진)와 동일한 32px 상단 마진을 부여하여
+   테마 전환 시 코트가 위로 점프(올라오는 느낌)하는 현상을 완벽하게 방지 */
+:global(body.classic-theme) .courtWrapper {
+    margin-top: 32px;
+}
+
 .courtHeader {
     display: flex;
     justify-content: space-between;
