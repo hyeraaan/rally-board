@@ -63,7 +63,7 @@ export default function PlayerMagnet({ id, name, tier, onDelete, isEditMode }: P
         >
             {isEditMode && (
                 <div className={styles.deleteIconOverlay} title="삭제">
-                    <CircleMinus size={20} color="white" fill="#ef4444" />
+                    <CircleMinus size={20} color={theme === 'retro' ? '#212529' : 'white'} fill="#ef4444" />
                 </div>
             )}
             {theme === 'retro' ? (

@@ -213,3 +213,8 @@
 .editMode:hover .deleteIconOverlay {
     transform: scale(1.15);
 }
+
+/* 레트로 테마 전용 플로팅 아이콘 외곽선 오버라이드 */
+:global(.retro-theme) .deleteIconOverlay {
+    background-color: #212529;
+}
