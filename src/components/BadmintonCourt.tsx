@@ -93,7 +93,7 @@ export default function BadmintonCourt({ courtNumber, players, status = 'waiting
                                 style={{ padding: '2px 8px', fontSize: '0.8rem' }}
                                 onClick={() => startGame(courtNumber)}
                             >
-                                시작 (15분)
+                                {t.startGame15m}
                             </button>
                         )}
                         {status === 'playing' && (
@@ -105,9 +105,9 @@ export default function BadmintonCourt({ courtNumber, players, status = 'waiting
                                     className="nes-btn is-warning"
                                     style={{ padding: '2px 8px', fontSize: '0.8rem' }}
                                     onClick={() => endGame(courtNumber)}
-                                    title="게임 종료 및 명단 복귀"
+                                    title={t.endGameRetroTitle}
                                 >
-                                    종료
+                                    {t.endGame}
                                 </button>
                             </div>
                         )}
@@ -136,10 +136,10 @@ export default function BadmintonCourt({ courtNumber, players, status = 'waiting
                                         display: 'flex', alignItems: 'center', gap: '4px'
                                     }}
                                 >
-                                    <Play size={theme === 'retro' ? 18 : 14} /> 시작
+                                    <Play size={theme === 'retro' ? 18 : 14} /> {t.startGame}
                                 </button>
                             ) : (
-                                <span className={styles.playerCount}>{players.length} / 4 명</span>
+                                <span className={styles.playerCount}>{t.playerCount(players.length, 4)}</span>
                             )
                         ) : (
                             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', backgroundColor: 'rgba(0,0,0,0.5)', padding: '4px 12px', borderRadius: '20px' }}>
@@ -152,9 +152,9 @@ export default function BadmintonCourt({ courtNumber, players, status = 'waiting
                                         backgroundColor: '#ef4444', color: 'white', border: 'none', borderRadius: '4px',
                                         padding: '2px 8px', fontWeight: 600, cursor: 'pointer', fontSize: '0.8rem'
                                     }}
-                                    title="게임 조기 종료"
+                                    title={t.endGameEarlyTitle}
                                 >
-                                    종료
+                                    {t.endGame}
                                 </button>
                             </div>
                         )}

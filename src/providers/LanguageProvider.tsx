@@ -18,7 +18,12 @@ const translations = {
         playerNamePlaceholder: '이름',
         addBtn: '추가',
         cancelBtn: '취소',
-        playerCount: (count: number, max: number) => `${count}/${max}`,
+        startGame15m: '시작 (15분)',
+        startGame: '시작',
+        endGame: '종료',
+        endGameEarlyTitle: '게임 조기 종료',
+        endGameRetroTitle: '게임 종료 및 명단 복귀',
+        playerCount: (count: number, max: number) => `${count} / ${max} 명`,
     },
     en: {
         appTitle: 'Rally Board',
@@ -33,7 +38,12 @@ const translations = {
         playerNamePlaceholder: 'Name',
         addBtn: 'Add',
         cancelBtn: 'Cancel',
-        playerCount: (count: number, max: number) => `${count}/${max}`,
+        startGame15m: 'Start (15m)',
+        startGame: 'Start',
+        endGame: 'End',
+        endGameEarlyTitle: 'End game early',
+        endGameRetroTitle: 'End game & return to list',
+        playerCount: (count: number, max: number) => `${count} / ${max} Players`,
     },
 };
 
