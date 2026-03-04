@@ -15,9 +15,17 @@ export interface Court {
     startTime?: number;
 }
 
+export interface MatchRecord {
+    id: string;
+    courtId: number;
+    players: Player[];
+    startTimeStr: string;
+}
+
 interface BoardState {
     courts: Court[];
     waitingList: Player[];
+    matchHistory: MatchRecord[];
     isEditMode: boolean;
 
     // Actions
@@ -78,6 +86,7 @@ const initialWaitingList: Player[] = [
 export const useBoardStore = create<BoardState>((set) => ({
     courts: initialCourts,
     waitingList: initialWaitingList,
+    matchHistory: [],
     isEditMode: false,
 
     setCourts: (courts) => set({ courts }),
@@ -233,13 +242,33 @@ export const useBoardStore = create<BoardState>((set) => ({
         }),
 
     startGame: (courtId) =>
-        set((state) => ({
-            courts: state.courts.map((c) =>
-                c.id === courtId && c.players.length === 4
-                    ? { ...c, status: 'playing', startTime: Date.now() }
-                    : c
-            ),
-        })),
+        set((state) => {
+            const targetCourt = state.courts.find((c) => c.id === courtId);
+            if (!targetCourt || targetCourt.players.length < 4 || targetCourt.status === 'playing') {
+                return state;
+            }
+
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const timeStr = `${hours}:${minutes}`;
+
+            const newRecord: MatchRecord = {
+                id: `m${Date.now()}-${courtId}`,
+                courtId: courtId,
+                players: [...targetCourt.players],
+                startTimeStr: timeStr,
+            };
+
+            return {
+                courts: state.courts.map((c) =>
+                    c.id === courtId
+                        ? { ...c, status: 'playing', startTime: Date.now() }
+                        : c
+                ),
+                matchHistory: [newRecord, ...state.matchHistory],
+            };
+        }),
 
     endGame: (courtId) =>
         set((state) => {

@@ -6,6 +6,7 @@ import BadmintonCourt from '@/components/BadmintonCourt';
 import PlayerMagnet from '@/components/PlayerMagnet';
 import AddCourtButton from '@/components/AddCourtButton';
 import AddPlayerForm from '@/components/AddPlayerForm';
+import MatchHistoryModal from '@/components/MatchHistoryModal';
 import { useTheme } from '@/providers/ThemeProvider';
 import { useLanguage } from '@/providers/LanguageProvider';
 import {
@@ -22,6 +23,7 @@ export default function Home() {
   const {
     courts,
     waitingList,
+    matchHistory,
     isEditMode,
     toggleEditMode,
     addCourt,
@@ -33,6 +35,7 @@ export default function Home() {
   } = useBoardStore();
 
   const [activeId, setActiveId] = useState<string | null>(null);
+  const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
   const activePlayer = activeId
     ? [...waitingList, ...courts.flatMap(c => c.players)].find(p => p.id === activeId)
     : null;
@@ -151,15 +154,26 @@ export default function Home() {
               <h2 className={`${styles.areaTitle} ${theme === 'retro' ? 'nes-text is-primary' : ''}`} style={{ flex: 1 }}>
                 {t.waitingList} ({waitingList.length})
               </h2>
-              <button
-                type="button"
-                className={theme === 'retro' ? 'nes-btn is-warning' : styles.themeToggleBtn}
-                style={theme === 'retro' ? { padding: '4px 8px', fontSize: '0.8rem' } : { backgroundColor: '#f59e0b', display: 'flex', gap: '6px', alignItems: 'center' }}
-                onClick={randomMatch}
-                title="빈 코트에 인원을 랜덤으로 채웁니다."
-              >
-                🎲 {theme === 'retro' ? '랜덤 매칭' : '랜덤 매칭'}
-              </button>
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <button
+                  type="button"
+                  className={theme === 'retro' ? 'nes-btn is-warning' : styles.themeToggleBtn}
+                  style={theme === 'retro' ? { padding: '4px 8px', fontSize: '0.8rem' } : { backgroundColor: '#f59e0b', display: 'flex', gap: '6px', alignItems: 'center' }}
+                  onClick={randomMatch}
+                  title="빈 코트에 인원을 랜덤으로 채웁니다."
+                >
+                  🎲 랜덤 매칭
+                </button>
+                <button
+                  type="button"
+                  className={theme === 'retro' ? 'nes-btn is-primary' : styles.themeToggleBtn}
+                  style={theme === 'retro' ? { padding: '4px 8px', fontSize: '0.8rem' } : { backgroundColor: '#3b82f6', display: 'flex', gap: '6px', alignItems: 'center' }}
+                  onClick={() => setIsHistoryModalOpen(true)}
+                  title="오늘 하루 게임을 진행한 매칭 기록을 확인합니다."
+                >
+                  📜 기록 ({matchHistory.length})
+                </button>
+              </div>
             </div>
             <div className={styles.playerListContainer}>
               <SortableContext items={waitingList.map((p) => p.id)} strategy={rectSortingStrategy}>
@@ -190,6 +204,11 @@ export default function Home() {
           ) : null}
         </DragOverlay>
       </DndContext>
+
+      <MatchHistoryModal
+        isOpen={isHistoryModalOpen}
+        onClose={() => setIsHistoryModalOpen(false)}
+      />
     </main>
   );
 }

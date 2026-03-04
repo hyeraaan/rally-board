@@ -1,0 +1,154 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modalContent {
+    background-color: #fff;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.modalHeader {
+    padding: 16px 20px;
+    border-bottom: 1px solid #e1e4e8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+}
+
+.modalHeader h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #24292e;
+}
+
+.closeBtn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #586069;
+}
+
+.closeBtn:hover {
+    color: #d73a49;
+}
+
+.historyList {
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+}
+
+.emptyMessage {
+    text-align: center;
+    color: #6a737d;
+    padding: 40px 0;
+    font-size: 0.95rem;
+}
+
+.historyItem {
+    border: 1px solid #e1e4e8;
+    border-radius: 8px;
+    padding: 16px;
+    background-color: #fdfdfd;
+}
+
+.itemHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed #e1e4e8;
+}
+
+.courtBadge {
+    font-weight: 600;
+    color: #0366d6;
+    font-size: 0.9rem;
+}
+
+.timeBadge {
+    color: #586069;
+    font-size: 0.85rem;
+    background-color: #f1f8ff;
+    padding: 2px 8px;
+    border-radius: 12px;
+}
+
+.playerGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.playerTag {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border-radius: 4px;
+    background-color: #f6f8fa;
+    border: 1px solid #e1e4e8;
+}
+
+/* 레트로 테마용 오버라이드 */
+.retroTag {
+    background-color: #fff;
+    border: 2px solid #212529;
+    border-radius: 0;
+}
+
+.tierBadge {
+    font-weight: 700;
+    font-size: 0.75rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: white;
+}
+
+.tierBadge[data-tier="A"] {
+    background-color: #ef4444;
+}
+
+.tierBadge[data-tier="B"] {
+    background-color: #f97316;
+}
+
+.tierBadge[data-tier="C"] {
+    background-color: #eab308;
+}
+
+.tierBadge[data-tier="D"] {
+    background-color: #22c55e;
+}
+
+.tierBadge[data-tier="E"] {
+    background-color: #3b82f6;
+}
+
+.playerName {
+    font-size: 0.9rem;
+    color: #24292e;
+    font-weight: 500;
+}
