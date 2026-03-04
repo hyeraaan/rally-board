@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import styles from './AddPlayerForm.module.css';
 import { useTheme } from '@/providers/ThemeProvider';
+import { useLanguage } from '@/providers/LanguageProvider';
 import { Plus, Check, X } from 'lucide-react';
 
 type Tier = 'A' | 'B' | 'C' | 'D' | 'E';
@@ -15,6 +16,7 @@ const TIERS: Tier[] = ['A', 'B', 'C', 'D', 'E'];
 
 export default function AddPlayerForm({ onAdd }: AddPlayerFormProps) {
     const { theme } = useTheme();
+    const { t } = useLanguage();
     const [open, setOpen] = useState(false);
     const [name, setName] = useState('');
     const [tier, setTier] = useState<Tier>('C');
@@ -52,7 +54,7 @@ export default function AddPlayerForm({ onAdd }: AddPlayerFormProps) {
             <input
                 type="text"
                 className={theme === 'retro' ? `nes-input ${styles.nameInputRetro}` : styles.nameInput}
-                placeholder="이름"
+                placeholder={t.playerNamePlaceholder}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 onKeyDown={handleKeyDown}
@@ -76,19 +78,19 @@ export default function AddPlayerForm({ onAdd }: AddPlayerFormProps) {
                     type="button"
                     className={`${theme === 'retro' ? `nes-btn is-success ${styles.btnRetro} ${styles.confirmRetro}` : styles.confirmBtn}`}
                     onClick={handleSubmit}
-                    title={theme === 'retro' ? 'OK' : '추가'}
+                    title={theme === 'retro' ? 'OK' : t.addBtn}
                     style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}
                 >
-                    <Check size={theme === 'retro' ? 20 : 16} /> 추가
+                    <Check size={theme === 'retro' ? 20 : 16} /> {t.addBtn}
                 </button>
                 <button
                     type="button"
                     className={`${theme === 'retro' ? `nes-btn ${styles.btnRetro}` : styles.cancelBtn}`}
                     onClick={() => setOpen(false)}
-                    title={theme === 'retro' ? 'X' : '취소'}
+                    title={theme === 'retro' ? 'X' : t.cancelBtn}
                     style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}
                 >
-                    <X size={theme === 'retro' ? 20 : 16} /> 취소
+                    <X size={theme === 'retro' ? 20 : 16} /> {t.cancelBtn}
                 </button>
             </div>
         </div>

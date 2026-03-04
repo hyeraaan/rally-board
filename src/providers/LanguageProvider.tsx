@@ -14,6 +14,10 @@ const translations = {
         switchToClassic: '클래식 모드로 전환',
         randomMatchBtn: '랜덤 매칭',
         historyBtn: '기록',
+        addCourtBtn: '코트 추가',
+        playerNamePlaceholder: '이름',
+        addBtn: '추가',
+        cancelBtn: '취소',
         playerCount: (count: number, max: number) => `${count}/${max}`,
     },
     en: {
@@ -25,6 +29,10 @@ const translations = {
         switchToClassic: 'Switch to Classic',
         randomMatchBtn: 'Random',
         historyBtn: 'History',
+        addCourtBtn: 'Add Court',
+        playerNamePlaceholder: 'Name',
+        addBtn: 'Add',
+        cancelBtn: 'Cancel',
         playerCount: (count: number, max: number) => `${count}/${max}`,
     },
 };

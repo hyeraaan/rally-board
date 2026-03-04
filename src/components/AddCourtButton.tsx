@@ -2,6 +2,7 @@
 
 import styles from './AddCourtButton.module.css';
 import { useTheme } from '@/providers/ThemeProvider';
+import { useLanguage } from '@/providers/LanguageProvider';
 import { Plus } from 'lucide-react';
 
 interface AddCourtButtonProps {
@@ -10,6 +11,7 @@ interface AddCourtButtonProps {
 
 export default function AddCourtButton({ onClick }: AddCourtButtonProps) {
     const { theme } = useTheme();
+    const { t } = useLanguage();
 
     return (
         <button
@@ -27,7 +29,7 @@ export default function AddCourtButton({ onClick }: AddCourtButtonProps) {
                     <Plus size={theme === 'retro' ? 36 : 28} />
                 </span>
                 <span className={styles.addLabel}>
-                    코트 추가
+                    {t.addCourtBtn}
                 </span>
             </div>
         </button>
