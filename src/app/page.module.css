@@ -179,16 +179,11 @@
     padding: 16px 4px 4px 4px;
     /* 위쪽 잘림 방지 16px 패딩 */
     margin: -4px;
-    /* (-16px 보정 대신 기본값 유지, 아래 12px 오프셋 반영용) */
+    /* (-16px 보정 대신 기본값 유지, 아래 오프셋 반영용) */
 }
 
 /* 레트로/클래식 공통: 왼쪽 코트 시작 높이와 우측 대기명단의 시각적 라인을 정확히 일치시키기 위해
-   대기명단 전체 그룹을 아래로 12px 여유 있게 밀어냄 */
+   대기명단 전체 그룹 8px 오프셋 지정 */
 .playerListContainer {
-    margin-top: 12px !important;
-}
-
-/* 레트로 모드에서는 우측 대기 명단 타이틀 하단 간격을 클래식보다 조금 더 가깝게(8px) 줄임 */
-.retroMain .playerListContainer {
     margin-top: 8px !important;
 }
