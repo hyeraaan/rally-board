@@ -95,7 +95,25 @@ export default function Home() {
             <div className={styles.titleRow}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
                 <h1 className={styles.areaTitle}>{t.appTitle}</h1>
-                <div style={{ display: 'flex', gap: '8px' }}>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                  <button
+                    type="button"
+                    className={theme === 'retro' ? 'nes-btn is-warning' : styles.themeToggleBtn}
+                    style={theme === 'retro' ? { padding: '4px 8px', fontSize: '12px', height: '36px' } : { backgroundColor: '#f59e0b', display: 'flex', gap: '6px', alignItems: 'center', height: '36px', padding: '0 12px' }}
+                    onClick={randomMatch}
+                    title="빈 코트에 인원을 랜덤으로 채웁니다."
+                  >
+                    🎲 랜덤 매칭
+                  </button>
+                  <button
+                    type="button"
+                    className={theme === 'retro' ? 'nes-btn is-primary' : styles.themeToggleBtn}
+                    style={theme === 'retro' ? { padding: '4px 8px', fontSize: '12px', height: '36px' } : { backgroundColor: '#3b82f6', display: 'flex', gap: '6px', alignItems: 'center', height: '36px', padding: '0 12px' }}
+                    onClick={() => setIsHistoryModalOpen(true)}
+                    title="오늘 하루 게임을 진행한 매칭 기록을 확인합니다."
+                  >
+                    📜 기록 ({matchHistory.length})
+                  </button>
                   <button
                     type="button"
                     className={theme === 'retro' ? `nes-btn ${isEditMode ? 'is-error' : ''} ${styles.retroFloatBtn}` : `${styles.floatBtn} ${isEditMode ? styles.editActiveBtn : ''}`}
@@ -150,30 +168,10 @@ export default function Home() {
 
           {/* 2. 오른쪽 영역 대기 명단 */}
           <aside className={styles.waitingArea} ref={setWaitingListRef}>
-            <div className={styles.titleRow} style={{ alignItems: 'center' }}>
-              <h2 className={`${styles.areaTitle} ${theme === 'retro' ? 'nes-text is-primary' : ''}`} style={{ flex: 1 }}>
+            <div className={styles.titleRow}>
+              <h2 className={`${styles.areaTitle} ${theme === 'retro' ? 'nes-text is-primary' : ''}`}>
                 {t.waitingList} ({waitingList.length})
               </h2>
-              <div style={{ display: 'flex', gap: '8px' }}>
-                <button
-                  type="button"
-                  className={theme === 'retro' ? 'nes-btn is-warning' : styles.themeToggleBtn}
-                  style={theme === 'retro' ? { padding: '4px 8px', fontSize: '0.8rem' } : { backgroundColor: '#f59e0b', display: 'flex', gap: '6px', alignItems: 'center' }}
-                  onClick={randomMatch}
-                  title="빈 코트에 인원을 랜덤으로 채웁니다."
-                >
-                  🎲 랜덤 매칭
-                </button>
-                <button
-                  type="button"
-                  className={theme === 'retro' ? 'nes-btn is-primary' : styles.themeToggleBtn}
-                  style={theme === 'retro' ? { padding: '4px 8px', fontSize: '0.8rem' } : { backgroundColor: '#3b82f6', display: 'flex', gap: '6px', alignItems: 'center' }}
-                  onClick={() => setIsHistoryModalOpen(true)}
-                  title="오늘 하루 게임을 진행한 매칭 기록을 확인합니다."
-                >
-                  📜 기록 ({matchHistory.length})
-                </button>
-              </div>
             </div>
             <div className={styles.playerListContainer}>
               <SortableContext items={waitingList.map((p) => p.id)} strategy={rectSortingStrategy}>
