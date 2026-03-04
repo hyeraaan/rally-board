@@ -158,16 +158,23 @@ export const useBoardStore = create<BoardState>((set) => ({
 
             if (!targetPlayer) return state; // 찾지 못하면 무시
 
-            // 2.5 목적지가 다른 선수인 경우 (그 선수가 속한 컨테이너로 toId를 치환)
+            // 2.5 목적지가 다른 선수인 경우 (그 선수가 속한 컨테이너로 toId를 치환하고 해당 선수의 인덱스 파악)
             let actualToId = toId;
+            let targetIndex = -1;
+
             if (typeof toId === 'string' && toId !== 'waiting-list') {
-                const isOverWaitingPlayer = state.waitingList.some(p => p.id === toId);
-                if (isOverWaitingPlayer) {
+                const waitingIdx = state.waitingList.findIndex((p) => p.id === toId);
+                if (waitingIdx !== -1) {
                     actualToId = 'waiting-list';
+                    targetIndex = waitingIdx;
                 } else {
-                    const overCourt = state.courts.find(c => c.players.some(p => p.id === toId));
-                    if (overCourt) {
-                        actualToId = overCourt.id;
+                    for (const c of state.courts) {
+                        const courtIdx = c.players.findIndex((p) => p.id === toId);
+                        if (courtIdx !== -1) {
+                            actualToId = c.id;
+                            targetIndex = courtIdx;
+                            break;
+                        }
                     }
                 }
             }
@@ -183,22 +190,33 @@ export const useBoardStore = create<BoardState>((set) => ({
             }
 
             // 4. 새로운 상태 배열 생성 (원래 있던 곳에서 삭제)
-            let newWaitingList = fromWaitingList
-                ? state.waitingList.filter((p) => p.id !== playerId)
-                : [...state.waitingList];
+            let newWaitingList = [...state.waitingList];
+            const newCourts = state.courts.map((c) => ({ ...c, players: [...c.players] }));
 
-            const newCourts = state.courts.map((court) => {
-                let updatedPlayers = court.players.filter((p) => p.id !== playerId);
-                // 목적지가 현 코트면 추가
-                if (court.id === actualToId) {
-                    updatedPlayers = [...updatedPlayers, targetPlayer!];
+            if (fromWaitingList) {
+                newWaitingList = newWaitingList.filter((p) => p.id !== playerId);
+            } else {
+                for (const court of newCourts) {
+                    court.players = court.players.filter((p) => p.id !== playerId);
                 }
-                return { ...court, players: updatedPlayers };
-            });
+            }
 
-            // 5. 목적지가 대기 명단이면 추가
+            // 5. 목적지 특정 위치(인덱스)에 추가
             if (actualToId === 'waiting-list') {
-                newWaitingList = [...newWaitingList, targetPlayer!];
+                if (targetIndex !== -1) {
+                    newWaitingList.splice(targetIndex, 0, targetPlayer!);
+                } else {
+                    newWaitingList.push(targetPlayer!);
+                }
+            } else {
+                const destCourt = newCourts.find((c) => c.id === actualToId);
+                if (destCourt) {
+                    if (targetIndex !== -1) {
+                        destCourt.players.splice(targetIndex, 0, targetPlayer!);
+                    } else {
+                        destCourt.players.push(targetPlayer!);
+                    }
+                }
             }
 
             return {

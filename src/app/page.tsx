@@ -10,7 +10,7 @@ import { useTheme } from '@/providers/ThemeProvider';
 import { useLanguage } from '@/providers/LanguageProvider';
 import {
   DndContext, DragEndEvent, DragStartEvent, useDroppable,
-  DragOverlay, useSensors, useSensor, PointerSensor, pointerWithin
+  DragOverlay, useSensors, useSensor, PointerSensor, closestCorners
 } from '@dnd-kit/core';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
 
@@ -84,7 +84,7 @@ export default function Home() {
 
   return (
     <main className={`${styles.mainContainer} ${theme === 'retro' ? styles.retroMain : ''}`}>
-      <DndContext sensors={sensors} collisionDetection={pointerWithin} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+      <DndContext sensors={sensors} collisionDetection={closestCorners} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
         <div className={styles.contentWrapper}>
           {/* 1. 왼쪽 영역 코트 판 */}
           <section className={styles.courtArea}>
@@ -143,13 +143,13 @@ export default function Home() {
           </section>
 
           {/* 2. 오른쪽 영역 대기 명단 */}
-          <aside className={styles.waitingArea}>
+          <aside className={styles.waitingArea} ref={setWaitingListRef}>
             <div className={styles.titleRow}>
               <h2 className={`${styles.areaTitle} ${theme === 'retro' ? 'nes-text is-primary' : ''}`}>
                 {t.waitingList} ({waitingList.length})
               </h2>
             </div>
-            <div className={styles.playerListContainer} ref={setWaitingListRef}>
+            <div className={styles.playerListContainer}>
               <SortableContext items={waitingList.map((p) => p.id)} strategy={rectSortingStrategy}>
                 {waitingList.map((player) => (
                   <PlayerMagnet
