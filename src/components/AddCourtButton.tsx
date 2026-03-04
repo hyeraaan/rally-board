@@ -24,7 +24,7 @@ export default function AddCourtButton({ onClick }: AddCourtButtonProps) {
         >
             <div className={styles.addIcon}>
                 <span className={styles.plusSign}>
-                    <Plus size={28} />
+                    <Plus size={theme === 'retro' ? 36 : 28} />
                 </span>
                 <span className={styles.addLabel}>
                     코트 추가

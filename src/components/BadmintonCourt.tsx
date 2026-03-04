@@ -99,7 +99,7 @@ export default function BadmintonCourt({ courtNumber, players, status = 'waiting
                         {status === 'playing' && (
                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                                 <span style={{ fontWeight: 800, color: timeLeft <= 60 ? 'red' : 'inherit', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                    <Timer size={14} /> {formatTime(timeLeft)}
+                                    <Timer size={theme === 'retro' ? 18 : 14} /> {formatTime(timeLeft)}
                                 </span>
                                 <button
                                     className="nes-btn is-warning"
@@ -136,7 +136,7 @@ export default function BadmintonCourt({ courtNumber, players, status = 'waiting
                                         display: 'flex', alignItems: 'center', gap: '4px'
                                     }}
                                 >
-                                    <Play size={14} /> 시작
+                                    <Play size={theme === 'retro' ? 18 : 14} /> 시작
                                 </button>
                             ) : (
                                 <span className={styles.playerCount}>{players.length} / 4 명</span>
@@ -144,7 +144,7 @@ export default function BadmintonCourt({ courtNumber, players, status = 'waiting
                         ) : (
                             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', backgroundColor: 'rgba(0,0,0,0.5)', padding: '4px 12px', borderRadius: '20px' }}>
                                 <span style={{ color: timeLeft <= 60 ? '#ef4444' : '#fff', fontWeight: 700, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                    <Timer size={14} /> {formatTime(timeLeft)}
+                                    <Timer size={theme === 'retro' ? 18 : 14} /> {formatTime(timeLeft)}
                                 </span>
                                 <button
                                     onClick={() => endGame(courtNumber)}
@@ -166,7 +166,7 @@ export default function BadmintonCourt({ courtNumber, players, status = 'waiting
                                 title="코트 삭제"
                                 style={{ display: 'flex', alignItems: 'center' }}
                             >
-                                <Trash2 size={18} />
+                                <Trash2 size={theme === 'retro' ? 22 : 18} />
                             </button>
                         )}
                     </div>

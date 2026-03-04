@@ -105,7 +105,7 @@ export default function Home() {
                     title="빈 코트에 인원을 랜덤으로 채웁니다."
                   >
                     <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <Shuffle size={16} /> {t.randomMatchBtn}
+                      <Shuffle size={theme === 'retro' ? 20 : 16} /> {t.randomMatchBtn}
                     </div>
                   </button>
                   <button
@@ -116,7 +116,7 @@ export default function Home() {
                     title="오늘 하루 게임을 진행한 매칭 기록을 확인합니다."
                   >
                     <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <History size={16} /> {t.historyBtn} ({matchHistory.length})
+                      <History size={theme === 'retro' ? 20 : 16} /> {t.historyBtn} ({matchHistory.length})
                     </div>
                   </button>
                   <button
@@ -127,7 +127,7 @@ export default function Home() {
                     title="선수 삭제 모드"
                     aria-label="선수 삭제 모드"
                   >
-                    <Eraser size={20} />
+                    <Eraser size={theme === 'retro' ? 24 : 20} />
                   </button>
                   <button
                     type="button"
@@ -137,7 +137,7 @@ export default function Home() {
                     title={lang === 'ko' ? 'Switch to English' : '한국어로 전환'}
                     aria-label={lang === 'ko' ? 'Switch to English' : '한국어로 전환'}
                   >
-                    <Globe size={20} />
+                    <Globe size={theme === 'retro' ? 24 : 20} />
                   </button>
                   <button
                     type="button"
@@ -147,7 +147,7 @@ export default function Home() {
                     title={theme === 'retro' ? '클래식 모드로 전환' : '레트로 모드로 전환'}
                     aria-label={theme === 'retro' ? '클래식 모드로 전환' : '레트로 모드로 전환'}
                   >
-                    <Gamepad2 size={20} />
+                    <Gamepad2 size={theme === 'retro' ? 24 : 20} />
                   </button>
                 </div>
               </div>
