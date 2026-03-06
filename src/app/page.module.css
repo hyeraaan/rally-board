@@ -71,26 +71,67 @@
 }
 
 .courtArea {
-    flex: 7;
-    /* 화면의 70% 차지 */
+    flex: 1;
     background-color: var(--court-green);
     padding: 20px;
     position: relative;
     overflow-y: auto;
-    min-width: 600px;
     display: flex;
     flex-direction: column;
 }
 
 .waitingArea {
-    flex: 3;
-    /* 화면의 30% 차지 */
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 350px;
+    height: 100vh;
     background-color: var(--bg-primary);
     border-left: 2px solid var(--border-color);
     display: flex;
     flex-direction: column;
+    z-index: 1000;
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: -4px 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.waitingArea.isOpen {
+    transform: translateX(0);
+}
+
+.sidebarContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
     padding: 20px;
-    min-width: 300px;
+    overflow-y: auto;
+}
+
+.sidebarToggle {
+    position: absolute;
+    left: -44px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 60px;
+    background-color: var(--bg-primary);
+    border: 2px solid var(--border-color);
+    border-right: none;
+    border-radius: 12px 0 0 12px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1001;
+    transition: all 0.2s;
+    box-shadow: -4px 0 8px rgba(0, 0, 0, 0.2);
+}
+
+.sidebarToggle:hover {
+    background-color: var(--bg-secondary);
+    padding-right: 4px;
 }
 
 /* 영역 타이틀 (기본 흰색) */
@@ -116,6 +157,17 @@
 
 .retroMain .waitingArea {
     border-left: 4px solid #212529 !important;
+    background-color: white !important;
+}
+
+:global(.retro-theme) .sidebarToggle {
+    background-color: white;
+    border: 4px solid #212529;
+    border-right: none;
+    color: #212529;
+    height: 64px;
+    width: 48px;
+    left: -48px;
 }
 
 /* 오른쪽 하단 플로팅 버튼 그룹 */

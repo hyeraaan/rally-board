@@ -14,7 +14,7 @@ import {
   DragOverlay, useSensors, useSensor, PointerSensor, closestCorners
 } from '@dnd-kit/core';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
-import { Shuffle, Eraser, Globe, Monitor, Gamepad2, History } from 'lucide-react';
+import { Shuffle, Eraser, Globe, Monitor, Gamepad2, History, ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { useBoardStore, Tier, Player } from '@/store/useBoardStore';
 
@@ -37,6 +37,7 @@ export default function Home() {
 
   const [activeId, setActiveId] = useState<string | null>(null);
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
+  const [isWaitingListOpen, setIsWaitingListOpen] = useState(false);
   const activePlayer = activeId
     ? [...waitingList, ...courts.flatMap(c => c.players)].find(p => p.id === activeId)
     : null;
@@ -169,30 +170,41 @@ export default function Home() {
             </div>
           </section>
 
-          {/* 2. 오른쪽 영역 대기 명단 */}
-          <aside className={styles.waitingArea} ref={setWaitingListRef}>
-            <div className={styles.titleRow}>
-              <h2 className={`${styles.areaTitle} ${theme === 'retro' ? 'nes-text is-primary' : ''}`}>
-                {t.waitingList} ({waitingList.length})
-              </h2>
+          {/* 2. 오른쪽 영역 대기 명단 (사이드바 레이어) */}
+          <aside className={`${styles.waitingArea} ${isWaitingListOpen ? styles.isOpen : ''}`} ref={setWaitingListRef}>
+            {/* 레이어 토글 버튼 */}
+            <button
+              className={`${styles.sidebarToggle} ${theme === 'retro' ? 'nes-btn' : ''}`}
+              onClick={() => setIsWaitingListOpen(!isWaitingListOpen)}
+              title={isWaitingListOpen ? "대기명단 닫기" : "대기명단 열기"}
+            >
+              {isWaitingListOpen ? <ChevronRight size={24} /> : <ChevronLeft size={24} />}
+            </button>
+
+            <div className={styles.sidebarContent}>
+              <div className={styles.titleRow}>
+                <h2 className={`${styles.areaTitle} ${theme === 'retro' ? 'nes-text is-primary' : ''}`}>
+                  {t.waitingList} ({waitingList.length})
+                </h2>
+              </div>
+              <div className={styles.playerListContainer}>
+                <SortableContext items={waitingList.map((p) => p.id)} strategy={rectSortingStrategy}>
+                  {waitingList.map((player) => (
+                    <PlayerMagnet
+                      key={player.id}
+                      id={player.id}
+                      name={player.name}
+                      tier={player.tier}
+                      matchCount={player.matchCount}
+                      onDelete={deletePlayer}
+                      isEditMode={isEditMode}
+                    />
+                  ))}
+                </SortableContext>
+              </div>
+              {/* 선수 추가 폼 (원래대로 하단 배치) */}
+              <AddPlayerForm onAdd={addPlayer} />
             </div>
-            <div className={styles.playerListContainer}>
-              <SortableContext items={waitingList.map((p) => p.id)} strategy={rectSortingStrategy}>
-                {waitingList.map((player) => (
-                  <PlayerMagnet
-                    key={player.id}
-                    id={player.id}
-                    name={player.name}
-                    tier={player.tier}
-                    matchCount={player.matchCount}
-                    onDelete={deletePlayer}
-                    isEditMode={isEditMode}
-                  />
-                ))}
-              </SortableContext>
-            </div>
-            {/* 선수 추가 폼 (원래대로 하단 배치) */}
-            <AddPlayerForm onAdd={addPlayer} />
           </aside>
         </div>
         <DragOverlay>
