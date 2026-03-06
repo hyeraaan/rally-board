@@ -13,6 +13,13 @@
     /* flex container에서 찌그러지지 방지 */
     margin: 4px;
     position: relative;
+    border: 2px solid transparent;
+}
+
+.selected {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4), var(--shadow-magnet-hover) !important;
+    transform: translateY(-2px);
 }
 
 /* 편집(지우개) 모드일 때 네임카드 흔들림 효과 및 휴지통 커서 */
@@ -146,6 +153,11 @@
 :global(.retro-theme) .magnetWrapper.nes-container {
     padding: 0 !important;
     border: 4px solid #212529;
+}
+
+:global(.retro-theme) .magnetWrapper.selected {
+    border: 6px solid #212529 !important;
+    box-shadow: 0 0 0 4px #f59e0b !important;
 }
 
 .retroContainer {

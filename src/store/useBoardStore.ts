@@ -40,6 +40,7 @@ interface BoardState {
     addPlayer: (name: string, tier: Tier) => void;
     deletePlayer: (playerId: string) => void;
     movePlayer: (playerId: string, toId: string | number) => void;
+    moveMultiplePlayers: (playerIds: string[], targetCourtId: number) => void;
     startGame: (courtId: number) => void;
     endGame: (courtId: number) => void;
     randomMatch: () => void;
@@ -239,6 +240,54 @@ export const useBoardStore = create<BoardState>((set) => ({
             return {
                 courts: newCourts,
                 waitingList: newWaitingList,
+            };
+        }),
+
+    moveMultiplePlayers: (playerIds, targetCourtId) =>
+        set((state) => {
+            const targetCourt = state.courts.find((c) => c.id === targetCourtId);
+            if (!targetCourt || targetCourt.status === 'playing') return state;
+
+            const remainingSpace = 4 - targetCourt.players.length;
+            if (remainingSpace <= 0) return state;
+
+            const idsToMove = playerIds.slice(0, remainingSpace);
+
+            let newWaitingList = [...state.waitingList];
+            let newCourts = state.courts.map((c) => ({ ...c, players: [...c.players] }));
+
+            const playersData: Player[] = [];
+
+            // 1. 소스 위치에서 제거 및 데이터 수집
+            idsToMove.forEach(id => {
+                // 대기명단에서 찾기
+                const wIdx = newWaitingList.findIndex(p => p.id === id);
+                if (wIdx !== -1) {
+                    playersData.push(newWaitingList[wIdx]);
+                    newWaitingList.splice(wIdx, 1);
+                } else {
+                    // 다른 코트에서 찾기
+                    newCourts.forEach(c => {
+                        const pIdx = c.players.findIndex(p => p.id === id);
+                        if (pIdx !== -1 && c.id !== targetCourtId) {
+                            playersData.push(c.players[pIdx]);
+                            c.players.splice(pIdx, 1);
+                        }
+                    });
+                }
+            });
+
+            // 2. 타겟 코트에 추가
+            const finalCourts = newCourts.map(c => {
+                if (c.id === targetCourtId) {
+                    return { ...c, players: [...c.players, ...playersData] };
+                }
+                return c;
+            });
+
+            return {
+                waitingList: newWaitingList,
+                courts: finalCourts,
             };
         }),
 

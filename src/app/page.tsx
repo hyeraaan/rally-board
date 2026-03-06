@@ -38,6 +38,21 @@ export default function Home() {
   const [activeId, setActiveId] = useState<string | null>(null);
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
   const [isWaitingListOpen, setIsWaitingListOpen] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+
+  const handleSelect = (playerId: string) => {
+    setSelectedIds(prev => {
+      if (prev.includes(playerId)) {
+        return prev.filter(id => id !== playerId);
+      }
+      if (prev.length >= 4) {
+        alert("최대 4명까지만 선택 가능합니다.");
+        return prev;
+      }
+      return [...prev, playerId];
+    });
+  };
+
   const activePlayer = activeId
     ? [...waitingList, ...courts.flatMap(c => c.players)].find(p => p.id === activeId)
     : null;
@@ -55,25 +70,35 @@ export default function Home() {
   });
 
   const handleDragStart = (event: DragStartEvent) => {
-    setActiveId(event.active.id as string);
+    const { active } = event;
+    setActiveId(active.id as string);
+
+    // 드래그한 원소가 선택 목록에 없다면 선택 목록 초기화
+    if (!selectedIds.includes(active.id as string)) {
+      setSelectedIds([]);
+    }
   };
 
   const handleDragEnd = (event: DragEndEvent) => {
     setActiveId(null);
     const { active, over } = event;
-    console.log('--- Drag End Event ---');
-    console.log('active:', active);
-    console.log('over:', over);
     if (!over) return;
 
-    // active.id: 드래그 중인 선수 ID
-    // over.id: 드롭된 영역 ID (코트 id 또는 'waiting-list' 또는 다른 선수 id)
     const activeId = active.id as string;
     const overId = over.id as string | number;
 
     if (activeId !== overId) {
-      if (movePlayer) {
-        movePlayer(activeId, overId);
+      if (typeof overId === 'number' && selectedIds.length > 0 && selectedIds.includes(activeId)) {
+        // 다중 이동 (코트로 드롭했을 때만)
+        if (useBoardStore.getState().moveMultiplePlayers) {
+          useBoardStore.getState().moveMultiplePlayers(selectedIds, overId);
+          setSelectedIds([]); // 이동 후 선택 해제
+        }
+      } else {
+        // 단일 이동
+        if (movePlayer) {
+          movePlayer(activeId, overId);
+        }
       }
     }
   };
@@ -196,6 +221,8 @@ export default function Home() {
                       name={player.name}
                       tier={player.tier}
                       matchCount={player.matchCount}
+                      onSelect={handleSelect}
+                      isSelected={selectedIds.includes(player.id)}
                       onDelete={deletePlayer}
                       isEditMode={isEditMode}
                     />
@@ -207,15 +234,42 @@ export default function Home() {
             </div>
           </aside>
         </div>
-        <DragOverlay>
+        <DragOverlay adjustScale={true}>
           {activePlayer ? (
-            <PlayerMagnet
-              id={activePlayer.id}
-              name={activePlayer.name}
-              tier={activePlayer.tier}
-              matchCount={activePlayer.matchCount}
-              isEditMode={isEditMode}
-            />
+            <div style={{ position: 'relative' }}>
+              {/* 다중 선택 시 겹쳐 보이는 효과 */}
+              {selectedIds.length > 1 && selectedIds.includes(activePlayer.id) ? (
+                selectedIds.slice(0, 4).map((id, index) => {
+                  const p = [...waitingList, ...courts.flatMap(c => c.players)].find(player => player.id === id);
+                  if (!p) return null;
+                  return (
+                    <div key={id} style={{
+                      position: index === 0 ? 'relative' : 'absolute',
+                      top: index * 4,
+                      left: index * 4,
+                      zIndex: 10 - index,
+                      opacity: index === 0 ? 1 : 0.4
+                    }}>
+                      <PlayerMagnet
+                        id={p.id}
+                        name={p.name}
+                        tier={p.tier}
+                        matchCount={p.matchCount}
+                        isEditMode={isEditMode}
+                      />
+                    </div>
+                  );
+                })
+              ) : (
+                <PlayerMagnet
+                  id={activePlayer.id}
+                  name={activePlayer.name}
+                  tier={activePlayer.tier}
+                  matchCount={activePlayer.matchCount}
+                  isEditMode={isEditMode}
+                />
+              )}
+            </div>
           ) : null}
         </DragOverlay>
       </DndContext>
