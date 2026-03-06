@@ -118,7 +118,12 @@ export default function Home() {
       <DndContext sensors={sensors} collisionDetection={closestCorners} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
         <div className={styles.contentWrapper}>
           {/* 1. 왼쪽 영역 코트 판 */}
-          <section className={styles.courtArea}>
+          <section
+            className={styles.courtArea}
+            onClick={() => {
+              if (isWaitingListOpen) setIsWaitingListOpen(false);
+            }}
+          >
             <div className={styles.titleRow}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
                 <h1 className={styles.areaTitle}>{t.appTitle}</h1>
