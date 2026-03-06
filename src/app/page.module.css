@@ -84,7 +84,7 @@
     position: fixed;
     top: 0;
     right: 0;
-    width: 350px;
+    width: 440px;
     height: 100vh;
     background-color: var(--bg-primary);
     border-left: 2px solid var(--border-color);
