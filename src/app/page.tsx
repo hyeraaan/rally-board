@@ -37,7 +37,7 @@ export default function Home() {
 
   const [activeId, setActiveId] = useState<string | null>(null);
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
-  const [isWaitingListOpen, setIsWaitingListOpen] = useState(false);
+  const [isWaitingListOpen, setIsWaitingListOpen] = useState(true);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
   const handleSelect = (playerId: string) => {
