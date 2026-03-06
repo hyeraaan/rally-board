@@ -168,6 +168,13 @@
     height: 64px;
     width: 48px;
     left: -48px;
+    box-shadow: none !important;
+}
+
+:global(.retro-theme) .sidebarToggle:focus,
+:global(.retro-theme) .sidebarToggle:active {
+    outline: none;
+    box-shadow: none !important;
 }
 
 /* 오른쪽 하단 플로팅 버튼 그룹 */
