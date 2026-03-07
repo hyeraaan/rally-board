@@ -7,6 +7,7 @@ export interface Player {
     name: string;
     tier: Tier;
     matchCount: number;
+    waitingStartTime?: number | null;
 }
 
 export interface Court {
@@ -28,6 +29,10 @@ interface BoardState {
     waitingList: Player[];
     matchHistory: MatchRecord[];
     isEditMode: boolean;
+    isCountingDown: boolean;
+    countdownTime: number;
+    isEventRunning: boolean;
+    eventStartTime: number | null;
 
     // Actions
     setCourts: (courts: Court[]) => void;
@@ -44,6 +49,12 @@ interface BoardState {
     startGame: (courtId: number) => void;
     endGame: (courtId: number) => void;
     randomMatch: () => void;
+    setIsCountingDown: (isCounting: boolean) => void;
+    setCountdownTime: (time: number) => void;
+    startAllReadyGames: () => void;
+    endAllGames: () => void;
+    startTournament: () => void;
+    endTournament: () => void;
 }
 
 const initialCourts: Court[] = [
@@ -90,6 +101,10 @@ export const useBoardStore = create<BoardState>((set) => ({
     waitingList: initialWaitingList,
     matchHistory: [],
     isEditMode: false,
+    isCountingDown: false,
+    countdownTime: 3,
+    isEventRunning: false,
+    eventStartTime: null,
 
     setCourts: (courts) => set({ courts }),
     setWaitingList: (waitingList) => set({ waitingList }),
@@ -107,7 +122,7 @@ export const useBoardStore = create<BoardState>((set) => ({
             if (!courtToDelete) return state;
 
             return {
-                waitingList: [...state.waitingList, ...courtToDelete.players],
+                waitingList: [...state.waitingList, ...courtToDelete.players.map(p => ({ ...p, waitingStartTime: state.isEventRunning ? Date.now() : null }))],
                 courts: state.courts.filter((c) => c.id !== courtId),
             };
         }),
@@ -115,7 +130,14 @@ export const useBoardStore = create<BoardState>((set) => ({
     addPlayer: (name, tier) =>
         set((state) => {
             const newId = `w${Date.now()}`;
-            return { waitingList: [...state.waitingList, { id: newId, name, tier, matchCount: 0 }] };
+            const newPlayer: Player = {
+                id: newId,
+                name,
+                tier,
+                matchCount: 0,
+                waitingStartTime: state.isEventRunning ? Date.now() : null
+            };
+            return { waitingList: [...state.waitingList, newPlayer] };
         }),
 
     deletePlayer: (playerId) =>
@@ -221,18 +243,24 @@ export const useBoardStore = create<BoardState>((set) => ({
 
             // 5. 목적지 특정 위치(인덱스)에 추가
             if (actualToId === 'waiting-list') {
+                const finalPlayer = {
+                    ...targetPlayer!,
+                    waitingStartTime: (!fromWaitingList && state.isEventRunning) ? Date.now() : targetPlayer!.waitingStartTime
+                };
                 if (targetIndex !== -1) {
-                    newWaitingList.splice(targetIndex, 0, targetPlayer!);
+                    newWaitingList.splice(targetIndex, 0, finalPlayer);
                 } else {
-                    newWaitingList.push(targetPlayer!);
+                    newWaitingList.push(finalPlayer);
                 }
             } else {
                 const destCourt = newCourts.find((c) => c.id === actualToId);
                 if (destCourt) {
+                    // 코트로 들어갈 때는 대기 시간 초기화
+                    const finalPlayer = { ...targetPlayer!, waitingStartTime: null };
                     if (targetIndex !== -1) {
-                        destCourt.players.splice(targetIndex, 0, targetPlayer!);
+                        destCourt.players.splice(targetIndex, 0, finalPlayer);
                     } else {
-                        destCourt.players.push(targetPlayer!);
+                        destCourt.players.push(finalPlayer);
                     }
                 }
             }
@@ -341,7 +369,7 @@ export const useBoardStore = create<BoardState>((set) => ({
                         ? { ...c, players: [], status: 'waiting', startTime: undefined }
                         : c
                 ),
-                waitingList: [...state.waitingList, ...finishedPlayers],
+                waitingList: [...state.waitingList, ...finishedPlayers.map(p => ({ ...p, waitingStartTime: Date.now() }))],
             };
         }),
 
@@ -400,4 +428,80 @@ export const useBoardStore = create<BoardState>((set) => ({
                 waitingList: shuffledWaiting,
             };
         }),
+
+    setIsCountingDown: (isCounting) => set({ isCountingDown: isCounting }),
+    setCountdownTime: (time) => set({ countdownTime: time }),
+
+    startAllReadyGames: () =>
+        set((state) => {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const timeStr = `${hours}:${minutes}`;
+
+            const readyCourts = state.courts.filter(
+                (c) => c.status === 'waiting' && c.players.length === 4
+            );
+
+            if (readyCourts.length === 0) return state;
+
+            const newRecords: MatchRecord[] = readyCourts.map((court) => ({
+                id: `m${Date.now()}-${court.id}`,
+                courtId: court.id,
+                players: [...court.players],
+                startTimeStr: timeStr,
+            }));
+
+            const updatedCourts = state.courts.map((c) => {
+                const isReady = readyCourts.some((rc) => rc.id === c.id);
+                if (isReady) {
+                    return {
+                        ...c,
+                        status: 'playing' as const,
+                        startTime: Date.now(),
+                        players: c.players.map((p) => ({ ...p, matchCount: p.matchCount + 1 })),
+                    };
+                }
+                return c;
+            });
+
+            return {
+                courts: updatedCourts,
+                matchHistory: [...newRecords, ...state.matchHistory],
+            };
+        }),
+
+    endAllGames: () =>
+        set((state) => {
+            const playingCourts = state.courts.filter((c) => c.status === 'playing');
+            if (playingCourts.length === 0) return state;
+
+            const allFinishedPlayers = playingCourts.flatMap((c) => c.players);
+
+            return {
+                courts: state.courts.map((c) =>
+                    c.status === 'playing'
+                        ? { ...c, players: [], status: 'waiting', startTime: undefined }
+                        : c
+                ),
+                waitingList: [...state.waitingList, ...allFinishedPlayers.map(p => ({ ...p, waitingStartTime: Date.now() }))],
+            };
+        }),
+
+    startTournament: () =>
+        set((state) => {
+            const now = Date.now();
+            return {
+                isEventRunning: true,
+                eventStartTime: now,
+                waitingList: state.waitingList.map(p => ({ ...p, waitingStartTime: now }))
+            };
+        }),
+
+    endTournament: () =>
+        set((state) => ({
+            isEventRunning: false,
+            eventStartTime: null,
+            waitingList: state.waitingList.map(p => ({ ...p, waitingStartTime: null }))
+        })),
 }));

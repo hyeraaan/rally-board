@@ -14,7 +14,7 @@ import {
   DragOverlay, useSensors, useSensor, PointerSensor, closestCorners
 } from '@dnd-kit/core';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
-import { Shuffle, Eraser, Globe, Monitor, Gamepad2, History, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Shuffle, Eraser, Globe, Monitor, Gamepad2, History, ChevronLeft, ChevronRight, Play, PlayCircle, Square, Trophy, Clock } from 'lucide-react';
 
 import { useBoardStore, Tier, Player } from '@/store/useBoardStore';
 
@@ -32,8 +32,39 @@ export default function Home() {
     deletePlayer,
     addPlayer,
     movePlayer,
-    randomMatch
+    randomMatch,
+    isCountingDown,
+    countdownTime,
+    setIsCountingDown,
+    setCountdownTime,
+    startAllReadyGames,
+    endAllGames,
+    isEventRunning,
+    eventStartTime,
+    startTournament,
+    endTournament
   } = useBoardStore();
+
+  const [eventTime, setEventTime] = useState('00:00:00');
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (isEventRunning && eventStartTime) {
+      const updateTimer = () => {
+        const now = Date.now();
+        const diff = Math.floor((now - eventStartTime) / 1000);
+        const h = Math.floor(diff / 3600).toString().padStart(2, '0');
+        const m = Math.floor((diff % 3600) / 60).toString().padStart(2, '0');
+        const s = (diff % 60).toString().padStart(2, '0');
+        setEventTime(`${h}:${m}:${s}`);
+      };
+      updateTimer();
+      interval = setInterval(updateTimer, 1000);
+    } else {
+      setEventTime('00:00:00');
+    }
+    return () => clearInterval(interval);
+  }, [isEventRunning, eventStartTime]);
 
   const [activeId, setActiveId] = useState<string | null>(null);
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
@@ -109,6 +140,29 @@ export default function Home() {
     setIsMounted(true);
   }, []);
 
+  const handleStartTournament = () => {
+    setIsCountingDown(true);
+    setCountdownTime(3);
+
+    const timer = setInterval(() => {
+      useBoardStore.getState().setCountdownTime(useBoardStore.getState().countdownTime - 1);
+    }, 1000);
+
+    setTimeout(() => {
+      clearInterval(timer);
+      setIsCountingDown(false);
+      startTournament();
+    }, 3000);
+  };
+
+  const handleEndTournament = () => {
+    if (confirm(lang === 'ko' ? "정말 대회를 종료하시겠습니까? 모든 정보가 초기화됩니다." : "End the tournament? All status will be reset.")) {
+      endTournament();
+    }
+  };
+
+  const isAnyGamePlaying = courts.some(c => c.status === 'playing');
+
   if (!isMounted) {
     // 서버 사이드와 첫 번째 클라이언트 렌더링 시점에는 
     // 테마나 언어에 의존하지 않는 정적인 껍데기만 렌더링하여 Hydration 불일치를 방지합니다.
@@ -128,8 +182,48 @@ export default function Home() {
           >
             <div className={styles.titleRow}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                <h1 className={styles.areaTitle}>{t.appTitle}</h1>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                  <h1 className={styles.areaTitle}>{t.appTitle}</h1>
+                  {isEventRunning && (
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      backgroundColor: theme === 'retro' ? '#fff' : 'rgba(0,0,0,0.5)',
+                      padding: '4px 12px',
+                      borderRadius: theme === 'retro' ? '0' : '20px',
+                      border: theme === 'retro' ? '3px solid #000' : '1px solid rgba(255,255,255,0.2)',
+                      color: theme === 'retro' ? '#000' : '#10b981',
+                      fontWeight: 800,
+                      fontSize: '1.2rem',
+                    }}>
+                      <Clock size={20} />
+                      {eventTime}
+                    </div>
+                  )}
+                </div>
                 <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                  {isEventRunning ? (
+                    <button
+                      type="button"
+                      className={theme === 'retro' ? 'nes-btn is-error' : styles.themeToggleBtn}
+                      style={theme === 'retro' ? { display: 'flex', gap: '6px', alignItems: 'center', padding: '4px 8px', fontSize: '12px', height: '36px' } : { backgroundColor: '#ef4444', color: 'white' }}
+                      onClick={handleEndTournament}
+                      title="전체 대회를 종료합니다."
+                    >
+                      <Trophy size={theme === 'retro' ? 20 : 16} fill={theme === 'retro' ? 'currentColor' : 'white'} /> {t.tournamentEnd}
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      className={theme === 'retro' ? 'nes-btn is-primary' : styles.themeToggleBtn}
+                      style={theme === 'retro' ? { display: 'flex', gap: '6px', alignItems: 'center', padding: '4px 8px', fontSize: '12px', height: '36px' } : { backgroundColor: '#10b981', color: 'white' }}
+                      onClick={handleStartTournament}
+                      title="대회를 시작하고 대기 시간을 측정합니다."
+                    >
+                      <Play size={theme === 'retro' ? 20 : 16} fill={theme === 'retro' ? 'currentColor' : 'white'} /> {t.tournamentStart}
+                    </button>
+                  )}
                   <button
                     type="button"
                     className={theme === 'retro' ? 'nes-btn' : styles.themeToggleBtn}
@@ -255,6 +349,7 @@ export default function Home() {
                       name={player.name}
                       tier={player.tier}
                       matchCount={player.matchCount}
+                      waitingStartTime={player.waitingStartTime}
                       onSelect={handleSelect}
                       isSelected={selectedIds.includes(player.id)}
                       onDelete={deletePlayer}
@@ -312,6 +407,44 @@ export default function Home() {
         isOpen={isHistoryModalOpen}
         onClose={() => setIsHistoryModalOpen(false)}
       />
+
+      {/* 카운트다운 오버레이 */}
+      {isCountingDown && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          backgroundColor: 'rgba(0,0,0,0.8)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          zIndex: 9999,
+          flexDirection: 'column',
+          backdropFilter: 'blur(4px)'
+        }}>
+          <div
+            className={theme === 'retro' ? 'nes-text is-warning' : ''}
+            style={{
+              fontSize: '12rem',
+              fontWeight: 900,
+              color: theme === 'retro' ? undefined : '#f59e0b',
+              animation: 'pulse 1s infinite',
+              textShadow: '0 0 20px rgba(245, 158, 11, 0.5)'
+            }}
+          >
+            {countdownTime}
+          </div>
+          <style jsx global>{`
+            @keyframes pulse {
+              0% { transform: scale(1); opacity: 1; }
+              50% { transform: scale(1.2); opacity: 0.8; }
+              100% { transform: scale(1); opacity: 1; }
+            }
+          `}</style>
+        </div>
+      )}
     </main>
   );
 }

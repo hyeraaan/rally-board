@@ -1,4 +1,6 @@
+import { useState, useEffect } from 'react';
 import styles from './PlayerMagnet.module.css';
+import { useLanguage } from '@/providers/LanguageProvider';
 import { useTheme } from '@/providers/ThemeProvider';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
@@ -13,10 +15,30 @@ interface PlayerMagnetProps {
     isSelected?: boolean; // 선택 여부
     onDelete?: (id: string) => void;
     isEditMode?: boolean; // 삭제 모드 활성화 여부
+    waitingStartTime?: number | null;
 }
 
-export default function PlayerMagnet({ id, name, tier, matchCount = 0, onSelect, isSelected, onDelete, isEditMode }: PlayerMagnetProps) {
+export default function PlayerMagnet({ id, name, tier, matchCount = 0, onSelect, isSelected, onDelete, isEditMode, waitingStartTime }: PlayerMagnetProps) {
     const { theme } = useTheme();
+    const { t } = useLanguage();
+    const [elapsedTime, setElapsedTime] = useState(0);
+
+    useEffect(() => {
+        if (!waitingStartTime) {
+            setElapsedTime(0);
+            return;
+        }
+
+        const updateElapsed = () => {
+            const now = Date.now();
+            const diff = Math.floor((now - waitingStartTime) / 60000);
+            setElapsedTime(diff);
+        };
+
+        updateElapsed();
+        const interval = setInterval(updateElapsed, 60000); // 1분마다 갱신
+        return () => clearInterval(interval);
+    }, [waitingStartTime]);
     const {
         attributes,
         listeners,
@@ -83,6 +105,7 @@ export default function PlayerMagnet({ id, name, tier, matchCount = 0, onSelect,
                     </div>
                     <div className={styles.retroBottom}>
                         <span className={styles.retroName}>{name}</span>
+                        {waitingStartTime && <span className={styles.retroWaiting}>{t.waitingTime(elapsedTime)}</span>}
                         <span className={styles.retroMatchCount}>{matchCount}</span>
                     </div>
                 </div>
@@ -93,6 +116,7 @@ export default function PlayerMagnet({ id, name, tier, matchCount = 0, onSelect,
                     </div>
                     <div className={styles.magnetBottom}>
                         <span className={styles.playerName}>{name}</span>
+                        {waitingStartTime && <span className={styles.waitingBadge}>{t.waitingTime(elapsedTime)}</span>}
                         <span className={styles.matchCountBadge}>{matchCount}</span>
                     </div>
                 </>

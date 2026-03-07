@@ -118,6 +118,15 @@
     border: 1px solid #e2e8f0;
 }
 
+.waitingBadge {
+    position: absolute;
+    top: 2px;
+    left: 4px;
+    font-size: 9px;
+    color: #ef4444;
+    font-weight: 700;
+}
+
 /* --- 각 급수별 테마 색상 (전역 CSS 변수 활용) --- */
 .tierA .magnetTop {
     background-color: var(--badge-a);
@@ -210,6 +219,15 @@
     font-size: 10px;
     color: #7f8c8d;
     font-family: inherit;
+}
+
+.retroWaiting {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    font-size: 8px;
+    color: #e74c3c;
+    font-weight: bold;
 }
 
 /* 레트로 급수 색상 (클래식 컬러와 동기화) */

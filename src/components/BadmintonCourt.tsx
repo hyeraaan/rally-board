@@ -23,30 +23,23 @@ export default function BadmintonCourt({ courtNumber, players, status = 'waiting
     const { t } = useLanguage();
     const { startGame, endGame } = useBoardStore();
 
-    const [timeLeft, setTimeLeft] = useState(15 * 60); // 15분 (900초)
+    const [elapsedTime, setElapsedTime] = useState(0);
 
     // 타이머 로직
     useEffect(() => {
         let interval: NodeJS.Timeout;
 
         if (status === 'playing' && startTime) {
-            const calculateTimeLeft = () => {
+            const calculateElapsed = () => {
                 const now = Date.now();
-                const elapsedSeconds = Math.floor((now - startTime) / 1000);
-                const remaining = Math.max(15 * 60 - elapsedSeconds, 0);
-
-                setTimeLeft(remaining);
-
-                if (remaining === 0) {
-                    // 타이머 종료 로직 (자동으로 endGame 호출 등)
-                    // 현재는 시간만 계속 0에 머무르게 두거나, alert 등 처리 가능
-                }
+                const diff = Math.floor((now - startTime) / 1000);
+                setElapsedTime(diff);
             };
 
-            calculateTimeLeft(); // 즉시 1회 실행
-            interval = setInterval(calculateTimeLeft, 1000); // 1초마다 갱신
+            calculateElapsed();
+            interval = setInterval(calculateElapsed, 1000);
         } else {
-            setTimeLeft(15 * 60); // 초기화
+            setElapsedTime(0);
         }
 
         return () => clearInterval(interval);
@@ -98,8 +91,8 @@ export default function BadmintonCourt({ courtNumber, players, status = 'waiting
                         )}
                         {status === 'playing' && (
                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                <span style={{ fontWeight: 800, color: timeLeft <= 60 ? 'red' : 'inherit', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                    <Timer size={18} /> {formatTime(timeLeft)}
+                                <span style={{ fontWeight: 800, display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                    <Timer size={18} /> {formatTime(elapsedTime)}
                                 </span>
                                 <button
                                     className="nes-btn is-warning"
@@ -143,8 +136,8 @@ export default function BadmintonCourt({ courtNumber, players, status = 'waiting
                             )
                         ) : (
                             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', backgroundColor: 'rgba(0,0,0,0.5)', padding: '4px 12px', borderRadius: '20px' }}>
-                                <span style={{ color: timeLeft <= 60 ? '#ef4444' : '#fff', fontWeight: 700, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                    <Timer size={14} /> {formatTime(timeLeft)}
+                                <span style={{ color: '#fff', fontWeight: 700, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                    <Timer size={14} /> {formatTime(elapsedTime)}
                                 </span>
                                 <button
                                     onClick={() => endGame(courtNumber)}
