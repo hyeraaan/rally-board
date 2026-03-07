@@ -110,7 +110,9 @@ export default function Home() {
   }, []);
 
   if (!isMounted) {
-    return <main className={`${styles.mainContainer} ${theme === 'retro' ? styles.retroMain : ''}`} />;
+    // 서버 사이드와 첫 번째 클라이언트 렌더링 시점에는 
+    // 테마나 언어에 의존하지 않는 정적인 껍데기만 렌더링하여 Hydration 불일치를 방지합니다.
+    return <main className={styles.mainContainer} />;
   }
 
   return (

@@ -16,7 +16,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const [theme, setTheme] = useState<Theme>('retro');
 
     useEffect(() => {
-        const savedTheme = localStorage.getItem('rally-board-theme') as Theme;
+        const savedTheme = typeof window !== 'undefined' ? localStorage.getItem('rally-board-theme') as Theme : null;
         if (savedTheme === 'classic' || savedTheme === 'retro') {
             setTheme(savedTheme);
         }
