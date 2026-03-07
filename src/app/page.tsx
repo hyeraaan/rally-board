@@ -217,6 +217,33 @@ export default function Home() {
                   {t.waitingList} ({waitingList.length})
                 </h2>
               </div>
+
+              {/* 다중 선택 퀵 코트 배치 메뉴 */}
+              {selectedIds.length >= 2 && (
+                <div className={styles.quickAddContainer}>
+                  <span className={styles.quickAddTitle}>
+                    {selectedIds.length}명을 배치할 코트를 선택하세요:
+                  </span>
+                  <div className={styles.quickAddButtons}>
+                    {courts.map((court) => (
+                      <button
+                        key={court.id}
+                        className={theme === 'retro' ? 'nes-btn is-primary' : styles.quickAddBtn}
+                        style={theme === 'retro' ? { padding: '4px 8px', fontSize: '10px', flex: '1', minWidth: '60px' } : undefined}
+                        onClick={() => {
+                          if (useBoardStore.getState().moveMultiplePlayers) {
+                            useBoardStore.getState().moveMultiplePlayers(selectedIds, court.id);
+                            setSelectedIds([]);
+                          }
+                        }}
+                      >
+                        {court.id}번 코트
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               <div className={styles.playerListContainer}>
                 <SortableContext items={waitingList.map((p) => p.id)} strategy={rectSortingStrategy}>
                   {waitingList.map((player) => (
