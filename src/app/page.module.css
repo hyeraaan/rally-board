@@ -114,10 +114,10 @@
 
 .sidebarToggle {
     position: absolute;
-    left: -44px;
+    left: -54px;
     top: 50%;
     transform: translateY(-50%);
-    width: 44px;
+    width: 54px;
     height: 60px;
     background-color: var(--bg-primary);
     border: 2px solid var(--border-color);
@@ -128,8 +128,8 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    z-index: 1;
-    /* 본체(2)보다 아래로 배치 */
+    z-index: 10;
+    /* 본체(2)보다 위로 배치 */
     transition: all 0.2s;
     box-shadow: -4px 0 8px rgba(0, 0, 0, 0.2);
 }
@@ -172,7 +172,7 @@
     color: #212529;
     height: 64px;
     width: 48px;
-    left: -48px;
+    left: -60px;
     top: 50%;
     transform: translateY(-50%);
     z-index: 1;
