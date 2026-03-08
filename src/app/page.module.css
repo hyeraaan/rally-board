@@ -344,10 +344,11 @@
 /* 대기 명단 네임택 컨테이너 */
 .playerListContainer {
     display: grid;
-    grid-template-columns: repeat(4, 80px);
-    /* 데스크탑 기본 크기 기준 4열 */
+    grid-template-columns: repeat(4, auto);
+    /* 네임택 크기(80px+마진)에 맞춰 자동 조절 */
     justify-content: center;
-    gap: 8px;
+    gap: 0;
+    /* 네임택 자체의 margin(4px)이 있으므로 gap은 0으로 설정하여 중복 방지 */
     align-content: flex-start;
     overflow-y: auto;
     flex: 1;
@@ -359,9 +360,10 @@
 
 @media (max-width: 480px) {
     .playerListContainer {
-        grid-template-columns: repeat(4, 70px);
-        /* 모바일 크기 기준 4열 */
-        gap: 4px;
+        grid-template-columns: repeat(4, auto);
+        /* 모바일에서도 4열 유지 */
+        padding: 16px 8px 16px 8px;
+        /* 모바일에서는 좌우 여백 살짝 축소 */
     }
 }
 
