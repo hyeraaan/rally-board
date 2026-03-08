@@ -305,10 +305,18 @@ export default function Home() {
           <aside className={`${styles.waitingArea} ${isWaitingListOpen ? styles.isOpen : ''}`} ref={setWaitingListRef}>
             <div className={styles.sidebarContent}>
               <div className={styles.sidebarHeader}>
+                <h2 className={`${styles.areaTitle} ${theme === 'retro' ? 'nes-text is-primary' : ''}`}>
+                  {t.waitingList} ({waitingList.length})
+                </h2>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <h2 className={`${styles.areaTitle} ${theme === 'retro' ? 'nes-text is-primary' : ''}`}>
-                    {t.waitingList} ({waitingList.length})
-                  </h2>
+                  <button
+                    type="button"
+                    className={theme === 'retro' ? 'nes-btn is-warning' : styles.randomBtn}
+                    onClick={randomMatch}
+                    title="빈 코트에 인원을 랜덤으로 채웁니다."
+                  >
+                    <Shuffle size={theme === 'retro' ? 20 : 16} /> {t.randomMatchBtn}
+                  </button>
                   <button
                     type="button"
                     className={theme === 'retro' ? 'nes-btn is-error' : styles.sidebarCloseBtn}
@@ -319,14 +327,6 @@ export default function Home() {
                     {theme === 'retro' ? 'X' : <X size={20} />}
                   </button>
                 </div>
-                <button
-                  type="button"
-                  className={theme === 'retro' ? 'nes-btn is-warning' : styles.randomBtn}
-                  onClick={randomMatch}
-                  title="빈 코트에 인원을 랜덤으로 채웁니다."
-                >
-                  <Shuffle size={theme === 'retro' ? 20 : 16} /> {t.randomMatchBtn}
-                </button>
               </div>
 
               {/* 다중 선택 퀵 코트 배치 메뉴 */}
