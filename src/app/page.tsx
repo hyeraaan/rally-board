@@ -306,6 +306,9 @@ export default function Home() {
             <div className={styles.sidebarContent}>
               <div className={styles.sidebarHeader}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                  <h2 className={`${styles.areaTitle} ${theme === 'retro' ? 'nes-text is-primary' : ''}`}>
+                    {t.waitingList} ({waitingList.length})
+                  </h2>
                   <button
                     type="button"
                     className={theme === 'retro' ? styles.retroCloseBtn : styles.sidebarCloseBtn}
@@ -314,9 +317,6 @@ export default function Home() {
                   >
                     <X size={20} />
                   </button>
-                  <h2 className={`${styles.areaTitle} ${theme === 'retro' ? 'nes-text is-primary' : ''}`}>
-                    {t.waitingList} ({waitingList.length})
-                  </h2>
                 </div>
                 <button
                   type="button"
