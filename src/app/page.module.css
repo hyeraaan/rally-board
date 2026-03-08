@@ -168,9 +168,10 @@
     height: 64px;
     width: 48px;
     left: -48px;
-    top: auto;
-    bottom: 100px;
-    transform: none;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 999;
+    /* 사이드바(1000)보다 아래로 배치 */
     box-shadow: none !important;
 }
 
@@ -190,7 +191,7 @@
 
 /* 클릭 시 위치 이동 효과 제거 (필요한 경우) */
 :global(.retro-theme) .sidebarToggle:active {
-    transform: none !important;
+    transform: translateY(-50%) !important;
 }
 
 /* 오른쪽 하단 플로팅 버튼 그룹 */
