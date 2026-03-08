@@ -88,7 +88,10 @@
     flex-direction: column;
     /* 이름과 하단 정보를 위한 방향 전환 */
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    /* 중앙에서 상단 정렬로 변경 */
+    padding-top: 8px;
+    /* 위쪽 여백 */
     background-color: white;
     border-top: 1px solid rgba(0, 0, 0, 0.05);
     border-bottom-left-radius: 8px;
@@ -195,9 +198,11 @@
     width: 100% !important;
     background-color: transparent;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    /* 상단 정렬 */
     justify-content: center;
-    padding: 4px;
+    padding: 6px 4px 4px 4px;
+    /* 위쪽 패딩 살짝 추가 */
     position: relative;
     /* 숫자 위치용 */
 }
