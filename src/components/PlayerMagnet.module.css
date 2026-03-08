@@ -18,8 +18,10 @@
 
 @media (max-width: 480px) {
     .magnetWrapper {
-        width: 70px;
-        height: 80px;
+        width: 65px;
+        /* 70px -> 65px 축소 */
+        height: 75px;
+        /* 비율에 맞춰 높이도 살짝 축소 */
         margin: 1px;
     }
 }
@@ -171,13 +173,15 @@
 
 @media (max-width: 480px) {
     :global(.retro-theme) .magnetWrapper {
-        width: 70px;
-        height: 80px;
+        width: 65px;
+        /* 70px -> 65px 축소 */
+        height: 75px;
         margin: 1px;
     }
 
     .retroName {
-        font-size: 0.8rem !important;
+        font-size: 0.75rem !important;
+        /* 좁은 공간 대응 */
     }
 
     .playerName {

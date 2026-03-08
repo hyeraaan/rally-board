@@ -352,6 +352,8 @@
     /* 세로 12px, 가로 8px 간격 */
     align-content: flex-start;
     overflow-y: auto;
+    overflow-x: hidden;
+    /* 가로 스크롤 절대 방지 */
     flex: 1;
     /* 남은 공간 모두 차지 */
     padding: 16px 12px;
@@ -363,10 +365,10 @@
     .playerListContainer {
         grid-template-columns: repeat(4, 1fr);
         /* 1fr로 강제 고정 */
-        gap: 8px 4px;
-        /* 가로 간격 4px로 축소 */
-        padding: 16px 8px;
-        /* 좌우 패딩 8px로 축소 */
+        gap: 6px 2px;
+        /* 가로 간격을 2px로 더 축소 */
+        padding: 12px 4px;
+        /* 좌우 여백을 4px로 더 축소 */
     }
 }
 
