@@ -18,10 +18,10 @@
 
 @media (max-width: 480px) {
     .magnetWrapper {
-        width: 65px;
-        /* 70px -> 65px 축소 */
-        height: 75px;
-        /* 비율에 맞춰 높이도 살짝 축소 */
+        width: 60px;
+        /* 65px -> 60px 추가 축소 */
+        height: 70px;
+        /* 높이도 비례 축소 */
         margin: 1px;
     }
 }
@@ -173,15 +173,15 @@
 
 @media (max-width: 480px) {
     :global(.retro-theme) .magnetWrapper {
-        width: 65px;
-        /* 70px -> 65px 축소 */
-        height: 75px;
+        width: 60px;
+        /* 65px -> 60px 추가 축소 */
+        height: 70px;
         margin: 1px;
     }
 
     .retroName {
-        font-size: 0.75rem !important;
-        /* 좁은 공간 대응 */
+        font-size: 0.7rem !important;
+        /* 공간 부족으로 다시 미세 축소 */
     }
 
     .playerName {

@@ -159,6 +159,8 @@
 @media (max-width: 768px) {
     .waitingArea {
         width: 100%;
+        overflow-x: hidden;
+        /* 가로 스크롤 절대 방지 */
     }
 }
 
@@ -172,12 +174,20 @@
     flex-direction: column;
     padding: 20px;
     overflow-y: auto;
+    overflow-x: hidden;
+    /* 가로 스크롤 절대 방지 */
     background-color: var(--bg-primary);
     border-left: 2px solid var(--border-color);
     box-shadow: -4px 0 15px rgba(0, 0, 0, 0.3);
     position: relative;
     z-index: 2;
-    /* 버튼(1)보다 위로 올라오게 함 */
+}
+
+@media (max-width: 480px) {
+    .sidebarContent {
+        padding: 12px;
+        /* 패딩 축소하여 공간 확보 */
+    }
 }
 
 .activeHeaderBtn {
@@ -211,6 +221,9 @@
     align-items: flex-start;
     margin-bottom: 20px;
     gap: 12px;
+    width: 100%;
+    overflow-x: hidden;
+    /* 가로 스크롤 방지 */
 }
 
 .sidebarButtonGroup {
