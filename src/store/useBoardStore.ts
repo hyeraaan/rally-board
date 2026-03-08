@@ -98,8 +98,24 @@ const CELEBRITY_POOL: { name: string; tier: Tier }[] = [
 ];
 
 const getRandomInitialWaitingList = (): Player[] => {
-    const shuffled = [...CELEBRITY_POOL].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, 20).map((celeb, idx) => ({
+    const getByTier = (tier: Tier, count: number) => {
+        const filtered = CELEBRITY_POOL.filter(p => p.tier === tier);
+        return [...filtered].sort(() => 0.5 - Math.random()).slice(0, count);
+    };
+
+    // 요청하신 비율: A:2, B:2, C:2, D:5, E:9 (총 20명)
+    const selected = [
+        ...getByTier('A', 2),
+        ...getByTier('B', 2),
+        ...getByTier('C', 2),
+        ...getByTier('D', 5),
+        ...getByTier('E', 9),
+    ];
+
+    // 전체 리스트를 한 번 더 섞어줍니다.
+    const finalShuffled = selected.sort(() => 0.5 - Math.random());
+
+    return finalShuffled.map((celeb, idx) => ({
         id: `w${idx}-${Date.now()}`,
         name: celeb.name,
         tier: celeb.tier,
