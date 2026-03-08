@@ -16,6 +16,14 @@
     border: 2px solid transparent;
 }
 
+@media (max-width: 480px) {
+    .magnetWrapper {
+        width: 70px;
+        height: 80px;
+        margin: 2px;
+    }
+}
+
 .selected {
     border-color: #3b82f6 !important;
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4), var(--shadow-magnet-hover) !important;
@@ -159,6 +167,21 @@
     background-color: white;
     display: flex;
     flex-direction: column;
+}
+
+@media (max-width: 480px) {
+    :global(.retro-theme) .magnetWrapper {
+        width: 70px;
+        height: 80px;
+    }
+
+    .retroName {
+        font-size: 0.8rem !important;
+    }
+
+    .playerName {
+        font-size: 1rem;
+    }
 }
 
 /* NES.css 컨테이너 스타일 오버라이드 */

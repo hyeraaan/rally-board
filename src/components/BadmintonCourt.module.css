@@ -140,6 +140,17 @@
     place-items: center;
 }
 
+@media (max-width: 480px) {
+    .playersContainer {
+        gap: 8px;
+        padding: 8px;
+    }
+
+    .courtField {
+        min-height: 220px;
+    }
+}
+
 .emptySlot {
     width: 80px;
     height: 90px;

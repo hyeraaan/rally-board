@@ -278,9 +278,9 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap', alignItems: 'flex-start', flex: 1, alignContent: 'flex-start' }}>
+            <div className={styles.courtGrid}>
               {courts.map((court) => (
-                <div key={court.id} style={{ flex: '0 0 calc(50% - 12px)', maxWidth: 'calc(50% - 12px)' }}>
+                <div key={court.id} className={styles.courtGridItem}>
                   <BadmintonCourt
                     courtNumber={court.id}
                     players={court.players}
