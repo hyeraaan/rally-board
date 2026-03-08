@@ -394,46 +394,55 @@ export const useBoardStore = create<BoardState>((set) => ({
                 }
             };
 
-            // 1. 대기 명단 복사 및 셔플 (Fisher-Yates)
-            const shuffledWaiting = [...state.waitingList];
-            for (let i = shuffledWaiting.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [shuffledWaiting[i], shuffledWaiting[j]] = [shuffledWaiting[j], shuffledWaiting[i]];
-            }
+            // 1. 대기 명단 우선순위 정렬
+            // 우선순위: 1. 경기 횟수 적은 순, 2. 대기 시작 시간 오래된 순
+            const sortedWaiting = [...state.waitingList].sort((a, b) => {
+                if (a.matchCount !== b.matchCount) {
+                    return a.matchCount - b.matchCount;
+                }
+                const timeA = a.waitingStartTime || 0;
+                const timeB = b.waitingStartTime || 0;
+                return timeA - timeB;
+            });
 
             // 2. 새로운 코트 상태 생성 준비
             const newCourts = state.courts.map((c) => ({ ...c, players: [...c.players] }));
-            const remainingWaitingList: Player[] = [];
+            const currentWaiting = [...sortedWaiting];
 
-            // 3. 빈 자리가 있는 대기 중인 코트들에 순서대로 채워 넣기 (급수 차이 조건 1 이하)
+            // 3. 빈 자리가 있는 대기 중인 코트들에 순서대로 채워 넣기
             for (const court of newCourts) {
                 if (court.status !== 'waiting') continue;
 
-                // 대기 명단 인원들을 하나씩 꺼내보며 코트에 투입 가능한지 여부 판단
+                // 코트에 자리가 빌 때까지 반복
                 let wIndex = 0;
-                while (wIndex < shuffledWaiting.length && court.players.length < 4) {
-                    const candidate = shuffledWaiting[wIndex];
+                while (wIndex < currentWaiting.length && court.players.length < 4) {
+                    const candidate = currentWaiting[wIndex];
 
-                    // 현재 코트 안의 인원들 + 후보 인원의 급수들 나열
-                    const allTiers = [...court.players, candidate].map((p) => getTierScore(p.tier));
-                    const maxTier = Math.max(...allTiers);
-                    const minTier = Math.min(...allTiers);
+                    // 현재 코트 안의 인원들과 급수 차이 검증
+                    if (court.players.length > 0) {
+                        const allTiers = [...court.players, candidate].map((p) => getTierScore(p.tier));
+                        const maxTier = Math.max(...allTiers);
+                        const minTier = Math.min(...allTiers);
 
-                    // 최고 급수와 최저 급수 차이가 1 이하(2 미만)일 때만 합류 허용
-                    if (maxTier - minTier <= 1) {
-                        court.players.push(candidate);
-                        shuffledWaiting.splice(wIndex, 1); // 투입 성공 시 배열에서 제거 (인덱스 유지)
+                        // 최고 급수와 최저 급수 차이가 1 이하일 때만 합류
+                        if (maxTier - minTier <= 1) {
+                            court.players.push(candidate);
+                            currentWaiting.splice(wIndex, 1);
+                        } else {
+                            // 급수 차이가 너무 크면 다음 후보자 확인
+                            wIndex++;
+                        }
                     } else {
-                        // 투입 실패 시 다음 후보 탐색
-                        wIndex++;
+                        // 코트가 비어있으면 가장 우선순위 높은 사람 무조건 투입
+                        court.players.push(candidate);
+                        currentWaiting.splice(wIndex, 1);
                     }
                 }
             }
 
-            // 4. 상태 업데이트 (어느 코트에도 못 들어가고 남은 셔플 배열을 대기 리스트로)
             return {
                 courts: newCourts,
-                waitingList: shuffledWaiting,
+                waitingList: currentWaiting,
             };
         }),
 
