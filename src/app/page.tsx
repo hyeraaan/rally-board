@@ -238,6 +238,15 @@ export default function Home() {
                   </button>
                   <button
                     type="button"
+                    className={theme === 'retro' ? `nes-btn ${isWaitingListOpen ? 'is-success' : ''}` : `${styles.themeToggleBtn} ${isWaitingListOpen ? styles.activeHeaderBtn : ''}`}
+                    style={theme === 'retro' ? { display: 'flex', gap: '6px', alignItems: 'center', padding: '4px 8px', fontSize: '12px', height: '36px' } : undefined}
+                    onClick={() => setIsWaitingListOpen(!isWaitingListOpen)}
+                    title={isWaitingListOpen ? "대기명단 닫기" : "대기명단 열기"}
+                  >
+                    <Monitor size={theme === 'retro' ? 20 : 16} /> {t.waitingList}
+                  </button>
+                  <button
+                    type="button"
                     className={theme === 'retro' ? `nes-btn ${isEditMode ? 'is-error' : ''} ${styles.retroHeaderBtn}` : `${styles.themeIconBtn} ${isEditMode ? styles.editActiveBtn : ''}`}
                     onClick={toggleEditMode}
                     style={theme === 'retro' ? { width: '36px', height: '36px', fontSize: '16px', padding: 0, display: 'flex', justifyContent: 'center', alignItems: 'center' } : undefined}
@@ -291,16 +300,6 @@ export default function Home() {
           </section>
 
           {/* 2. 오른쪽 영역 대기 명단 (사이드바 레이어) */}
-          <aside className={`${styles.waitingArea} ${isWaitingListOpen ? styles.isOpen : ''}`} ref={setWaitingListRef}>
-            {/* 레이어 토글 버튼 */}
-            <button
-              className={`${styles.sidebarToggle} ${theme === 'retro' ? 'nes-btn' : ''}`}
-              onClick={() => setIsWaitingListOpen(!isWaitingListOpen)}
-              title={isWaitingListOpen ? "대기명단 닫기" : "대기명단 열기"}
-            >
-              {isWaitingListOpen ? <ChevronRight size={24} /> : <ChevronLeft size={24} />}
-            </button>
-
             <div className={styles.sidebarContent}>
               <div className={styles.sidebarHeader}>
                 <h2 className={`${styles.areaTitle} ${theme === 'retro' ? 'nes-text is-primary' : ''}`}>
@@ -412,43 +411,45 @@ export default function Home() {
 
       <ConfirmModal />
 
-      {/* 카운트다운 오버레이 */}
-      {isCountingDown && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100vw',
-          height: '100vh',
-          backgroundColor: 'rgba(0,0,0,0.8)',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          zIndex: 9999,
-          flexDirection: 'column',
-          backdropFilter: 'blur(4px)'
-        }}>
-          <div
-            className={theme === 'retro' ? 'nes-text is-warning' : ''}
-            style={{
-              fontSize: '12rem',
-              fontWeight: 900,
-              color: theme === 'retro' ? undefined : '#f59e0b',
-              animation: 'pulse 1s infinite',
-              textShadow: '0 0 20px rgba(245, 158, 11, 0.5)'
-            }}
-          >
-            {countdownTime}
-          </div>
-          <style jsx global>{`
+      {/* 카운트다운 오버레이 */ }
+  {
+    isCountingDown && (
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        backgroundColor: 'rgba(0,0,0,0.8)',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 9999,
+        flexDirection: 'column',
+        backdropFilter: 'blur(4px)'
+      }}>
+        <div
+          className={theme === 'retro' ? 'nes-text is-warning' : ''}
+          style={{
+            fontSize: '12rem',
+            fontWeight: 900,
+            color: theme === 'retro' ? undefined : '#f59e0b',
+            animation: 'pulse 1s infinite',
+            textShadow: '0 0 20px rgba(245, 158, 11, 0.5)'
+          }}
+        >
+          {countdownTime}
+        </div>
+        <style jsx global>{`
             @keyframes pulse {
               0% { transform: scale(1); opacity: 1; }
               50% { transform: scale(1.2); opacity: 0.8; }
               100% { transform: scale(1); opacity: 1; }
             }
           `}</style>
-        </div>
-      )}
-    </main>
+      </div>
+    )
+  }
+    </main >
   );
 }

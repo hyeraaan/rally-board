@@ -112,75 +112,10 @@
     /* 버튼(1)보다 위로 올라오게 함 */
 }
 
-.sidebarToggle {
-    position: absolute;
-    left: -12px;
-    /* 평소에는 살짝만 보임 */
-    top: 60%;
-    transform: translateY(-50%);
-    width: 54px;
-    height: 60px;
-    background-color: var(--bg-primary);
-    border: 2px solid var(--border-color);
-    border-right: none;
-    border-radius: 12px 0 0 12px;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 10;
-    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s;
-    /* 왼쪽으로 튀어나오는 애니메이션 */
-    box-shadow: -4px 0 8px rgba(0, 0, 0, 0.2);
-}
-
-.sidebarToggle:hover {
-    left: -54px;
-    /* 호버 시 전체 모습 노출 */
-    background-color: var(--bg-secondary);
-    padding-right: 4px;
-}
-
-/* 기존 hover 중복 제거 */
-
-.sidebarHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    gap: 8px;
-}
-
-.randomBtn {
-    background-color: #f59e0b;
-    color: white;
-    padding: 0 12px;
-    border-radius: 6px;
-    font-weight: 700;
-    transition: all 0.2s;
-    font-size: 13px;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    height: 32px;
-    white-space: nowrap;
-}
-
-.randomBtn:hover {
-    background-color: #d97706;
-    transform: scale(1.05);
-}
-
-:global(.retro-theme) .randomBtn.nes-btn {
-    height: 32px;
-    padding: 2px 8px;
-    font-size: 10px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
+.activeHeaderBtn {
+    background-color: var(--accent-blue) !important;
+    border-color: var(--accent-blue) !important;
+    color: white !important;
 }
 
 /* 영역 타이틀 (기본 흰색) */
