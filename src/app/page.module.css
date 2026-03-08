@@ -168,6 +168,9 @@
     height: 64px;
     width: 48px;
     left: -48px;
+    top: auto;
+    bottom: 100px;
+    transform: none;
     box-shadow: none !important;
 }
 
@@ -187,7 +190,7 @@
 
 /* 클릭 시 위치 이동 효과 제거 (필요한 경우) */
 :global(.retro-theme) .sidebarToggle:active {
-    transform: translateY(-50%) !important;
+    transform: none !important;
 }
 
 /* 오른쪽 하단 플로팅 버튼 그룹 */
