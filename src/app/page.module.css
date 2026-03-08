@@ -378,8 +378,8 @@
     .playerListContainer {
         grid-template-columns: repeat(4, 1fr);
         /* 1fr로 강제 고정 */
-        gap: 6px 2px;
-        /* 가로 간격을 2px로 더 축소 */
+        gap: 10px 2px;
+        /* 세로 간격을 10px로 늘려 여백 확보 */
         padding: 12px 4px;
         /* 좌우 여백을 4px로 더 축소 */
     }
