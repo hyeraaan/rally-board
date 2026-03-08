@@ -41,7 +41,7 @@ export default function AddPlayerForm({ onAdd }: AddPlayerFormProps) {
                 type="button"
                 className={theme === 'retro' ? `nes-btn ${styles.addBtnRetro}` : styles.addBtn}
                 onClick={() => setOpen(true)}
-                aria-label="선수 추가"
+                aria-label={t.addPlayerTooltip}
                 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
             >
                 <Plus size={theme === 'retro' ? 32 : 24} />

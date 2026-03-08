@@ -1,6 +1,7 @@
 import React from 'react';
 import { useBoardStore } from '@/store/useBoardStore';
 import { useTheme } from '@/providers/ThemeProvider';
+import { useLanguage } from '@/providers/LanguageProvider';
 import styles from './MatchHistoryModal.module.css';
 
 interface MatchHistoryModalProps {
@@ -10,6 +11,7 @@ interface MatchHistoryModalProps {
 
 export default function MatchHistoryModal({ isOpen, onClose }: MatchHistoryModalProps) {
     const { matchHistory } = useBoardStore();
+    const { t } = useLanguage();
     const { theme } = useTheme();
 
     if (!isOpen) return null;
@@ -23,12 +25,12 @@ export default function MatchHistoryModal({ isOpen, onClose }: MatchHistoryModal
             >
                 {theme === 'retro' ? (
                     <div className="title" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
-                        <span style={{ fontWeight: 'bold' }}>📜 매칭 기록</span>
+                        <span style={{ fontWeight: 'bold' }}>📜 {t.historyTitle}</span>
                         <button className="nes-btn is-error" style={{ padding: '0 8px' }} onClick={onClose}>X</button>
                     </div>
                 ) : (
                     <div className={styles.modalHeader}>
-                        <h2>📜 매칭 기록</h2>
+                        <h2>📜 {t.historyTitle}</h2>
                         <button className={styles.closeBtn} onClick={onClose}>&times;</button>
                     </div>
                 )}
@@ -36,13 +38,13 @@ export default function MatchHistoryModal({ isOpen, onClose }: MatchHistoryModal
                 <div className={styles.historyList}>
                     {matchHistory.length === 0 ? (
                         <div className={styles.emptyMessage}>
-                            오늘 진행된 매칭이 없습니다.
+                            {t.noHistory}
                         </div>
                     ) : (
                         matchHistory.map((record) => (
                             <div key={record.id} className={`${styles.historyItem} ${theme === 'retro' ? 'nes-container is-rounded' : ''}`} style={theme === 'retro' ? { padding: '1rem', marginBottom: '1rem' } : {}}>
                                 <div className={styles.itemHeader}>
-                                    <span className={styles.courtBadge}>코트 {record.courtId}</span>
+                                    <span className={styles.courtBadge}>{t.courtLabel} {record.courtId}</span>
                                     <span className={styles.timeBadge}>{record.startTimeStr}</span>
                                 </div>
                                 <div className={styles.playerGrid}>

@@ -46,7 +46,8 @@ export default function Home() {
     eventStartTime,
     startTournament,
     endTournament,
-    openConfirm
+    openConfirm,
+    moveMultiplePlayers
   } = useBoardStore();
 
   const [eventTime, setEventTime] = useState('00:00:00');
@@ -81,7 +82,7 @@ export default function Home() {
         return prev.filter(id => id !== playerId);
       }
       if (prev.length >= 4) {
-        alert("최대 4명까지만 선택 가능합니다.");
+        alert(t.alertMaxPlayers);
         return prev;
       }
       return [...prev, playerId];
@@ -161,7 +162,7 @@ export default function Home() {
 
   const handleEndTournament = () => {
     openConfirm(
-      lang === 'ko' ? "정말 대회를 종료하시겠습니까? 모든 정보가 초기화됩니다." : "End the tournament? All status will be reset.",
+      t.tournamentEndConfirm,
       () => endTournament()
     );
   };
@@ -214,7 +215,7 @@ export default function Home() {
                       className={theme === 'retro' ? 'nes-btn is-error' : styles.themeToggleBtn}
                       style={theme === 'retro' ? { display: 'flex', gap: '6px', alignItems: 'center', padding: '4px 8px', fontSize: '12px', height: '36px' } : { backgroundColor: '#ef4444', color: 'white' }}
                       onClick={handleEndTournament}
-                      title="전체 대회를 종료합니다."
+                      title={t.endTournamentTooltip}
                     >
                       <Trophy size={theme === 'retro' ? 20 : 16} fill={theme === 'retro' ? 'currentColor' : 'white'} /> {t.tournamentEnd}
                     </button>
@@ -224,7 +225,7 @@ export default function Home() {
                       className={theme === 'retro' ? 'nes-btn is-primary' : styles.themeToggleBtn}
                       style={theme === 'retro' ? { display: 'flex', gap: '6px', alignItems: 'center', padding: '4px 8px', fontSize: '12px', height: '36px' } : { backgroundColor: '#10b981', color: 'white' }}
                       onClick={handleStartTournament}
-                      title="대회를 시작하고 대기 시간을 측정합니다."
+                      title={t.startTournamentTooltip}
                     >
                       <Play size={theme === 'retro' ? 20 : 16} fill={theme === 'retro' ? 'currentColor' : 'white'} /> {t.tournamentStart}
                     </button>
@@ -234,7 +235,7 @@ export default function Home() {
                     className={theme === 'retro' ? 'nes-btn' : styles.themeToggleBtn}
                     style={theme === 'retro' ? { display: 'flex', gap: '6px', alignItems: 'center', padding: '4px 8px', fontSize: '12px', height: '36px' } : undefined}
                     onClick={() => setIsHistoryModalOpen(true)}
-                    title="오늘 하루 게임을 진행한 매칭 기록을 확인합니다."
+                    title={t.historyTooltip}
                   >
                     <History size={theme === 'retro' ? 20 : 16} /> {t.historyBtn} ({matchHistory.length})
                   </button>
@@ -243,7 +244,7 @@ export default function Home() {
                     className={theme === 'retro' ? `nes-btn ${isWaitingListOpen ? 'is-success' : ''}` : `${styles.themeToggleBtn} ${isWaitingListOpen ? styles.activeHeaderBtn : ''}`}
                     style={theme === 'retro' ? { display: 'flex', gap: '6px', alignItems: 'center', padding: '4px 8px', fontSize: '12px', height: '36px' } : undefined}
                     onClick={() => setIsWaitingListOpen(!isWaitingListOpen)}
-                    title={isWaitingListOpen ? "대기명단 닫기" : "대기명단 열기"}
+                    title={isWaitingListOpen ? t.closeWaitingListTooltip : t.openWaitingListTooltip}
                   >
                     <Monitor size={theme === 'retro' ? 20 : 16} /> {t.waitingList}
                   </button>
@@ -341,14 +342,9 @@ export default function Home() {
                         key={court.id}
                         className={theme === 'retro' ? 'nes-btn is-primary' : styles.quickAddBtn}
                         style={theme === 'retro' ? { padding: '4px 8px', fontSize: '10px', flex: '1', minWidth: '60px' } : undefined}
-                        onClick={() => {
-                          if (useBoardStore.getState().moveMultiplePlayers) {
-                            useBoardStore.getState().moveMultiplePlayers(selectedIds, court.id);
-                            setSelectedIds([]);
-                          }
-                        }}
+                        onClick={() => moveMultiplePlayers(selectedIds, court.id)}
                       >
-                        {court.id}번 코트
+                        {t.courtNumber(court.id)}
                       </button>
                     ))}
                   </div>
