@@ -184,8 +184,8 @@ export default function Home() {
             }}
           >
             <div className={styles.titleRow}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+              <div className={styles.headerContainer}>
+                <div className={styles.titleGroup}>
                   <h1 className={styles.areaTitle}>{t.appTitle}</h1>
                   {isEventRunning && (
                     <div style={{
@@ -205,7 +205,7 @@ export default function Home() {
                     </div>
                   )}
                 </div>
-                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                <div className={styles.buttonGroup}>
                   {isEventRunning ? (
                     <button
                       type="button"

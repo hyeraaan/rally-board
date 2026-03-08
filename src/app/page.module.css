@@ -10,13 +10,47 @@
 
 .titleRow {
     display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.headerContainer {
+    display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
-    min-height: 48px;
-    flex-wrap: wrap;
-    /* 모바일 해더 버튼 줄바꿈 */
+    width: 100%;
+    gap: 16px;
+}
+
+.titleGroup {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.buttonGroup {
+    display: flex;
     gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+@media (max-width: 640px) {
+    .headerContainer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .titleGroup {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .buttonGroup {
+        width: 100%;
+        justify-content: flex-start;
+    }
 }
 
 .themeToggleBtn {
