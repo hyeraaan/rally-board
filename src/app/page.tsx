@@ -231,15 +231,6 @@ export default function Home() {
                     type="button"
                     className={theme === 'retro' ? 'nes-btn' : styles.themeToggleBtn}
                     style={theme === 'retro' ? { display: 'flex', gap: '6px', alignItems: 'center', padding: '4px 8px', fontSize: '12px', height: '36px' } : undefined}
-                    onClick={randomMatch}
-                    title="빈 코트에 인원을 랜덤으로 채웁니다."
-                  >
-                    <Shuffle size={theme === 'retro' ? 20 : 16} /> {t.randomMatchBtn}
-                  </button>
-                  <button
-                    type="button"
-                    className={theme === 'retro' ? 'nes-btn' : styles.themeToggleBtn}
-                    style={theme === 'retro' ? { display: 'flex', gap: '6px', alignItems: 'center', padding: '4px 8px', fontSize: '12px', height: '36px' } : undefined}
                     onClick={() => setIsHistoryModalOpen(true)}
                     title="오늘 하루 게임을 진행한 매칭 기록을 확인합니다."
                   >
@@ -311,10 +302,18 @@ export default function Home() {
             </button>
 
             <div className={styles.sidebarContent}>
-              <div className={styles.titleRow}>
+              <div className={styles.sidebarHeader}>
                 <h2 className={`${styles.areaTitle} ${theme === 'retro' ? 'nes-text is-primary' : ''}`}>
                   {t.waitingList} ({waitingList.length})
                 </h2>
+                <button
+                  type="button"
+                  className={theme === 'retro' ? 'nes-btn is-warning' : styles.randomBtn}
+                  onClick={randomMatch}
+                  title="빈 코트에 인원을 랜덤으로 채웁니다."
+                >
+                  <Shuffle size={theme === 'retro' ? 20 : 16} /> {t.randomMatchBtn}
+                </button>
               </div>
 
               {/* 다중 선택 퀵 코트 배치 메뉴 */}
