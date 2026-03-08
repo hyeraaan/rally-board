@@ -66,31 +66,35 @@ interface BoardState {
 }
 
 const CELEBRITY_POOL: { name: string; tier: Tier }[] = [
-    // 배우 (최신 핫한 라인업)
-    { name: '변우석', tier: 'A' }, { name: '김혜윤', tier: 'A' }, { name: '송강', tier: 'A' },
-    { name: '고윤정', tier: 'A' }, { name: '로운', tier: 'A' }, { name: '이도현', tier: 'A' },
-    { name: '차은우', tier: 'A' }, { name: '박보검', tier: 'A' }, { name: '한소희', tier: 'A' },
-    { name: '남주혁', tier: 'B' }, { name: '노윤서', tier: 'B' }, { name: '최현욱', tier: 'B' },
-    { name: '김영대', tier: 'B' }, { name: '이재욱', tier: 'B' }, { name: '김지원', tier: 'B' },
-    { name: '김유정', tier: 'B' }, { name: '박은빈', tier: 'B' }, { name: '문가영', tier: 'B' },
-    { name: '안효섭', tier: 'C' }, { name: '서강준', tier: 'C' }, { name: '남윤수', tier: 'C' },
-    { name: '전배수', tier: 'C' }, { name: '김선호', tier: 'C' }, { name: '조이현', tier: 'C' },
-    { name: '공유', tier: 'A' }, { name: '손석구', tier: 'A' }, { name: '김고은', tier: 'A' },
+    // A급 (최상급자)
+    { name: '변우석', tier: 'A' }, { name: '김혜윤', tier: 'A' }, { name: '민지', tier: 'A' },
+    { name: '하니', tier: 'A' }, { name: '장원영', tier: 'A' }, { name: '카리나', tier: 'A' },
+    { name: '공유', tier: 'A' }, { name: '차은우', tier: 'A' }, { name: '뷔', tier: 'A' },
+    { name: '정국', tier: 'A' }, { name: '성찬', tier: 'A' }, { name: '태용', tier: 'A' },
 
-    // 아이돌 (뉴진스, 아이브, 에스파 등)
-    { name: '민지', tier: 'A' }, { name: '하니', tier: 'A' }, { name: '해린', tier: 'A' },
-    { name: '장원영', tier: 'A' }, { name: '안유진', tier: 'A' }, { name: '카리나', tier: 'A' },
-    { name: '윈터', tier: 'A' }, { name: '닝닝', tier: 'B' }, { name: '지젤', tier: 'B' },
-    { name: '레이', tier: 'B' }, { name: '가을', tier: 'B' }, { name: '리즈', tier: 'B' },
-    { name: '다니엘', tier: 'B' }, { name: '혜인', tier: 'B' }, { name: '사쿠라', tier: 'B' },
-    { name: '김채원', tier: 'A' }, { name: '허윤진', tier: 'B' }, { name: '카즈하', tier: 'B' },
-    { name: '홍은채', tier: 'C' }, { name: '설윤', tier: 'A' }, { name: '해원', tier: 'B' },
+    // B급 (상급자)
+    { name: '해린', tier: 'B' }, { name: '안유진', tier: 'B' }, { name: '윈터', tier: 'B' },
+    { name: '손석구', tier: 'B' }, { name: '박보검', tier: 'B' }, { name: '송강', tier: 'B' },
+    { name: '로운', tier: 'B' }, { name: '이도현', tier: 'B' }, { name: '김고은', tier: 'B' },
+    { name: '지민', tier: 'B' }, { name: '원빈', tier: 'B' }, { name: '제니', tier: 'B' },
 
-    // 남자 아이돌 및 기타
-    { name: '정국', tier: 'A' }, { name: '뷔', tier: 'A' }, { name: '지민', tier: 'A' },
-    { name: '백현', tier: 'A' }, { name: '태용', tier: 'B' }, { name: '원빈', tier: 'A' },
-    { name: '성찬', tier: 'B' }, { name: '도영', tier: 'B' }, { name: '승관', tier: 'C' },
-    { name: '호시', tier: 'B' }, { name: '민규', tier: 'A' }, { name: '정한', tier: 'A' },
+    // C급 (중급자)
+    { name: '다니엘', tier: 'C' }, { name: '혜인', tier: 'C' }, { name: '김채원', tier: 'C' },
+    { name: '가을', tier: 'C' }, { name: '레이', tier: 'C' }, { name: '닝닝', tier: 'C' },
+    { name: '한소희', tier: 'C' }, { name: '고윤정', tier: 'C' }, { name: '안효섭', tier: 'C' },
+    { name: '남주혁', tier: 'C' }, { name: '서강준', tier: 'C' }, { name: '신세경', tier: 'C' },
+
+    // D급 (초중급자)
+    { name: '리즈', tier: 'D' }, { name: '이서', tier: 'D' }, { name: '지젤', tier: 'D' },
+    { name: '홍은채', tier: 'D' }, { name: '사쿠라', tier: 'D' }, { name: '허윤진', tier: 'D' },
+    { name: '노윤서', tier: 'D' }, { name: '최현욱', tier: 'D' }, { name: '김영대', tier: 'D' },
+    { name: '이재욱', tier: 'D' }, { name: '박규영', tier: 'D' }, { name: '설인아', tier: 'D' },
+
+    // E급 (입문자)
+    { name: '김유정', tier: 'E' }, { name: '조이현', tier: 'E' }, { name: '남윤수', tier: 'E' },
+    { name: '전배수', tier: 'E' }, { name: '김선호', tier: 'E' }, { name: '박은빈', tier: 'E' },
+    { name: '문가영', tier: 'E' }, { name: '김지원', tier: 'E' }, { name: '설윤', tier: 'E' },
+    { name: '해원', tier: 'E' }, { name: '백현', tier: 'E' }, { name: '승관', tier: 'E' },
 ];
 
 const getRandomInitialWaitingList = (): Player[] => {
