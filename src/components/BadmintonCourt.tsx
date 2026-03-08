@@ -97,7 +97,11 @@ export default function BadmintonCourt({ courtNumber, players, status = 'waiting
                                 <button
                                     className="nes-btn is-warning"
                                     style={{ padding: '2px 8px', fontSize: '0.8rem' }}
-                                    onClick={() => endGame(courtNumber)}
+                                    onClick={() => {
+                                        if (confirm(t.endGameConfirm)) {
+                                            endGame(courtNumber);
+                                        }
+                                    }}
                                     title={t.endGameRetroTitle}
                                 >
                                     {t.endGame}
@@ -140,7 +144,11 @@ export default function BadmintonCourt({ courtNumber, players, status = 'waiting
                                     <Timer size={14} /> {formatTime(elapsedTime)}
                                 </span>
                                 <button
-                                    onClick={() => endGame(courtNumber)}
+                                    onClick={() => {
+                                        if (confirm(t.endGameConfirm)) {
+                                            endGame(courtNumber);
+                                        }
+                                    }}
                                     style={{
                                         backgroundColor: '#ef4444', color: 'white', border: 'none', borderRadius: '4px',
                                         padding: '2px 8px', fontWeight: 600, cursor: 'pointer', fontSize: '0.8rem'
