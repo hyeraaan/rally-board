@@ -118,6 +118,45 @@
     color: white !important;
 }
 
+.sidebarHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 8px;
+}
+
+.randomBtn {
+    background-color: #f59e0b;
+    color: white;
+    padding: 0 12px;
+    border-radius: 6px;
+    font-weight: 700;
+    transition: all 0.2s;
+    font-size: 13px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 32px;
+    white-space: nowrap;
+}
+
+.randomBtn:hover {
+    background-color: #d97706;
+    transform: scale(1.05);
+}
+
+:global(.retro-theme) .randomBtn.nes-btn {
+    height: 32px;
+    padding: 2px 8px;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
 /* 영역 타이틀 (기본 흰색) */
 .areaTitle {
     font-size: 1.5rem;
@@ -142,42 +181,6 @@
 .retroMain .areaTitle {
     color: #212529 !important;
     text-shadow: none !important;
-}
-
-:global(.retro-theme) .sidebarToggle {
-    background-color: white;
-    border: 4px solid #212529;
-    border-right: none;
-    color: #212529;
-    height: 64px;
-    width: 60px;
-    left: -12px;
-    /* 레트로도 평소에는 얇게 */
-    top: 60%;
-    transform: translateY(-50%);
-    z-index: 10;
-    transition: left 0.3s steps(4), background-color 0.2s;
-    /* 레트로틱한 steps 애니메이션 */
-    box-shadow: none !important;
-}
-
-:global(.retro-theme) .sidebarToggle:hover {
-    left: -60px;
-    /* 호버 시 튀어나옴 */
-}
-
-:global(.retro-theme) .sidebarToggle:focus,
-:global(.retro-theme) .sidebarToggle:active,
-:global(.retro-theme) .sidebarToggle:hover {
-    outline: none;
-    box-shadow: none !important;
-}
-
-:global(.retro-theme) .sidebarToggle::after,
-:global(.retro-theme) .sidebarToggle:hover::after,
-:global(.retro-theme) .sidebarToggle:active::after,
-:global(.retro-theme) .sidebarToggle:focus::after {
-    box-shadow: none !important;
 }
 
 /* 클릭 시 위치 이동 효과 제거 (필요한 경우) */

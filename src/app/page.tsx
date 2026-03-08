@@ -300,6 +300,7 @@ export default function Home() {
           </section>
 
           {/* 2. 오른쪽 영역 대기 명단 (사이드바 레이어) */}
+          <aside className={`${styles.waitingArea} ${isWaitingListOpen ? styles.isOpen : ''}`} ref={setWaitingListRef}>
             <div className={styles.sidebarContent}>
               <div className={styles.sidebarHeader}>
                 <h2 className={`${styles.areaTitle} ${theme === 'retro' ? 'nes-text is-primary' : ''}`}>
@@ -411,45 +412,43 @@ export default function Home() {
 
       <ConfirmModal />
 
-      {/* 카운트다운 오버레이 */ }
-  {
-    isCountingDown && (
-      <div style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100vw',
-        height: '100vh',
-        backgroundColor: 'rgba(0,0,0,0.8)',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        zIndex: 9999,
-        flexDirection: 'column',
-        backdropFilter: 'blur(4px)'
-      }}>
-        <div
-          className={theme === 'retro' ? 'nes-text is-warning' : ''}
-          style={{
-            fontSize: '12rem',
-            fontWeight: 900,
-            color: theme === 'retro' ? undefined : '#f59e0b',
-            animation: 'pulse 1s infinite',
-            textShadow: '0 0 20px rgba(245, 158, 11, 0.5)'
-          }}
-        >
-          {countdownTime}
-        </div>
-        <style jsx global>{`
+      {/* 카운트다운 오버레이 */}
+      {isCountingDown && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          backgroundColor: 'rgba(0,0,0,0.8)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          zIndex: 9999,
+          flexDirection: 'column',
+          backdropFilter: 'blur(4px)'
+        }}>
+          <div
+            className={theme === 'retro' ? 'nes-text is-warning' : ''}
+            style={{
+              fontSize: '12rem',
+              fontWeight: 900,
+              color: theme === 'retro' ? undefined : '#f59e0b',
+              animation: 'pulse 1s infinite',
+              textShadow: '0 0 20px rgba(245, 158, 11, 0.5)'
+            }}
+          >
+            {countdownTime}
+          </div>
+          <style jsx global>{`
             @keyframes pulse {
               0% { transform: scale(1); opacity: 1; }
               50% { transform: scale(1.2); opacity: 0.8; }
               100% { transform: scale(1); opacity: 1; }
             }
           `}</style>
-      </div>
-    )
-  }
-    </main >
+        </div>
+      )}
+    </main>
   );
 }
