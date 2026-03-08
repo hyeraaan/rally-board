@@ -21,8 +21,12 @@ export default function ConfirmModal() {
     return (
         <div className={styles.modalOverlay} onClick={closeConfirm}>
             <div
-                className={`${styles.modalContent} ${theme === 'retro' ? 'nes-dialog is-rounded ' + styles.retroContent : ''}`}
+                className={`${styles.modalContent} ${theme === 'retro'
+                        ? `nes-dialog is-rounded ${styles.retroContent}`
+                        : styles.classicContent
+                    }`}
                 onClick={(e) => e.stopPropagation()}
+                style={theme === 'retro' ? { border: '4px solid #000' } : {}}
             >
                 {theme === 'retro' ? (
                     <form method="dialog">

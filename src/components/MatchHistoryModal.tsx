@@ -17,8 +17,8 @@ export default function MatchHistoryModal({ isOpen, onClose }: MatchHistoryModal
     return (
         <div className={styles.modalOverlay} onClick={onClose}>
             <div
-                className={`${styles.modalContent} ${theme === 'retro' ? 'nes-dialog' : ''}`}
-                style={theme === 'retro' ? { padding: '1.5rem', border: '4px solid #000' } : {}}
+                className={`${styles.modalContent} ${theme === 'retro' ? 'nes-dialog is-rounded' : ''}`}
+                style={theme === 'retro' ? { padding: '1.5rem', border: '4px solid #000', backgroundColor: '#fff' } : {}}
                 onClick={(e) => e.stopPropagation()} // 내부 클릭 시 닫힘 방지
             >
                 {theme === 'retro' ? (
