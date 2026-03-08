@@ -47,10 +47,16 @@ export default function Home() {
     startTournament,
     endTournament,
     openConfirm,
-    moveMultiplePlayers
+    moveMultiplePlayers,
+    initializeData
   } = useBoardStore();
 
   const [eventTime, setEventTime] = useState('00:00:00');
+
+  useEffect(() => {
+    // 앱 시작 시 데이터가 비어있으면 랜덤 연예인 명단 생성
+    initializeData();
+  }, []);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
