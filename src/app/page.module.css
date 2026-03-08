@@ -205,28 +205,11 @@
     opacity: 1;
 }
 
-.retroCloseBtn {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2px;
-    background-color: #212529;
-    color: white;
-    border: none;
-    width: 28px;
-    height: 28px;
-    font-weight: bold;
-}
-
-.retroCloseBtn:hover {
-    background-color: #e74c3c;
-}
-
 .sidebarHeader {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+    /* 상단 정렬 강제 */
     margin-bottom: 20px;
     gap: 8px;
 }

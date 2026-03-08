@@ -305,17 +305,18 @@ export default function Home() {
           <aside className={`${styles.waitingArea} ${isWaitingListOpen ? styles.isOpen : ''}`} ref={setWaitingListRef}>
             <div className={styles.sidebarContent}>
               <div className={styles.sidebarHeader}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <h2 className={`${styles.areaTitle} ${theme === 'retro' ? 'nes-text is-primary' : ''}`}>
                     {t.waitingList} ({waitingList.length})
                   </h2>
                   <button
                     type="button"
-                    className={theme === 'retro' ? styles.retroCloseBtn : styles.sidebarCloseBtn}
+                    className={theme === 'retro' ? 'nes-btn is-error' : styles.sidebarCloseBtn}
+                    style={theme === 'retro' ? { padding: '2px 8px', fontSize: '0.8rem' } : undefined}
                     onClick={() => setIsWaitingListOpen(false)}
                     title="대기명단 닫기"
                   >
-                    <X size={20} />
+                    {theme === 'retro' ? 'X' : <X size={20} />}
                   </button>
                 </div>
                 <button
