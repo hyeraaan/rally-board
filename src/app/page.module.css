@@ -115,7 +115,7 @@
 .sidebarToggle {
     position: absolute;
     left: -54px;
-    top: 70%;
+    top: 60%;
     transform: translateY(-50%);
     width: 54px;
     height: 60px;
@@ -212,7 +212,7 @@
     height: 64px;
     width: 60px;
     left: -60px;
-    top: 70%;
+    top: 60%;
     transform: translateY(-50%);
     z-index: 10;
     /* 본체(2)보다 위로 배치 */
