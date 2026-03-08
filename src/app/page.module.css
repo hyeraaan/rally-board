@@ -160,6 +160,11 @@
     border-color: #212529 !important;
 }
 
+.retroMain .areaTitle {
+    color: #212529 !important;
+    text-shadow: none !important;
+}
+
 :global(.retro-theme) .sidebarToggle {
     background-color: white;
     border: 4px solid #212529;
