@@ -308,7 +308,7 @@ export default function Home() {
                 <h2 className={`${styles.areaTitle} ${theme === 'retro' ? 'nes-text is-primary' : ''}`}>
                   {t.waitingList} ({waitingList.length})
                 </h2>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <div className={styles.sidebarButtonGroup}>
                   <button
                     type="button"
                     className={theme === 'retro' ? 'nes-btn is-warning' : styles.randomBtn}
