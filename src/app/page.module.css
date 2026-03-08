@@ -361,10 +361,12 @@
 
 @media (max-width: 480px) {
     .playerListContainer {
-        grid-template-columns: repeat(4, auto);
-        /* 모바일에서도 4열 유지 */
-        padding: 16px 8px 16px 8px;
-        /* 모바일에서는 좌우 여백 살짝 축소 */
+        grid-template-columns: repeat(4, 1fr);
+        /* 1fr로 강제 고정 */
+        gap: 8px 4px;
+        /* 가로 간격 4px로 축소 */
+        padding: 16px 8px;
+        /* 좌우 패딩 8px로 축소 */
     }
 }
 

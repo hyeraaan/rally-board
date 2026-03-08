@@ -20,7 +20,7 @@
     .magnetWrapper {
         width: 70px;
         height: 80px;
-        margin: 2px;
+        margin: 1px;
     }
 }
 
@@ -173,6 +173,7 @@
     :global(.retro-theme) .magnetWrapper {
         width: 70px;
         height: 80px;
+        margin: 1px;
     }
 
     .retroName {
