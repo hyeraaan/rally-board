@@ -305,7 +305,7 @@ export default function Home() {
           <aside className={`${styles.waitingArea} ${isWaitingListOpen ? styles.isOpen : ''}`} ref={setWaitingListRef}>
             <div className={styles.sidebarContent}>
               <div className={styles.sidebarHeader}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <h2 className={`${styles.areaTitle} ${theme === 'retro' ? 'nes-text is-primary' : ''}`}>
                     {t.waitingList} ({waitingList.length})
                   </h2>
