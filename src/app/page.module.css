@@ -114,7 +114,8 @@
 
 .sidebarToggle {
     position: absolute;
-    left: -54px;
+    left: -12px;
+    /* 평소에는 살짝만 보임 */
     top: 60%;
     transform: translateY(-50%);
     width: 54px;
@@ -129,15 +130,19 @@
     justify-content: center;
     cursor: pointer;
     z-index: 10;
-    /* 본체(2)보다 위로 배치 */
-    transition: all 0.2s;
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s;
+    /* 왼쪽으로 튀어나오는 애니메이션 */
     box-shadow: -4px 0 8px rgba(0, 0, 0, 0.2);
 }
 
 .sidebarToggle:hover {
+    left: -54px;
+    /* 호버 시 전체 모습 노출 */
     background-color: var(--bg-secondary);
     padding-right: 4px;
 }
+
+/* 기존 hover 중복 제거 */
 
 .sidebarHeader {
     display: flex;
@@ -211,12 +216,19 @@
     color: #212529;
     height: 64px;
     width: 60px;
-    left: -60px;
+    left: -12px;
+    /* 레트로도 평소에는 얇게 */
     top: 60%;
     transform: translateY(-50%);
     z-index: 10;
-    /* 본체(2)보다 위로 배치 */
+    transition: left 0.3s steps(4), background-color 0.2s;
+    /* 레트로틱한 steps 애니메이션 */
     box-shadow: none !important;
+}
+
+:global(.retro-theme) .sidebarToggle:hover {
+    left: -60px;
+    /* 호버 시 튀어나옴 */
 }
 
 :global(.retro-theme) .sidebarToggle:focus,
