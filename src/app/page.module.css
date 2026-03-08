@@ -352,7 +352,7 @@
     overflow-y: auto;
     flex: 1;
     /* 남은 공간 모두 차지 */
-    padding: 16px 4px 16px 4px;
+    padding: 16px 12px 16px 12px;
     /* 위아래 잘림 방지 패딩 */
     margin: 0;
 }
