@@ -120,7 +120,7 @@
 
 .waitingBadge {
     position: absolute;
-    top: 2px;
+    bottom: 4px;
     left: 4px;
     font-size: 9px;
     color: #ef4444;
@@ -223,8 +223,8 @@
 
 .retroWaiting {
     position: absolute;
-    top: 2px;
-    left: 2px;
+    bottom: 2px;
+    left: 4px;
     font-size: 8px;
     color: #e74c3c;
     font-weight: bold;
