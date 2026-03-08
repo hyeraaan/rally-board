@@ -343,18 +343,26 @@
 
 /* 대기 명단 네임택 컨테이너 */
 .playerListContainer {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4, 80px);
+    /* 데스크탑 기본 크기 기준 4열 */
+    justify-content: center;
     gap: 8px;
     align-content: flex-start;
-    align-items: flex-start;
     overflow-y: auto;
     flex: 1;
     /* 남은 공간 모두 차지 */
-    padding: 16px 4px 4px 4px;
-    /* 위쪽 잘림 방지 16px 패딩 */
-    margin: -4px;
-    /* 기본 gap 보정용 */
+    padding: 16px 4px 16px 4px;
+    /* 위아래 잘림 방지 패딩 */
+    margin: 0;
+}
+
+@media (max-width: 480px) {
+    .playerListContainer {
+        grid-template-columns: repeat(4, 70px);
+        /* 모바일 크기 기준 4열 */
+        gap: 4px;
+    }
 }
 
 /* 레트로/클래식 공통: 왼쪽 코트 상단의 마진 16px과 동일하게, 내부 패딩인 16px만큼만 네임택이 아래로 떨어지도록 마진을 추가로 넣지 않고 0으로 초기화 */
