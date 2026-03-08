@@ -30,6 +30,8 @@ const translations = {
         tournamentEnd: '경기 종료',
         waitingTime: (min: number) => `${min}분 대기`,
         endGameConfirm: '경기를 종료하시겠습니까? 종료된 선수는 대기 명단으로 이동합니다.',
+        confirmBtn: '확인',
+        cancelModalBtn: '취소',
     },
     en: {
         appTitle: 'Rally Board',
@@ -56,6 +58,8 @@ const translations = {
         tournamentEnd: 'Match End',
         waitingTime: (min: number) => `${min}m waiting`,
         endGameConfirm: 'Do you want to end the match? The players will return to the waiting list.',
+        confirmBtn: 'Confirm',
+        cancelModalBtn: 'Cancel',
     },
 };
 

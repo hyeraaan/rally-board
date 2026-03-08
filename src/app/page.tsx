@@ -7,6 +7,7 @@ import PlayerMagnet from '@/components/PlayerMagnet';
 import AddCourtButton from '@/components/AddCourtButton';
 import AddPlayerForm from '@/components/AddPlayerForm';
 import MatchHistoryModal from '@/components/MatchHistoryModal';
+import ConfirmModal from '@/components/ConfirmModal';
 import { useTheme } from '@/providers/ThemeProvider';
 import { useLanguage } from '@/providers/LanguageProvider';
 import {
@@ -42,7 +43,8 @@ export default function Home() {
     isEventRunning,
     eventStartTime,
     startTournament,
-    endTournament
+    endTournament,
+    openConfirm
   } = useBoardStore();
 
   const [eventTime, setEventTime] = useState('00:00:00');
@@ -156,9 +158,10 @@ export default function Home() {
   };
 
   const handleEndTournament = () => {
-    if (confirm(lang === 'ko' ? "정말 대회를 종료하시겠습니까? 모든 정보가 초기화됩니다." : "End the tournament? All status will be reset.")) {
-      endTournament();
-    }
+    openConfirm(
+      lang === 'ko' ? "정말 대회를 종료하시겠습니까? 모든 정보가 초기화됩니다." : "End the tournament? All status will be reset.",
+      () => endTournament()
+    );
   };
 
   const isAnyGamePlaying = courts.some(c => c.status === 'playing');
@@ -407,6 +410,8 @@ export default function Home() {
         isOpen={isHistoryModalOpen}
         onClose={() => setIsHistoryModalOpen(false)}
       />
+
+      <ConfirmModal />
 
       {/* 카운트다운 오버레이 */}
       {isCountingDown && (

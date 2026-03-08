@@ -21,7 +21,7 @@ interface BadmintonCourtProps {
 export default function BadmintonCourt({ courtNumber, players, status = 'waiting', startTime, onDelete, onDeletePlayer, isEditMode }: BadmintonCourtProps) {
     const { theme } = useTheme();
     const { t } = useLanguage();
-    const { startGame, endGame } = useBoardStore();
+    const { startGame, endGame, openConfirm } = useBoardStore();
 
     const [elapsedTime, setElapsedTime] = useState(0);
 
@@ -98,9 +98,7 @@ export default function BadmintonCourt({ courtNumber, players, status = 'waiting
                                     className="nes-btn is-warning"
                                     style={{ padding: '2px 8px', fontSize: '0.8rem' }}
                                     onClick={() => {
-                                        if (confirm(t.endGameConfirm)) {
-                                            endGame(courtNumber);
-                                        }
+                                        openConfirm(t.endGameConfirm, () => endGame(courtNumber));
                                     }}
                                     title={t.endGameRetroTitle}
                                 >
@@ -145,9 +143,7 @@ export default function BadmintonCourt({ courtNumber, players, status = 'waiting
                                 </span>
                                 <button
                                     onClick={() => {
-                                        if (confirm(t.endGameConfirm)) {
-                                            endGame(courtNumber);
-                                        }
+                                        openConfirm(t.endGameConfirm, () => endGame(courtNumber));
                                     }}
                                     style={{
                                         backgroundColor: '#ef4444', color: 'white', border: 'none', borderRadius: '4px',

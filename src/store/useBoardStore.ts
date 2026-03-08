@@ -33,6 +33,11 @@ interface BoardState {
     countdownTime: number;
     isEventRunning: boolean;
     eventStartTime: number | null;
+    confirmModal: {
+        isOpen: boolean;
+        message: string;
+        onConfirm: () => void;
+    } | null;
 
     // Actions
     setCourts: (courts: Court[]) => void;
@@ -55,6 +60,8 @@ interface BoardState {
     endAllGames: () => void;
     startTournament: () => void;
     endTournament: () => void;
+    openConfirm: (message: string, onConfirm: () => void) => void;
+    closeConfirm: () => void;
 }
 
 const initialCourts: Court[] = [
@@ -105,6 +112,7 @@ export const useBoardStore = create<BoardState>((set) => ({
     countdownTime: 3,
     isEventRunning: false,
     eventStartTime: null,
+    confirmModal: null,
 
     setCourts: (courts) => set({ courts }),
     setWaitingList: (waitingList) => set({ waitingList }),
@@ -504,4 +512,18 @@ export const useBoardStore = create<BoardState>((set) => ({
             eventStartTime: null,
             waitingList: state.waitingList.map(p => ({ ...p, waitingStartTime: null }))
         })),
+
+    openConfirm: (message, onConfirm) =>
+        set({
+            confirmModal: {
+                isOpen: true,
+                message,
+                onConfirm,
+            },
+        }),
+
+    closeConfirm: () =>
+        set({
+            confirmModal: null,
+        }),
 }));
