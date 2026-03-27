@@ -38,6 +38,8 @@ interface BoardState {
         message: string;
         onConfirm: () => void;
     } | null;
+    activePopoverPlayerId: string | null;
+    setActivePopoverPlayerId: (id: string | null) => void;
 
     // Actions
     setCourts: (courts: Court[]) => void;
@@ -142,8 +144,10 @@ export const useBoardStore = create<BoardState>((set) => ({
     isEventRunning: false,
     eventStartTime: null,
     confirmModal: null,
+    activePopoverPlayerId: null,
 
     setCourts: (courts) => set({ courts }),
+    setActivePopoverPlayerId: (id) => set((state) => ({ ...state, activePopoverPlayerId: id })),
     setWaitingList: (waitingList) => set({ waitingList }),
     toggleEditMode: () => set((state) => ({ isEditMode: !state.isEditMode })),
 

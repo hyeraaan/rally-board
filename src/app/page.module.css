@@ -364,9 +364,6 @@
     gap: 12px 8px;
     /* 세로 12px, 가로 8px 간격 */
     align-content: flex-start;
-    overflow-y: auto;
-    overflow-x: hidden;
-    /* 가로 스크롤 절대 방지 */
     flex: 1;
     /* 남은 공간 모두 차지 */
     padding: 16px 12px;

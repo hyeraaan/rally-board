@@ -4,7 +4,8 @@ import { useLanguage } from '@/providers/LanguageProvider';
 import { useTheme } from '@/providers/ThemeProvider';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { CircleMinus } from 'lucide-react';
+import { CircleMinus, Trash2, LayoutGrid } from 'lucide-react';
+import { useBoardStore } from '@/store/useBoardStore';
 
 interface PlayerMagnetProps {
     id: string; // 고유 ID
@@ -21,7 +22,9 @@ interface PlayerMagnetProps {
 export default function PlayerMagnet({ id, name, tier, matchCount = 0, onSelect, isSelected, onDelete, isEditMode, waitingStartTime }: PlayerMagnetProps) {
     const { theme } = useTheme();
     const { t } = useLanguage();
+    const { courts, movePlayer, activePopoverPlayerId, setActivePopoverPlayerId } = useBoardStore();
     const [elapsedTime, setElapsedTime] = useState(0);
+    const isPopoverOpen = activePopoverPlayerId === id;
 
     useEffect(() => {
         if (!waitingStartTime) {
@@ -53,7 +56,7 @@ export default function PlayerMagnet({ id, name, tier, matchCount = 0, onSelect,
         transform: CSS.Translate.toString(transform),
         transition: transition || 'transform 200ms cubic-bezier(0.18, 0.67, 0.6, 1.22)',
         opacity: isDragging ? 0.6 : 1, // 원래 있던 자리의 잔상은 낮게 유지
-        zIndex: isDragging ? 999 : 1,
+        zIndex: isDragging ? 999 : (isPopoverOpen ? 100 : 1),
         // 드래그 중일 때 약간 커지며 그림자 추가 
         ...(isDragging ? { transform: `${CSS.Translate.toString(transform)} scale(1.05)`, boxShadow: '0 8px 16px rgba(0,0,0,0.3)' } : {})
     };
@@ -89,6 +92,32 @@ export default function PlayerMagnet({ id, name, tier, matchCount = 0, onSelect,
                 }
             }}
         >
+            {/* 코트 선택 팝오버 */}
+            {isPopoverOpen && !isDragging && (
+                <div className={styles.courtPopover} onClick={(e) => e.stopPropagation()}>
+                    <div className={styles.popoverHeader}>
+                        <span>{theme === 'retro' ? 'SELECT' : '코트 선택'}</span>
+                        <button className={styles.popoverClose} onClick={() => setActivePopoverPlayerId(null)}>×</button>
+                    </div>
+                    <div className={styles.courtButtons}>
+                        {courts.map((court) => (
+                            <button
+                                key={court.id}
+                                className={theme === 'retro' ? `nes-btn ${court.players.length >= 4 ? 'is-disabled' : 'is-primary'}` : `${styles.courtBtn} ${court.players.length >= 4 ? styles.disabled : ''}`}
+                                onClick={() => {
+                                    if (court.players.length < 4) {
+                                        movePlayer(id, court.id);
+                                        setActivePopoverPlayerId(null);
+                                    }
+                                }}
+                                disabled={court.players.length >= 4}
+                            >
+                                {court.id}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            )}
             {isEditMode && (
                 <div className={styles.deleteIconOverlay} title="삭제">
                     <CircleMinus size={20} color={theme === 'retro' ? '#212529' : '#ef4444'} fill="white" />
@@ -100,7 +129,14 @@ export default function PlayerMagnet({ id, name, tier, matchCount = 0, onSelect,
                         tier === 'B' ? styles.retroTierB :
                             tier === 'C' ? styles.retroTierC :
                                 tier === 'D' ? styles.retroTierD : styles.retroTierE
-                        }`}>
+                        }`}
+                        onClick={(e) => {
+                            if (!isDragging && !isEditMode) {
+                                e.stopPropagation();
+                                setActivePopoverPlayerId(isPopoverOpen ? null : id);
+                            }
+                        }}
+                    >
                         {tier}
                     </div>
                     <div className={styles.retroBottom}>
@@ -111,7 +147,15 @@ export default function PlayerMagnet({ id, name, tier, matchCount = 0, onSelect,
                 </div>
             ) : (
                 <>
-                    <div className={styles.magnetTop}>
+                    <div 
+                        className={styles.magnetTop}
+                        onClick={(e) => {
+                            if (!isDragging && !isEditMode) {
+                                e.stopPropagation();
+                                setActivePopoverPlayerId(isPopoverOpen ? null : id);
+                            }
+                        }}
+                    >
                         <span className={styles.tierBadge}>{tier}</span>
                     </div>
                     <div className={styles.magnetBottom}>

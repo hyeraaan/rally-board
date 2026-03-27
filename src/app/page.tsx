@@ -48,7 +48,8 @@ export default function Home() {
     endTournament,
     openConfirm,
     moveMultiplePlayers,
-    initializeData
+    initializeData,
+    setActivePopoverPlayerId
   } = useBoardStore();
 
   const [eventTime, setEventTime] = useState('00:00:00');
@@ -190,6 +191,7 @@ export default function Home() {
             className={styles.courtArea}
             onClick={() => {
               if (isWaitingListOpen) setIsWaitingListOpen(false);
+              setActivePopoverPlayerId(null);
             }}
           >
             <div className={styles.titleRow}>
