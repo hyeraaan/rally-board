@@ -22,9 +22,47 @@
 }
 
 .addBtnRetro {
-    width: 100%;
+    flex: 1; /* 너비 조절 */
     font-size: 1rem;
     margin-top: 8px;
+}
+
+/* 추가/삭제 버튼 그룹 */
+.addBtnGroup {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    margin-top: 8px;
+}
+
+.clearBtn {
+    width: 44px; /* 정사각형 모양 */
+    height: 44px;
+    border-radius: 8px;
+    border: 2px dashed rgba(239, 68, 68, 0.3); /* 연한 빨강 */
+    background: rgba(239, 68, 68, 0.05);
+    color: rgba(239, 68, 68, 0.5);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+.clearBtn:hover {
+    border-color: rgba(239, 68, 68, 0.7);
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.clearBtnRetro {
+    margin-top: 8px;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* 폼 래퍼 */

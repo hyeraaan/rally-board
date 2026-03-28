@@ -361,24 +361,42 @@ export default function Home() {
 
               <div className={styles.playerListContainer}>
                 <SortableContext items={waitingList.map((p) => p.id)} strategy={rectSortingStrategy}>
-                  {waitingList.map((player) => (
-                    <PlayerMagnet
-                      key={player.id}
-                      id={player.id}
-                      name={player.name}
-                      tier={player.tier}
-                      matchCount={player.matchCount}
-                      waitingStartTime={player.waitingStartTime}
-                      onSelect={handleSelect}
-                      isSelected={selectedIds.includes(player.id)}
-                      onDelete={deletePlayer}
-                      isEditMode={isEditMode}
-                    />
-                  ))}
+                  {waitingList.length > 0 ? (
+                    waitingList.map((player) => (
+                      <PlayerMagnet
+                        key={player.id}
+                        id={player.id}
+                        name={player.name}
+                        tier={player.tier}
+                        matchCount={player.matchCount}
+                        waitingStartTime={player.waitingStartTime}
+                        onSelect={handleSelect}
+                        isSelected={selectedIds.includes(player.id)}
+                        onDelete={deletePlayer}
+                        isEditMode={isEditMode}
+                      />
+                    ))
+                  ) : (
+                    <div className={styles.emptyState}>
+                        <div className={styles.emptyStateTitle}>
+                           {theme === 'retro' ? 'LIST IS EMPTY!' : '대기 명단이 비어있습니다'}
+                        </div>
+                        <div className={styles.emptyStateDesc}>
+                            {theme === 'retro' 
+                              ? 'Click the [+] button below to add players.' 
+                              : '하단의 [+] 버튼을 눌러 선수를 추가할 수 있습니다.'}
+                        </div>
+                        <div className={styles.emptyStateTip}>
+                            <b>💡 TIP:</b> {theme === 'retro'
+                              ? '"A John, B Doe" format adds multiple players!'
+                              : '"a 정혜란, b 원빈" 처럼 입력하면 한 번에 추가 가능!'}
+                        </div>
+                    </div>
+                  )}
                 </SortableContext>
               </div>
               {/* 선수 추가 폼 (원래대로 하단 배치) */}
-              <AddPlayerForm onAdd={addPlayer} />
+              <AddPlayerForm />
             </div>
           </aside>
         </div>
