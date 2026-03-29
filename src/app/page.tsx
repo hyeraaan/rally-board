@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import styles from './page.module.css';
 import BadmintonCourt from '@/components/BadmintonCourt';
 import PlayerMagnet from '@/components/PlayerMagnet';
@@ -83,9 +83,42 @@ export default function Home() {
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
   const [isWaitingListOpen, setIsWaitingListOpen] = useState(true);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [currentGroupPage, setCurrentGroupPage] = useState(0); // 슬라이더 현재 페이지(0-indexed)
+  const sliderContainerRef = useRef<HTMLDivElement>(null); // 뷰포트 참조
+
+  // 스크롤 위치에 따라 현재 페이지 업데이트 (스와이프 대응)
+  const handleScroll = useCallback(() => {
+    if (!sliderContainerRef.current) return;
+    const { scrollLeft, clientWidth } = sliderContainerRef.current;
+    if (clientWidth === 0) return;
+    
+    // 현재 중앙에 있는 아이템 기준으로 페이지 계산
+    const page = Math.round(scrollLeft / clientWidth);
+    if (currentGroupPage !== page) {
+      setCurrentGroupPage(page);
+    }
+  }, [currentGroupPage]);
+
+  useEffect(() => {
+    const el = sliderContainerRef.current;
+    if (el) {
+      el.addEventListener('scroll', handleScroll, { passive: true });
+      return () => el.removeEventListener('scroll', handleScroll);
+    }
+  }, [handleScroll]);
+
+  // 버튼 클릭 시 해당 페이지로 스크롤
+  const scrollToPage = (page: number) => {
+    if (!sliderContainerRef.current) return;
+    const { clientWidth } = sliderContainerRef.current;
+    sliderContainerRef.current.scrollTo({
+      left: page * clientWidth,
+      behavior: 'smooth'
+    });
+  };
 
   const handleSelect = (playerId: string) => {
-    setSelectedIds(prev => {
+    setSelectedIds((prev: string[]) => {
       if (prev.includes(playerId)) {
         return prev.filter(id => id !== playerId);
       }
@@ -399,53 +432,94 @@ export default function Home() {
                 </div>
               )}
 
-              <div className={styles.playerListContainer}>
-                <SortableContext items={waitingList.map((p) => p.id)} strategy={rectSortingStrategy}>
-                  {waitingList.length > 0 ? (
-                    (() => {
-                        const groups = [];
-                        for (let i = 0; i < waitingList.length; i += 4) {
-                            groups.push(waitingList.slice(i, i + 4));
-                        }
-                        return groups.map((group, groupIndex) => (
-                            <div key={`group-${groupIndex}`} className={styles.playerGroup}>
+              {/* 슬라이더 래퍼 */}
+              {(() => {
+                const groups: typeof waitingList[] = [];
+                for (let i = 0; i < waitingList.length; i += 4) {
+                  groups.push(waitingList.slice(i, i + 4));
+                }
+                const COLS_PER_PAGE = 3;
+                const totalPages = Math.max(1, Math.ceil(groups.length / COLS_PER_PAGE));
+                const safePage = Math.min(currentGroupPage, totalPages - 1);
+
+                // 그룹 너비: 뷰포트의 1/3 - gap 계산. CSS var로 제어
+                const translateX = safePage > 0
+                  ? `calc(-${safePage} * (100% / ${COLS_PER_PAGE} * ${COLS_PER_PAGE} + 20px * ${COLS_PER_PAGE}))`
+                  : '0px';
+
+                return (
+                  <div className={styles.waitingSliderWrapper}>
+                    {/* 왼쪽 이동 버튼 */}
+                    {groups.length > COLS_PER_PAGE && safePage > 0 && (
+                      <button
+                        type="button"
+                        className={styles.sliderNavBtn}
+                        onClick={() => scrollToPage(safePage - 1)}
+                        aria-label="이전"
+                      >
+                        <ChevronLeft size={20} />
+                      </button>
+                    )}
+
+                    {/* 슬라이더 뷰포트 */}
+                    <div className={styles.playerListContainer} ref={sliderContainerRef}>
+                      <SortableContext items={waitingList.map((p) => p.id)} strategy={rectSortingStrategy}>
+                        {waitingList.length > 0 ? (
+                          <div className={styles.playerSlideTrack}>
+                            {groups.map((group, groupIndex) => (
+                              <div
+                                key={`group-${groupIndex}`}
+                                className={styles.playerGroup}
+                                style={{ width: `calc((100% - ${(COLS_PER_PAGE - 1) * 20}px) / ${COLS_PER_PAGE})` }}
+                              >
                                 <div className={styles.groupBadge}>
-                                    {theme === 'retro' ? `MATCH ${groupIndex + 1}` : `Match ${groupIndex + 1}`}
+                                  {theme === 'retro' ? `MATCH ${groupIndex + 1}` : `Match ${groupIndex + 1}`}
                                 </div>
                                 {group.map((player) => (
-                                    <PlayerMagnet
-                                        key={player.id}
-                                        id={player.id}
-                                        name={player.name}
-                                        tier={player.tier}
-                                        matchCount={player.matchCount}
-                                        waitingStartTime={player.waitingStartTime}
-                                        onSelect={handleSelect}
-                                        isSelected={selectedIds.includes(player.id)}
-                                        onDelete={deletePlayer}
-                                        isEditMode={isEditMode}
-                                    />
+                                  <PlayerMagnet
+                                    key={player.id}
+                                    id={player.id}
+                                    name={player.name}
+                                    tier={player.tier}
+                                    matchCount={player.matchCount}
+                                    waitingStartTime={player.waitingStartTime}
+                                    onSelect={handleSelect}
+                                    isSelected={selectedIds.includes(player.id)}
+                                    onDelete={deletePlayer}
+                                    isEditMode={isEditMode}
+                                  />
                                 ))}
-                            </div>
-                        ));
-                    })()
-                  ) : (
-                    <div className={styles.emptyState}>
-                        <div className={styles.emptyStateTitle}>
-                           {t.emptyWaitingList}
-                        </div>
-                        <div className={styles.emptyStateDesc}>
-                            {t.addPlayerGuide}
-                        </div>
-                        <div className={styles.emptyStateTip}>
-                            <b>💡 TIP:</b> {t.addPlayerTip}
-                        </div>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className={styles.emptyState}>
+                            <div className={styles.emptyStateTitle}>{t.emptyWaitingList}</div>
+                            <div className={styles.emptyStateDesc}>{t.addPlayerGuide}</div>
+                            <div className={styles.emptyStateTip}><b>💡 TIP:</b> {t.addPlayerTip}</div>
+                          </div>
+                        )}
+                      </SortableContext>
                     </div>
-                  )}
-                </SortableContext>
-              </div>
-              {/* 선수 추가 폼 (원래대로 하단 배치) */}
-              <AddPlayerForm />
+
+                    {/* 오른쪽 이동 버튼 */}
+                    {groups.length > COLS_PER_PAGE && safePage < totalPages - 1 && (
+                      <button
+                        type="button"
+                        className={styles.sliderNavBtn}
+                        onClick={() => scrollToPage(safePage + 1)}
+                        aria-label="다음"
+                      >
+                        <ChevronRight size={20} />
+                      </button>
+                    )}
+                  </div>
+                );
+              })()}
+              {/* 선수 추가 폼 (+ 버튼 클릭 시 표시) */}
+              {isAddFormOpen && (
+                <AddPlayerForm onClose={() => setIsAddFormOpen(false)} />
+              )}
             </div>
           </aside>
         </div>
@@ -454,7 +528,7 @@ export default function Home() {
             <div style={{ position: 'relative' }}>
               {/* 다중 선택 시 겹쳐 보이는 효과 */}
               {selectedIds.length > 1 && selectedIds.includes(activePlayer.id) ? (
-                selectedIds.slice(0, 4).map((id, index) => {
+                selectedIds.slice(0, 4).map((id: string, index: number) => {
                   const p = [...waitingList, ...courts.flatMap(c => c.players)].find(player => player.id === id);
                   if (!p) return null;
                   return (

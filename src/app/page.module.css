@@ -325,7 +325,7 @@
 
 .sidebarCloseBtn {
     background: none;
-    border: none;
+    border: 1px solid rgba(255, 255, 255, 0.3);
     color: white;
     cursor: pointer;
     display: flex;
@@ -333,12 +333,13 @@
     justify-content: center;
     padding: 4px;
     border-radius: 50%;
-    transition: background-color 0.2s;
+    transition: all 0.2s;
     opacity: 0.8;
 }
 
 .sidebarCloseBtn:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.7);
     opacity: 1;
 }
 
@@ -521,16 +522,36 @@
     padding: 0 !important;
 }
 
-/* 대기 명단 네임택 컨테이너 */
-.playerListContainer {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    align-content: flex-start;
-    flex: 1;
-    padding: 16px 0;
-    margin: 0;
+/* 대기 명단 - 슬라이더 외부 래퍼 */
+.waitingSliderWrapper {
+    position: relative;
     width: 100%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 0;
+}
+
+/* 슬라이더 뷰포트 (overflow hidden이 여기서 clippin) */
+.playerListContainer {
+    flex: 1;
+    overflow-x: auto; /* 스와이프 지원 */
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none; /* 스크롤바 숨김 */
+    -ms-overflow-style: none;
+}
+
+.playerListContainer::-webkit-scrollbar {
+    display: none;
+}
+
+/* 슬라이드 트랙 */
+.playerSlideTrack {
+    display: flex;
+    gap: 20px;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: transform;
 }
 
 .playerGroup {
@@ -542,8 +563,36 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 12px;
-    min-width: 480px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
     transition: all 0.2s ease;
+}
+
+/* 슬라이더 네비게이션 버튼 */
+.sliderNavBtn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 10;
+    flex-shrink: 0;
+}
+
+.sliderNavBtn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: scale(1.1);
+}
+
+.sliderNavBtn:active {
+    transform: scale(0.95);
 }
 
 .playerGroup:hover {
