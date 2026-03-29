@@ -376,20 +376,33 @@ export default function Home() {
               <div className={styles.playerListContainer}>
                 <SortableContext items={waitingList.map((p) => p.id)} strategy={rectSortingStrategy}>
                   {waitingList.length > 0 ? (
-                    waitingList.map((player) => (
-                      <PlayerMagnet
-                        key={player.id}
-                        id={player.id}
-                        name={player.name}
-                        tier={player.tier}
-                        matchCount={player.matchCount}
-                        waitingStartTime={player.waitingStartTime}
-                        onSelect={handleSelect}
-                        isSelected={selectedIds.includes(player.id)}
-                        onDelete={deletePlayer}
-                        isEditMode={isEditMode}
-                      />
-                    ))
+                    (() => {
+                        const groups = [];
+                        for (let i = 0; i < waitingList.length; i += 4) {
+                            groups.push(waitingList.slice(i, i + 4));
+                        }
+                        return groups.map((group, groupIndex) => (
+                            <div key={`group-${groupIndex}`} className={styles.playerGroup}>
+                                <div className={styles.groupBadge}>
+                                    {theme === 'retro' ? `MATCH ${groupIndex + 1}` : `Match ${groupIndex + 1}`}
+                                </div>
+                                {group.map((player) => (
+                                    <PlayerMagnet
+                                        key={player.id}
+                                        id={player.id}
+                                        name={player.name}
+                                        tier={player.tier}
+                                        matchCount={player.matchCount}
+                                        waitingStartTime={player.waitingStartTime}
+                                        onSelect={handleSelect}
+                                        isSelected={selectedIds.includes(player.id)}
+                                        onDelete={deletePlayer}
+                                        isEditMode={isEditMode}
+                                    />
+                                ))}
+                            </div>
+                        ));
+                    })()
                   ) : (
                     <div className={styles.emptyState}>
                         <div className={styles.emptyStateTitle}>
