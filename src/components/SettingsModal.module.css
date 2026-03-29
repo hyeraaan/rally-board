@@ -89,70 +89,70 @@
     color: #212529;
 }
 
-.alertMessage {
-    color: white;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    margin: 0 0 8px 0;
-    word-break: keep-all;
-}
-
-.modalCard.retro .alertMessage {
-    color: #212529;
-}
-
-.actionRow {
+.closeBtn {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.2s;
     display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.closeBtn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.dangerZone {
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    background-color: rgba(239, 68, 68, 0.05);
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.dangerTitle {
+    color: #ef4444;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    display: flex;
+    align-items: center;
     gap: 8px;
 }
 
-.confirmBtn,
-.cancelBtn {
-    flex: 1;
-    height: 40px;
+.dangerDesc {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 0 16px 0;
+    line-height: 1.5;
+    word-break: keep-all;
+}
+
+.resetBtn {
+    width: 100%;
+    padding: 12px;
+    background-color: #ef4444;
+    color: white;
+    border: none;
     border-radius: 8px;
-    font-size: 0.9rem;
     font-weight: 700;
     cursor: pointer;
-    border: none;
-    transition: all 0.2s ease;
+    transition: all 0.2s;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
 }
 
-.confirmBtn {
-    background-color: #10b981;
-    color: white;
-}
-
-.confirmBtn:hover {
-    filter: brightness(1.1);
+.resetBtn:hover {
+    background-color: #dc2626;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
-.cancelBtn {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.cancelBtn:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-}
-
-.btnRetro {
-    border: 2px solid #212529 !important;
-    border-radius: 0 !important;
-    color: #212529 !important;
-    background: transparent !important;
-    font-family: inherit !important;
-    box-shadow: none !important;
-}
-
-.confirmRetro {
-    background: #92cc41 !important; 
-    color: #212529 !important;
+.resetBtn:active {
+    transform: translateY(0);
 }

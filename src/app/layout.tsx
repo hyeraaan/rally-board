@@ -32,11 +32,11 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning>
       <body className={`${notoSansKR.variable} ${pressStart2P.variable}`}>
-        <ThemeProvider>
-          <LanguageProvider>
-            {children}
-          </LanguageProvider>
-        </ThemeProvider>
+          <ThemeProvider>
+            <LanguageProvider>
+              {children}
+            </LanguageProvider>
+          </ThemeProvider>
       </body>
     </html>
   );
