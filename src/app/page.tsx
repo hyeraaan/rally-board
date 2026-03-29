@@ -16,7 +16,7 @@ import {
 } from '@dnd-kit/core';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
 import {
-  Shuffle, Eraser, Globe, Monitor, Gamepad2, History, ChevronLeft, ChevronRight, Play, PlayCircle, Square, Trophy, Clock, X, LogOut, Settings
+  Shuffle, Eraser, Globe, Monitor, Gamepad2, History, ChevronLeft, ChevronRight, Play, PlayCircle, Square, Trophy, Clock, X, LogOut, Settings, Plus, Minus
 } from 'lucide-react';
 import { useSession, signOut } from 'next-auth/react';
 import Link from 'next/link';
@@ -55,7 +55,8 @@ export default function Home() {
     initializeData,
     setActivePopoverPlayerId,
     tournamentTitle,
-    setTournamentTitle
+    setTournamentTitle,
+    clearWaitingList
   } = useBoardStore();
 
   const [eventTime, setEventTime] = useState('00:00:00');
@@ -83,6 +84,7 @@ export default function Home() {
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
   const [isWaitingListOpen, setIsWaitingListOpen] = useState(true);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [isAddFormOpen, setIsAddFormOpen] = useState(false);
   const [currentGroupPage, setCurrentGroupPage] = useState(0); // 슬라이더 현재 페이지(0-indexed)
   const sliderContainerRef = useRef<HTMLDivElement>(null); // 뷰포트 참조
 
@@ -391,11 +393,32 @@ export default function Home() {
                   {t.waitingList} ({waitingList.length})
                 </h2>
                 <div className={styles.sidebarButtonGroup}>
+                  {/* + 선수 추가 버튼 */}
+                  <button
+                    type="button"
+                    className={theme === 'retro' ? 'nes-btn is-success' : styles.addPlayerBtn}
+                    onClick={() => setIsAddFormOpen(true)}
+                    title={t.addPlayerTooltip}
+                  >
+                    <Plus size={16} />
+                  </button>
+                  {/* - 전체 삭제 버튼 */}
+                  <button
+                    type="button"
+                    className={theme === 'retro' ? 'nes-btn is-error' : styles.clearPlayerBtn}
+                    onClick={() => openConfirm(
+                      t.clearAllConfirm,
+                      () => clearWaitingList()
+                    )}
+                    title={t.clearAllTooltip}
+                  >
+                    <Minus size={16} />
+                  </button>
                   <button
                     type="button"
                     className={theme === 'retro' ? 'nes-btn is-warning' : styles.randomBtn}
                     onClick={randomMatch}
-                    title="빈 코트에 인원을 랜덤으로 채웁니다."
+                    title={t.randomMatchTooltip}
                   >
                     <Shuffle size={theme === 'retro' ? 20 : 16} /> {t.randomMatchBtn}
                   </button>

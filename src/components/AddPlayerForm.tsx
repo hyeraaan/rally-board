@@ -46,7 +46,7 @@ export default function AddPlayerForm({ onClose }: { onClose: () => void }) {
             >
                 <div className={styles.modalHeader}>
                     <span className={styles.modalTitle}>
-                        {theme === 'retro' ? '+ ADD PLAYER' : '선수 추가'}
+                        {theme === 'retro' ? `+ ${t.addPlayerTitle.toUpperCase()}` : t.addPlayerTitle}
                     </span>
                     <button type="button" className={styles.modalCloseBtn} onClick={onClose}>
                         <X size={16} />
@@ -55,7 +55,7 @@ export default function AddPlayerForm({ onClose }: { onClose: () => void }) {
                 <input
                     type="text"
                     className={theme === 'retro' ? `nes-input ${styles.nameInputRetro}` : styles.nameInput}
-                    placeholder={theme === 'retro' ? 'e.g. A John, B Doe' : '예: a 정혜란, b 홍길동'}
+                    placeholder={t.bulkAddPlaceholder}
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     onKeyDown={handleKeyDown}
@@ -83,7 +83,7 @@ export default function AddPlayerForm({ onClose }: { onClose: () => void }) {
                         onClick={handleSubmit}
                         style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}
                     >
-                        <Check size={theme === 'retro' ? 20 : 16} /> {name.includes(',') ? 'Bulk Add' : t.addBtn}
+                        <Check size={theme === 'retro' ? 20 : 16} /> {name.includes(',') ? t.bulkAddBtnText : t.addBtn}
                     </button>
                     <button
                         type="button"
