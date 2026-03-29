@@ -249,7 +249,7 @@ export default function Home() {
                     <button
                       type="button"
                       className={theme === 'retro' ? 'nes-btn is-primary' : styles.themeToggleBtn}
-                      style={theme === 'retro' ? { display: 'flex', gap: '6px', alignItems: 'center', padding: '4px 8px', fontSize: '12px', height: '36px' } : { backgroundColor: '#10b981', color: 'white' }}
+                      style={theme === 'retro' ? { display: 'flex', gap: '8px', alignItems: 'center', padding: '4px 16px', fontSize: '12px', height: '36px', whiteSpace: 'nowrap' } : { backgroundColor: '#10b981', color: 'white', whiteSpace: 'nowrap' }}
                       onClick={handleStartTournament}
                       title={t.startTournamentTooltip}
                     >
@@ -259,7 +259,7 @@ export default function Home() {
                   <button
                     type="button"
                     className={theme === 'retro' ? 'nes-btn' : styles.themeToggleBtn}
-                    style={theme === 'retro' ? { display: 'flex', gap: '6px', alignItems: 'center', padding: '4px 8px', fontSize: '12px', height: '36px' } : undefined}
+                    style={theme === 'retro' ? { display: 'flex', gap: '8px', alignItems: 'center', padding: '4px 16px', fontSize: '12px', height: '36px', whiteSpace: 'nowrap' } : { whiteSpace: 'nowrap' }}
                     onClick={() => setIsHistoryModalOpen(true)}
                     title={t.historyTooltip}
                   >
@@ -268,7 +268,7 @@ export default function Home() {
                   <button
                     type="button"
                     className={theme === 'retro' ? `nes-btn ${isWaitingListOpen ? 'is-success' : ''}` : `${styles.themeToggleBtn} ${isWaitingListOpen ? styles.activeHeaderBtn : ''}`}
-                    style={theme === 'retro' ? { display: 'flex', gap: '6px', alignItems: 'center', padding: '4px 8px', fontSize: '12px', height: '36px' } : undefined}
+                    style={theme === 'retro' ? { display: 'flex', gap: '8px', alignItems: 'center', padding: '4px 16px', fontSize: '12px', height: '36px', whiteSpace: 'nowrap' } : { whiteSpace: 'nowrap' }}
                     onClick={() => setIsWaitingListOpen(!isWaitingListOpen)}
                     title={isWaitingListOpen ? t.closeWaitingListTooltip : t.openWaitingListTooltip}
                   >

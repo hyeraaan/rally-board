@@ -136,6 +136,7 @@
     flex-wrap: nowrap; /* 무조건 한 줄 */
     justify-content: flex-end;
     align-items: center;
+    flex-shrink: 0; /* 버튼 그룹 자체는 줄어들지 않음 */
 }
 
 @media (max-width: 640px) {
@@ -152,13 +153,15 @@
     .buttonGroup {
         width: 100%;
         justify-content: flex-start;
+        overflow-x: auto; /* 모바일에서 넘치면 스크롤 */
+        padding-bottom: 4px;
     }
 }
 
 .themeToggleBtn {
     background-color: transparent;
     color: white;
-    padding: 0 12px;
+    padding: 0 16px; /* 패팅 약간 증가 */
     border-radius: 6px;
     font-weight: 500;
     transition: all 0.2s;
@@ -169,6 +172,8 @@
     align-items: center;
     gap: 6px;
     height: 36px;
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+    flex-shrink: 0;
 }
 
 .themeToggleBtn:hover {
