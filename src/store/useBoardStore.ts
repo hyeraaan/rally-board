@@ -41,7 +41,9 @@ interface BoardState {
     } | null;
     activePopoverPlayerId: string | null;
     lastUpdated: number; // 마지막 업데이트 시간 (일주일 유지 체크용)
+    tournamentTitle: string; // 대회 타이틀
     setActivePopoverPlayerId: (id: string | null) => void;
+    setTournamentTitle: (title: string) => void;
 
     // Actions
 // ...
@@ -151,11 +153,13 @@ export const useBoardStore = create<BoardState>()(
             isEventRunning: false,
             eventStartTime: null,
             confirmModal: null,
+            tournamentTitle: '랠리보드 배드민턴 대회',
             activePopoverPlayerId: null,
             lastUpdated: Date.now(),
 
             setCourts: (courts) => set({ courts, lastUpdated: Date.now() }),
             setActivePopoverPlayerId: (id) => set((state) => ({ ...state, activePopoverPlayerId: id })),
+            setTournamentTitle: (title) => set({ tournamentTitle: title, lastUpdated: Date.now() }),
             setWaitingList: (waitingList) => set({ waitingList, lastUpdated: Date.now() }),
             toggleEditMode: () => set((state) => ({ isEditMode: !state.isEditMode })),
 
