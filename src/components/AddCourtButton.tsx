@@ -14,24 +14,29 @@ export default function AddCourtButton({ onClick }: AddCourtButtonProps) {
     const { t } = useLanguage();
 
     return (
-        <button
-            type="button"
-            className={
-                theme === 'retro'
-                    ? `nes-btn ${styles.retroAddCourtWrapper}`
-                    : styles.addCourtWrapper
-            }
+        <div
+            className={`${styles.courtWrapper} ${theme === 'retro' ? 'nes-container with-title' : ''}`}
             onClick={onClick}
-            aria-label="코트 추가"
+            style={theme === 'retro' ? { padding: '1.5rem', backgroundColor: 'transparent', border: '4px solid #212529', cursor: 'pointer' } : { cursor: 'pointer' }}
         >
-            <div className={styles.addIcon}>
-                <span className={styles.plusSign}>
-                    <Plus size={theme === 'retro' ? 36 : 28} />
-                </span>
-                <span className={styles.addLabel}>
+            {theme === 'retro' ? (
+                <h3 className="title" style={{ backgroundColor: 'white' }}>
                     {t.addCourtBtn}
-                </span>
+                </h3>
+            ) : (
+                <div className={styles.courtHeader}>
+                    <h3>{t.addCourtBtn}</h3>
+                </div>
+            )}
+            
+            {/* 실제 코트의 헤더 밑 마진(12px)을 gap:12px을 통해 시뮬레이션하기 위해 빈 div 추가 */}
+            <div style={{ height: '0px', visibility: 'hidden' }}></div>
+
+            <div className={styles.courtField}>
+                <div className={styles.addIconWrapper}>
+                    <Plus size={theme === 'retro' ? 48 : 40} strokeWidth={1.5} />
+                </div>
             </div>
-        </button>
+        </div>
     );
 }
