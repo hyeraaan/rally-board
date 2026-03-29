@@ -1,54 +1,77 @@
-.addCourtWrapper {
-    width: 100%;
-    height: 56px;
-    border-radius: 8px;
-    border: 2px dashed rgba(255, 255, 255, 0.3);
-    background: rgba(255, 255, 255, 0.05);
-    color: rgba(255, 255, 255, 0.5);
-    cursor: pointer;
-    transition: all 0.2s ease;
+.courtWrapper {
+    background-color: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+    padding: 16px;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 16px;
-    font-family: inherit;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 16px !important;
+    margin-bottom: 24px;
+    transition: all 0.3s ease;
+    width: 100%; /* 부모 그리드 너비에 맞춤 */
 }
 
-.addCourtWrapper:hover {
-    border-color: rgba(255, 255, 255, 0.7);
+.courtWrapper:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: var(--accent-blue);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.courtHeader h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.4);
+    transition: color 0.3s ease;
+}
+
+.courtWrapper:hover .courtHeader h3 {
     color: white;
-    background: rgba(255, 255, 255, 0.1);
 }
 
-.retroAddCourtWrapper {
-    width: 100%;
-    height: 56px;
-    margin-top: 16px;
-    font-size: 1rem;
+.courtField {
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 4px dashed rgba(255, 255, 255, 0.1); /* 2px -> 4px (BadmintonCourt와 동일) */
+    border-radius: 4px;
+    min-height: 250px;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: all 0.3s ease;
+    position: relative;
 }
 
-.addIcon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+.courtWrapper:hover .courtField {
+    background-color: rgba(59, 130, 246, 0.1);
+    border-color: rgba(59, 130, 246, 0.3);
 }
 
-.plusSign {
-    font-size: 1.5rem;
-    line-height: 1;
+.addIconWrapper {
+    color: rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
 }
 
-.addLabel {
-    font-size: 1rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
+.courtWrapper:hover .addIconWrapper {
+    color: var(--accent-blue);
+    transform: scale(1.1);
 }
 
-:global(.retro-theme) .addLabel {
-    font-size: 0.8rem;
-    letter-spacing: normal;
+/* 레트로 테마 지원 */
+:global(.retro-theme) .courtWrapper {
+    border: 4px dashed #212529 !important;
+    background-color: #bdc3c7 !important;
+    padding: 1.5rem !important;
+    margin-top: 16px !important;
+}
+
+:global(.retro-theme) .courtWrapper:hover {
+    background-color: #ecf0f1 !important;
+    transform: none;
+    box-shadow: none;
+}
+
+:global(.retro-theme) .courtField {
+    border: 2px dashed #212529 !important;
+    background-color: transparent !important;
 }
