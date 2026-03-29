@@ -16,18 +16,18 @@ import {
 } from '@dnd-kit/core';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
 import {
-  Shuffle, Eraser, Globe, Monitor, Gamepad2, History, ChevronLeft, ChevronRight, Play, PlayCircle, Square, Trophy, Clock, X, LogOut, Settings, Plus, Minus
+  Shuffle, Eraser, Globe, Monitor, Gamepad2, History, ChevronLeft, ChevronRight, Play, Trophy, Clock, X, LogOut, Settings, Plus, Minus
 } from 'lucide-react';
 import { useSession, signOut } from 'next-auth/react';
 import Link from 'next/link';
 
-import { useBoardStore, Tier, Player } from '@/store/useBoardStore';
+import { useBoardStore, Player } from '@/store/useBoardStore';
 
 export default function Home() {
   const { data: session } = useSession();
   const { theme, toggleTheme } = useTheme();
   const { lang, t, toggleLang } = useLanguage();
-// ... (omitted for short replacement, but I will include the full block below)
+
   const {
     courts,
     waitingList,
@@ -37,15 +37,12 @@ export default function Home() {
     addCourt,
     deleteCourt,
     deletePlayer,
-    addPlayer,
     movePlayer,
     randomMatch,
     isCountingDown,
     countdownTime,
     setIsCountingDown,
     setCountdownTime,
-    startAllReadyGames,
-    endAllGames,
     isEventRunning,
     eventStartTime,
     startTournament,
@@ -466,11 +463,6 @@ export default function Home() {
                 const COLS_PER_PAGE = 3;
                 const totalPages = Math.max(1, Math.ceil(groups.length / COLS_PER_PAGE));
                 const safePage = Math.min(currentGroupPage, totalPages - 1);
-
-                // 그룹 너비: 뷰포트의 1/3 - gap 계산. CSS var로 제어
-                const translateX = safePage > 0
-                  ? `calc(-${safePage} * (100% / ${COLS_PER_PAGE} * ${COLS_PER_PAGE} + 20px * ${COLS_PER_PAGE}))`
-                  : '0px';
 
                 return (
                   <div className={styles.waitingSliderWrapper}>
