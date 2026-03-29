@@ -212,6 +212,8 @@ export default function Home() {
                     />
                     <span className={styles.serviceWatermark}>{t.appTitle}</span>
                   </div>
+                </div>
+                <div className={styles.buttonGroup}>
                   {isEventRunning && (
                     <div style={{
                       display: 'flex',
@@ -229,8 +231,6 @@ export default function Home() {
                       {eventTime}
                     </div>
                   )}
-                </div>
-                <div className={styles.buttonGroup}>
                   {isEventRunning ? (
                     <button
                       type="button"
