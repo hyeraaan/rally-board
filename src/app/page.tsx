@@ -206,8 +206,9 @@ export default function Home() {
                       type="text"
                       className={styles.tournamentTitleInput}
                       value={tournamentTitle}
-                      onChange={(e) => setTournamentTitle(e.target.value)}
+                      onChange={(e) => setTournamentTitle(e.target.value.slice(0, 10))}
                       placeholder="대회 이름을 입력하세요"
+                      maxLength={10}
                     />
                     <span className={styles.serviceWatermark}>{t.appTitle}</span>
                   </div>
@@ -392,17 +393,13 @@ export default function Home() {
                   ) : (
                     <div className={styles.emptyState}>
                         <div className={styles.emptyStateTitle}>
-                           {theme === 'retro' ? 'LIST IS EMPTY!' : '대기 명단이 비어있습니다'}
+                           {t.emptyWaitingList}
                         </div>
                         <div className={styles.emptyStateDesc}>
-                            {theme === 'retro' 
-                              ? 'Click the [+] button below to add players.' 
-                              : '하단의 [+] 버튼을 눌러 선수를 추가할 수 있습니다.'}
+                            {t.addPlayerGuide}
                         </div>
                         <div className={styles.emptyStateTip}>
-                            <b>💡 TIP:</b> {theme === 'retro'
-                              ? '"A John, B Doe" format adds multiple players!'
-                              : '"a 정혜란, b 원빈" 처럼 입력하면 한 번에 추가 가능!'}
+                            <b>💡 TIP:</b> {t.addPlayerTip}
                         </div>
                     </div>
                   )}
