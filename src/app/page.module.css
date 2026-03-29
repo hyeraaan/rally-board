@@ -57,8 +57,24 @@
 
 .titleGroup {
     display: flex;
-    align-items: center;
-    gap: 16px;
+    flex-direction: column; /* 세로 배치 */
+    align-items: flex-start;
+    gap: 0.25rem;
+}
+
+.areaTitle {
+    font-size: 0.9rem; /* 서비스 이름은 조금 작게 */
+    font-weight: 600;
+    opacity: 0.8;
+    margin: 0;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+:global(.retro) .areaTitle {
+    font-size: 1rem;
+    opacity: 1;
+    color: #444;
 }
 
 .buttonGroup {
