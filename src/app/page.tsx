@@ -203,14 +203,16 @@ export default function Home() {
             <div className={styles.titleRow}>
               <div className={styles.headerContainer}>
                 <div className={styles.titleGroup}>
-                  <input
-                    type="text"
-                    className={styles.tournamentTitleInput}
-                    value={tournamentTitle}
-                    onChange={(e) => setTournamentTitle(e.target.value)}
-                    placeholder="대회 이름을 입력하세요"
-                  />
-                  <h1 className={styles.areaTitle}>{t.appTitle}</h1>
+                  <div className={styles.tournamentTitleWrapper}>
+                    <input
+                      type="text"
+                      className={styles.tournamentTitleInput}
+                      value={tournamentTitle}
+                      onChange={(e) => setTournamentTitle(e.target.value)}
+                      placeholder="대회 이름을 입력하세요"
+                    />
+                    <span className={styles.serviceWatermark}>{t.appTitle}</span>
+                  </div>
                   {isEventRunning && (
                     <div style={{
                       display: 'flex',
