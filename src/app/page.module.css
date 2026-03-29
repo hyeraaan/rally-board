@@ -45,8 +45,8 @@
 
 :global(.retro) .tournamentTitleInput {
     border: 4px solid #000;
-    background-color: #fff;
-    color: #000;
+    background-color: #fff !important;
+    color: #000 !important; /* 강제 적용 */
     font-family: inherit;
     font-size: 1rem;
     padding: 8px;
