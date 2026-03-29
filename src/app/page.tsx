@@ -203,6 +203,9 @@ export default function Home() {
               <div className={styles.headerContainer}>
                 <div className={styles.titleGroup}>
                   <div className={styles.tournamentTitleWrapper}>
+                    <div className={styles.inputMirror} aria-hidden="true">
+                      {tournamentTitle || '대회 이름을 입력하세요'}
+                    </div>
                     <input
                       type="text"
                       className={styles.tournamentTitleInput}
