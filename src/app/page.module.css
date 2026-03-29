@@ -257,7 +257,7 @@
 }
 
 .courtArea.shifted {
-    padding-bottom: 260px; /* 현황판 높이 240px + 기본 여백 20px */
+    padding-bottom: 340px; /* 현황판 높이 320px + 기본 여백 20px */
 }
 
 .waitingArea {
@@ -266,7 +266,7 @@
     left: 0;
     width: 100%;
     max-width: 100%;
-    height: 240px;
+    height: 320px;
     max-height: 80vh;
     display: flex;
     flex-direction: column;
@@ -291,7 +291,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 16px 24px;
+    padding: 16px 24px 24px; /* top padding 20 -> 16 */
     overflow-y: auto;
     overflow-x: hidden;
     background-color: var(--bg-primary);
@@ -338,7 +338,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 8px; /* 20px -> 8px 축소 */
     gap: 12px;
     width: 100%;
 }
@@ -521,7 +521,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 16px 0;
+    padding: 8px 0; /* 16px -> 8px 축소 */
 }
 
 /* 슬라이더 뷰포트 (overflow hidden이 여기서 clippin) */

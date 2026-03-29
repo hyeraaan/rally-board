@@ -381,10 +381,10 @@ export default function Home() {
                     type="button"
                     className={theme === 'retro' ? 'nes-btn is-error' : styles.clearPlayerBtn}
                     onClick={() => openConfirm(
-                      theme === 'retro' ? 'CLEAR ALL?' : '모든 대기 명단을 삭제하시겠습니까?',
+                      t.clearAllConfirm,
                       () => clearWaitingList()
                     )}
-                    title="전체 명단 삭제"
+                    title={t.clearAllTooltip}
                   >
                     <Minus size={16} />
                   </button>
@@ -392,7 +392,7 @@ export default function Home() {
                     type="button"
                     className={theme === 'retro' ? 'nes-btn is-warning' : styles.randomBtn}
                     onClick={randomMatch}
-                    title="빈 코트에 인원을 랜덤으로 채웁니다."
+                    title={t.randomMatchTooltip}
                   >
                     <Shuffle size={theme === 'retro' ? 20 : 16} /> {t.randomMatchBtn}
                   </button>

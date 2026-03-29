@@ -47,6 +47,12 @@ const translations = {
         emptyWaitingList: '대기 명단이 비어있습니다',
         addPlayerGuide: '하단의 [+] 버튼을 눌러 선수를 추가할 수 있습니다.',
         addPlayerTip: '"a 정혜란, b 원빈" 처럼 입력하면 한 번에 추가 가능!',
+        addPlayerTitle: '선수 추가',
+        bulkAddPlaceholder: '예: a 정혜란, b 홍길동',
+        bulkAddBtnText: '일괄 추가',
+        clearAllConfirm: '모든 대기 명단을 삭제하시겠습니까?',
+        clearAllTooltip: '전체 명단 삭제',
+        randomMatchTooltip: '빈 코트에 인원을 랜덤으로 채웁니다.',
     },
     en: {
         appTitle: 'Rally Board',
@@ -90,6 +96,12 @@ const translations = {
         emptyWaitingList: 'LIST IS EMPTY!',
         addPlayerGuide: 'Click the [+] button below to add players.',
         addPlayerTip: '"A John, B Doe" format adds multiple players!',
+        addPlayerTitle: 'Add Player',
+        bulkAddPlaceholder: 'e.g. A John, B Doe',
+        bulkAddBtnText: 'Bulk Add',
+        clearAllConfirm: 'Clear all players from the list?',
+        clearAllTooltip: 'Clear All',
+        randomMatchTooltip: 'Fill empty spots randomly.',
     },
 };
 
