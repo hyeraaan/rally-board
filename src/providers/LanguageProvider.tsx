@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 type Language = 'ko' | 'en';
 
@@ -98,9 +98,20 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-    const [lang, setLang] = useState<Language>('en');
+    const [lang, setLang] = useState<Language>('ko'); // 한국어 기본
 
-    const toggleLang = () => setLang((prev) => (prev === 'ko' ? 'en' : 'ko'));
+    useEffect(() => {
+        const savedLang = localStorage.getItem('rally-board-lang') as Language;
+        if (savedLang === 'ko' || savedLang === 'en') {
+            setLang(savedLang);
+        }
+    }, []);
+
+    const toggleLang = () => {
+        const newLang = lang === 'ko' ? 'en' : 'ko';
+        setLang(newLang);
+        localStorage.setItem('rally-board-lang', newLang);
+    };
 
     return (
         <LanguageContext.Provider value={{ lang, t: translations[lang], toggleLang }}>

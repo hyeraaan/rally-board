@@ -57,11 +57,6 @@ export default function Home() {
   const [eventTime, setEventTime] = useState('00:00:00');
 
   useEffect(() => {
-    // 앱 시작 시 데이터가 비어있으면 랜덤 연예인 명단 생성
-    initializeData();
-  }, []);
-
-  useEffect(() => {
     let interval: NodeJS.Timeout;
     if (isEventRunning && eventStartTime) {
       const updateTimer = () => {
@@ -152,6 +147,8 @@ export default function Home() {
 
   useEffect(() => {
     setIsMounted(true);
+    // 앱 시작 시 데이터가 비어있으면 랜덤 연예인 명단 생성
+    initializeData();
   }, []);
 
   const handleStartTournament = () => {
@@ -179,9 +176,11 @@ export default function Home() {
   const isAnyGamePlaying = courts.some(c => c.status === 'playing');
 
   if (!isMounted) {
-    // 서버 사이드와 첫 번째 클라이언트 렌더링 시점에는 
-    // 테마나 언어에 의존하지 않는 정적인 껍데기만 렌더링하여 Hydration 불일치를 방지합니다.
-    return <main className={styles.mainContainer} />;
+    return (
+      <div className={styles.container} style={{ opacity: 0 }}>
+        {/* 서버 렌더링 시에는 빈 껍데기만 보여주어 하이드레이션 충돌 방지 */}
+      </div>
+    );
   }
 
   return (
