@@ -44,6 +44,9 @@ const translations = {
         openWaitingListTooltip: '대기명단 열기',
         courtNumber: (id: number) => `${id}번 코트`,
         addPlayerTooltip: '선수 추가',
+        emptyWaitingList: '대기 명단이 비어있습니다',
+        addPlayerGuide: '하단의 [+] 버튼을 눌러 선수를 추가할 수 있습니다.',
+        addPlayerTip: '"a 정혜란, b 원빈" 처럼 입력하면 한 번에 추가 가능!',
     },
     en: {
         appTitle: 'Rally Board',
@@ -84,6 +87,9 @@ const translations = {
         openWaitingListTooltip: 'Open Waiting List',
         courtNumber: (id: number) => `Court ${id}`,
         addPlayerTooltip: 'Add Player',
+        emptyWaitingList: 'LIST IS EMPTY!',
+        addPlayerGuide: 'Click the [+] button below to add players.',
+        addPlayerTip: '"A John, B Doe" format adds multiple players!',
     },
 };
 
