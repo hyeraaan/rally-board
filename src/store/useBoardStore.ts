@@ -42,6 +42,7 @@ interface BoardState {
     activePopoverPlayerId: string | null;
     lastUpdated: number; // 마지막 업데이트 시간 (일주일 유지 체크용)
     tournamentTitle: string; // 대회 타이틀
+    isInitialized: boolean; // 초기 데이터 생성 여부 (리셋 후 재생성 방지)
     setActivePopoverPlayerId: (id: string | null) => void;
     setTournamentTitle: (title: string) => void;
 
@@ -72,6 +73,7 @@ interface BoardState {
     clearWaitingList: () => void;
     addPlayersBulk: (input: string) => void;
     initializeData: () => void;
+    resetAll: () => void;
 }
 
 const CELEBRITY_POOL: { name: string; tier: Tier }[] = [
@@ -156,6 +158,7 @@ export const useBoardStore = create<BoardState>()(
             tournamentTitle: '랠리보드 배드민턴 대회',
             activePopoverPlayerId: null,
             lastUpdated: Date.now(),
+            isInitialized: false,
 
             setCourts: (courts) => set({ courts, lastUpdated: Date.now() }),
             setActivePopoverPlayerId: (id) => set((state) => ({ ...state, activePopoverPlayerId: id })),
@@ -606,6 +609,12 @@ export const useBoardStore = create<BoardState>()(
 
             initializeData: () => {
                 const state = get();
+                
+                // 이미 초기화되었거나 사용자가 리셋한 경우 무시
+                if (state.isInitialized) {
+                    return;
+                }
+
                 const ONE_WEEK = 7 * 24 * 60 * 60 * 1000;
                 
                 // 일주일 경과 체크 및 자동 초기화
@@ -614,22 +623,36 @@ export const useBoardStore = create<BoardState>()(
                         waitingList: getRandomInitialWaitingList(), 
                         courts: initialCourts.map(c => ({ ...c, players: [], status: 'waiting' as const })),
                         matchHistory: [],
-                        lastUpdated: Date.now() 
+                        lastUpdated: Date.now(),
+                        isInitialized: true
                     });
                     return;
                 }
 
                 // 데이터가 이미 있으면(persistence 로드 성공) 무시
                 if (state.waitingList.length > 0 || state.courts.some(c => c.players.length > 0)) {
+                    set({ isInitialized: true });
                     return;
                 }
                 
                 // 데이터가 아예 없는 경우에만 랜덤 초기 데이터 생성
                 set({ 
                     waitingList: getRandomInitialWaitingList(), 
-                    lastUpdated: Date.now() 
+                    lastUpdated: Date.now(),
+                    isInitialized: true
                 });
             },
+
+            resetAll: () => 
+                set({
+                    courts: initialCourts.map(c => ({ ...c, players: [], status: 'waiting' as const, startTime: undefined })),
+                    waitingList: [],
+                    matchHistory: [],
+                    isEventRunning: false,
+                    eventStartTime: null,
+                    lastUpdated: Date.now(),
+                    isInitialized: true // 리셋 후에는 다시 자동 생성되지 않도록 설정
+                }),
         }),
         {
             name: 'rally-board-storage',
@@ -641,7 +664,8 @@ export const useBoardStore = create<BoardState>()(
                 lastUpdated: state.lastUpdated,
                 isEventRunning: state.isEventRunning,
                 eventStartTime: state.eventStartTime,
-                tournamentTitle: state.tournamentTitle
+                tournamentTitle: state.tournamentTitle,
+                isInitialized: state.isInitialized
             }),
         }
     )

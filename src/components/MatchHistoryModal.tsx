@@ -1,65 +1,65 @@
+'use client';
+
 import React from 'react';
 import { useBoardStore } from '@/store/useBoardStore';
 import { useTheme } from '@/providers/ThemeProvider';
 import { useLanguage } from '@/providers/LanguageProvider';
+import { X, History } from 'lucide-react';
 import styles from './MatchHistoryModal.module.css';
 
-interface MatchHistoryModalProps {
-    isOpen: boolean;
-    onClose: () => void;
+interface Props {
+  isOpen: boolean;
+  onClose: () => void;
 }
 
-export default function MatchHistoryModal({ isOpen, onClose }: MatchHistoryModalProps) {
-    const { matchHistory } = useBoardStore();
-    const { t } = useLanguage();
-    const { theme } = useTheme();
+export default function MatchHistoryModal({ isOpen, onClose }: Props) {
+  const { matchHistory } = useBoardStore();
+  const { theme } = useTheme();
+  const { t } = useLanguage();
 
-    if (!isOpen) return null;
+  if (!isOpen) return null;
 
-    return (
-        <div className={styles.modalOverlay} onClick={onClose}>
-            <div
-                className={`${styles.modalContent} ${theme === 'retro' ? 'nes-dialog is-rounded' : ''}`}
-                style={theme === 'retro' ? { padding: '1.5rem', border: '4px solid #000', backgroundColor: '#fff' } : {}}
-                onClick={(e) => e.stopPropagation()} // 내부 클릭 시 닫힘 방지
-            >
-                {theme === 'retro' ? (
-                    <div className="title" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
-                        <span style={{ fontWeight: 'bold' }}>📜 {t.historyTitle}</span>
-                        <button className="nes-btn is-error" style={{ padding: '0 8px' }} onClick={onClose}>X</button>
-                    </div>
-                ) : (
-                    <div className={styles.modalHeader}>
-                        <h2>📜 {t.historyTitle}</h2>
-                        <button className={styles.closeBtn} onClick={onClose}>&times;</button>
-                    </div>
-                )}
-
-                <div className={styles.historyList}>
-                    {matchHistory.length === 0 ? (
-                        <div className={styles.emptyMessage}>
-                            {t.noHistory}
-                        </div>
-                    ) : (
-                        matchHistory.map((record) => (
-                            <div key={record.id} className={`${styles.historyItem} ${theme === 'retro' ? 'nes-container is-rounded' : ''}`} style={theme === 'retro' ? { padding: '1rem', marginBottom: '1rem' } : {}}>
-                                <div className={styles.itemHeader}>
-                                    <span className={styles.courtBadge}>{t.courtLabel} {record.courtId}</span>
-                                    <span className={styles.timeBadge}>{record.startTimeStr}</span>
-                                </div>
-                                <div className={styles.playerGrid}>
-                                    {record.players.map((p) => (
-                                        <div key={p.id} className={`${styles.playerTag} ${theme === 'retro' ? styles.retroTag : ''}`}>
-                                            <span className={styles.tierBadge} data-tier={p.tier}>{p.tier}</span>
-                                            <span className={styles.playerName}>{p.name}</span>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        ))
-                    )}
-                </div>
-            </div>
+  return (
+    <div className={styles.modalOverlay} onClick={onClose}>
+      <div 
+        className={`${styles.modalCard} ${theme === 'retro' ? styles.retro : ''}`} 
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className={styles.modalHeader}>
+          <h2 className={styles.modalTitle}>
+            <History size={20} color={theme === 'retro' ? "#212529" : "currentColor"} />
+            {t.historyTitle}
+          </h2>
+          <button type="button" className={styles.modalCloseBtn} onClick={onClose}>
+            <X size={18} />
+          </button>
         </div>
-    );
+
+        <div className={styles.historyList}>
+          {matchHistory.length === 0 ? (
+            <div className={styles.emptyMessage}>{t.noHistory}</div>
+          ) : (
+            matchHistory.map((record) => (
+              <div key={record.id} className={styles.historyItem}>
+                <div className={styles.itemHeader}>
+                  <span className={styles.courtBadge}>{theme === 'retro' ? `MATCH ${record.courtId}` : `Match ${record.courtId}`}</span>
+                  <span className={styles.timeBadge}>{record.startTimeStr}</span>
+                </div>
+                <div className={styles.playerGrid}>
+                  {record.players.map((player) => (
+                    <div key={player.id} className={styles.playerTag}>
+                      <span className={styles.tierBadge} data-tier={player.tier}>
+                        {player.tier}
+                      </span>
+                      <span className={styles.playerName}>{player.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </div>
+    </div>
+  );
 }

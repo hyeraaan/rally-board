@@ -1,20 +1,21 @@
 .courtWrapper {
-    background-color: rgba(255, 255, 255, 0.03);
+    background-color: rgba(255, 255, 255, 0.015);
     border-radius: 12px;
-    border: 2px dashed rgba(255, 255, 255, 0.2);
+    border: 2px dashed rgba(255, 255, 255, 0.1); /* 약하게 */
     padding: 16px;
     display: flex;
     flex-direction: column;
     gap: 12px;
     margin-top: 16px !important;
     margin-bottom: 24px;
+    height: 340px; /* 실제 코트 카드 높이와 동일하게 340px로 고정 */
     transition: all 0.3s ease;
     width: 100%; /* 부모 그리드 너비에 맞춤 */
 }
 
 .courtWrapper:hover {
-    background-color: rgba(255, 255, 255, 0.08);
-    border-color: var(--accent-blue);
+    background-color: rgba(255, 255, 255, 0.04);
+    border-color: rgba(59, 130, 246, 0.4); /* 호버 시 파란색도 연하게 */
     transform: translateY(-4px);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
 }
@@ -22,17 +23,17 @@
 .courtHeader h3 {
     margin: 0;
     font-size: 1.25rem;
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.2); /* 0.4 -> 0.2 */
     transition: color 0.3s ease;
 }
 
 .courtWrapper:hover .courtHeader h3 {
-    color: white;
+    color: rgba(255, 255, 255, 0.7); /* 완전 흰색 대신 약간 투명하게 */
 }
 
 .courtField {
-    background-color: rgba(0, 0, 0, 0.2);
-    border: 4px dashed rgba(255, 255, 255, 0.1); /* 2px -> 4px (BadmintonCourt와 동일) */
+    background-color: transparent; /* 검은색 음영 완전 제거 */
+    border: 4px dashed rgba(255, 255, 255, 0.03); /* 점선도 더 흐릿하게 */
     border-radius: 4px;
     min-height: 250px;
     display: flex;
@@ -43,35 +44,36 @@
 }
 
 .courtWrapper:hover .courtField {
-    background-color: rgba(59, 130, 246, 0.1);
-    border-color: rgba(59, 130, 246, 0.3);
+    background-color: rgba(59, 130, 246, 0.05); /* 0.1 -> 0.05 */
+    border-color: rgba(59, 130, 246, 0.15); /* 0.3 -> 0.15 */
 }
 
 .addIconWrapper {
-    color: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.1); /* 0.2 -> 0.1 */
     transition: all 0.3s ease;
 }
 
 .courtWrapper:hover .addIconWrapper {
-    color: var(--accent-blue);
+    color: rgba(59, 130, 246, 0.6); /* 원색 대비 연한 파란색 */
     transform: scale(1.1);
 }
 
 /* 레트로 테마 지원 */
 :global(.retro-theme) .courtWrapper {
-    border: 4px dashed #212529 !important;
-    background-color: #bdc3c7 !important;
+    border: 4px dashed rgba(33, 37, 41, 0.2) !important;
+    background-color: rgba(33, 37, 41, 0.03) !important;
     padding: 1.5rem !important;
     margin-top: 16px !important;
 }
 
 :global(.retro-theme) .courtWrapper:hover {
-    background-color: #ecf0f1 !important;
+    border-color: rgba(33, 37, 41, 0.4) !important;
+    background-color: rgba(33, 37, 41, 0.08) !important;
     transform: none;
     box-shadow: none;
 }
 
 :global(.retro-theme) .courtField {
-    border: 2px dashed #212529 !important;
+    border: 2px dashed rgba(33, 37, 41, 0.15) !important;
     background-color: transparent !important;
 }

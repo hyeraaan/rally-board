@@ -8,6 +8,7 @@ import AddCourtButton from '@/components/AddCourtButton';
 import AddPlayerForm from '@/components/AddPlayerForm';
 import MatchHistoryModal from '@/components/MatchHistoryModal';
 import ConfirmModal from '@/components/ConfirmModal';
+import SettingsModal from '@/components/SettingsModal';
 import { useTheme } from '@/providers/ThemeProvider';
 import { useLanguage } from '@/providers/LanguageProvider';
 import {
@@ -82,38 +83,55 @@ export default function Home() {
   const [isWaitingListOpen, setIsWaitingListOpen] = useState(true);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [isAddFormOpen, setIsAddFormOpen] = useState(false);
-  const [currentGroupPage, setCurrentGroupPage] = useState(0); // 슬라이더 현재 페이지(0-indexed)
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false); // 설정 모달
   const sliderContainerRef = useRef<HTMLDivElement>(null); // 뷰포트 참조
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+  const [isScrollable, setIsScrollable] = useState(false);
 
-  // 스크롤 위치에 따라 현재 페이지 업데이트 (스와이프 대응)
+  // 스크롤 위치에 따라 화살표 상태 업데이트
   const handleScroll = useCallback(() => {
     if (!sliderContainerRef.current) return;
-    const { scrollLeft, clientWidth } = sliderContainerRef.current;
+    const { scrollLeft, clientWidth, scrollWidth } = sliderContainerRef.current;
     if (clientWidth === 0) return;
     
-    // 현재 중앙에 있는 아이템 기준으로 페이지 계산
-    const page = Math.round(scrollLeft / clientWidth);
-    if (currentGroupPage !== page) {
-      setCurrentGroupPage(page);
-    }
-  }, [currentGroupPage]);
+    setIsScrollable(scrollWidth > clientWidth + 2); // 2px 여유
+    setCanScrollLeft(scrollLeft > 2); // 오차 및 바운스 방지를 위해 2px 임계값 적용
+    setCanScrollRight(Math.ceil(scrollLeft + clientWidth) < scrollWidth - 2); // 2px 오차 허용
+  }, []);
 
   useEffect(() => {
     const el = sliderContainerRef.current;
     if (el) {
       el.addEventListener('scroll', handleScroll, { passive: true });
-      return () => el.removeEventListener('scroll', handleScroll);
+      window.addEventListener('resize', handleScroll);
+      // 초기 렌더링 이후 레이아웃 확정 시점에 화살표 렌더링
+      const timer = setTimeout(handleScroll, 100);
+      return () => {
+        el.removeEventListener('scroll', handleScroll);
+        window.removeEventListener('resize', handleScroll);
+        clearTimeout(timer);
+      };
     }
   }, [handleScroll]);
 
-  // 버튼 클릭 시 해당 페이지로 스크롤
-  const scrollToPage = (page: number) => {
+  // 대기명단이 변경될 때마다 화살표 갱신
+  useEffect(() => {
+    const timer = setTimeout(handleScroll, 150);
+    return () => clearTimeout(timer);
+  }, [waitingList.length, handleScroll]);
+
+  // 버튼 클릭 시 한 화면만큼 스크롤
+  const scrollPrev = () => {
     if (!sliderContainerRef.current) return;
-    const { clientWidth } = sliderContainerRef.current;
-    sliderContainerRef.current.scrollTo({
-      left: page * clientWidth,
-      behavior: 'smooth'
-    });
+    sliderContainerRef.current.scrollBy({ left: -sliderContainerRef.current.clientWidth, behavior: 'smooth' });
+    setTimeout(handleScroll, 400); // 애니메이션 종료 후 확실히 상태 갱신
+  };
+
+  const scrollNext = () => {
+    if (!sliderContainerRef.current) return;
+    sliderContainerRef.current.scrollBy({ left: sliderContainerRef.current.clientWidth, behavior: 'smooth' });
+    setTimeout(handleScroll, 400);
   };
 
   const handleSelect = (playerId: string) => {
@@ -218,8 +236,6 @@ export default function Home() {
     );
   }
 
-  const nCols = isWaitingListOpen ? 2 : 3;
-
   return (
         <main className={`${styles.mainContainer} ${theme === 'retro' ? styles.retroMain : ''}`}>
             <DndContext sensors={sensors} collisionDetection={closestCorners} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
@@ -237,14 +253,14 @@ export default function Home() {
                                 <div className={styles.titleGroup}>
                                     <div className={styles.tournamentTitleWrapper}>
                                         <div className={styles.inputMirror} aria-hidden="true">
-                                            {tournamentTitle || '대회 이름을 입력하세요'}
+                                            {tournamentTitle || t.tournamentTitlePlaceholder}
                                         </div>
                                         <input
                                             type="text"
                                             className={styles.tournamentTitleInput}
                                             value={tournamentTitle}
                                             onChange={(e) => setTournamentTitle(e.target.value.slice(0, 10))}
-                                            placeholder="대회 이름을 입력하세요"
+                                            placeholder={t.tournamentTitlePlaceholder}
                                             maxLength={10}
                                         />
                                         <span className={styles.serviceWatermark}>{t.appTitle}</span>
@@ -337,6 +353,16 @@ export default function Home() {
                                     >
                                         <Gamepad2 size={20} />
                                     </button>
+                                    <button
+                                        type="button"
+                                        className={theme === 'retro' ? `nes-btn ${styles.retroHeaderBtn}` : styles.themeIconBtn}
+                                        onClick={() => setIsSettingsOpen(true)}
+                                        style={theme === 'retro' ? { width: '36px', height: '36px', fontSize: '16px', padding: 0, display: 'flex', justifyContent: 'center', alignItems: 'center' } : undefined}
+                                        title={t.settingsTooltip}
+                                        aria-label={t.settingsTitle}
+                                    >
+                                        <Settings size={20} />
+                                    </button>
 
                                     <div className={styles.authActions}>
                                         {session?.user?.isAdmin && (
@@ -344,9 +370,9 @@ export default function Home() {
                                                 href="/admin"
                                                 className={theme === 'retro' ? `nes-btn is-warning ${styles.retroHeaderBtn}` : styles.themeIconBtn}
                                                 style={theme === 'retro' ? { width: '36px', height: '36px', fontSize: '16px', padding: 0, display: 'flex', justifyContent: 'center', alignItems: 'center' } : undefined}
-                                                title="관리자 설정"
+                                                title="관리자 페이지"
                                             >
-                                                <Settings size={20} />
+                                                <Trophy size={18} />
                                             </Link>
                                         )}
                                         <button
@@ -362,9 +388,7 @@ export default function Home() {
                                 </div>
                             </div>
                         </div>
-                        <div className={styles.courtGrid} style={{
-                            gridTemplateColumns: `repeat(${nCols}, 1fr)`
-                        }}>
+                        <div className={styles.courtGrid}>
               {courts.map((court) => (
                 <div key={court.id} className={styles.courtGridItem}>
                   <BadmintonCourt
@@ -460,19 +484,16 @@ export default function Home() {
                 for (let i = 0; i < waitingList.length; i += 4) {
                   groups.push(waitingList.slice(i, i + 4));
                 }
-                const COLS_PER_PAGE = 3;
-                const totalPages = Math.max(1, Math.ceil(groups.length / COLS_PER_PAGE));
-                const safePage = Math.min(currentGroupPage, totalPages - 1);
 
                 return (
                   <div className={styles.waitingSliderWrapper}>
-                    {/* 왼쪽 이동 버튼 - 페이지가 여러 개이고 현재 첫 페이지가 아닐 때 노출 */}
-                    {groups.length > COLS_PER_PAGE && (
+                    {/* 왼쪽 이동 버튼 */}
+                    {isScrollable && (
                       <button
                         type="button"
                         className={`${styles.sliderNavBtn} ${styles.left}`}
-                        onClick={() => scrollToPage(safePage - 1)}
-                        disabled={safePage === 0}
+                        onClick={scrollPrev}
+                        disabled={!canScrollLeft}
                         aria-label="이전"
                       >
                         <ChevronLeft size={20} />
@@ -488,7 +509,6 @@ export default function Home() {
                               <div
                                 key={`group-${groupIndex}`}
                                 className={styles.playerGroup}
-                                style={{ width: `calc((100% - ${(COLS_PER_PAGE - 1) * 20}px) / ${COLS_PER_PAGE})` }}
                               >
                                 <div className={styles.groupBadge}>
                                   {theme === 'retro' ? `MATCH ${groupIndex + 1}` : `Match ${groupIndex + 1}`}
@@ -521,12 +541,12 @@ export default function Home() {
                     </div>
 
                     {/* 오른쪽 이동 버튼 */}
-                    {groups.length > COLS_PER_PAGE && (
+                    {isScrollable && (
                       <button
                         type="button"
                         className={`${styles.sliderNavBtn} ${styles.right}`}
-                        onClick={() => scrollToPage(safePage + 1)}
-                        disabled={safePage >= totalPages - 1}
+                        onClick={scrollNext}
+                        disabled={!canScrollRight}
                         aria-label="다음"
                       >
                         <ChevronRight size={20} />
@@ -586,6 +606,10 @@ export default function Home() {
         isOpen={isHistoryModalOpen}
         onClose={() => setIsHistoryModalOpen(false)}
       />
+
+      {isSettingsOpen && (
+        <SettingsModal onClose={() => setIsSettingsOpen(false)} />
+      )}
 
       <ConfirmModal />
 

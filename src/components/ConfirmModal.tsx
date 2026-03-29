@@ -4,6 +4,7 @@ import React from 'react';
 import { useBoardStore } from '@/store/useBoardStore';
 import { useTheme } from '@/providers/ThemeProvider';
 import { useLanguage } from '@/providers/LanguageProvider';
+import { X, AlertCircle } from 'lucide-react';
 import styles from './ConfirmModal.module.css';
 
 export default function ConfirmModal() {
@@ -21,38 +22,31 @@ export default function ConfirmModal() {
     return (
         <div className={styles.modalOverlay} onClick={closeConfirm}>
             <div
-                className={`${styles.modalContent} ${theme === 'retro'
-                        ? `nes-dialog is-rounded ${styles.retroContent}`
-                        : styles.classicContent
-                    }`}
+                className={`${styles.modalCard} ${theme === 'retro' ? styles.retro : ''}`}
                 onClick={(e) => e.stopPropagation()}
-                style={theme === 'retro' ? { border: '4px solid #000' } : {}}
             >
-                {theme === 'retro' ? (
-                    <form method="dialog">
-                        <p className={styles.retroMessage}>
-                            {confirmModal.message}
-                        </p>
-                        <menu className={styles.retroButtons}>
-                            <button className="nes-btn" onClick={closeConfirm}>{t.cancelModalBtn}</button>
-                            <button className="nes-btn is-primary" onClick={handleConfirm}>{t.confirmBtn}</button>
-                        </menu>
-                    </form>
-                ) : (
-                    <>
-                        <p className={styles.message}>
-                            {confirmModal.message}
-                        </p>
-                        <div className={styles.buttonGroup}>
-                            <button className={styles.classicCancelBtn} onClick={closeConfirm}>
-                                {t.cancelModalBtn}
-                            </button>
-                            <button className={styles.classicConfirmBtn} onClick={handleConfirm}>
-                                {t.confirmBtn}
-                            </button>
-                        </div>
-                    </>
-                )}
+                <div className={styles.modalHeader}>
+                    <h2 className={styles.modalTitle}>
+                        <AlertCircle size={20} color={theme === 'retro' ? "#212529" : "#f59e0b"} />
+                        {t.confirmTitle}
+                    </h2>
+                    <button type="button" className={styles.modalCloseBtn} onClick={closeConfirm}>
+                        <X size={18} />
+                    </button>
+                </div>
+                
+                <p className={styles.alertMessage}>
+                    {confirmModal.message}
+                </p>
+                
+                <div className={styles.actionRow}>
+                    <button className={`${styles.cancelBtn} ${theme === 'retro' ? styles.btnRetro : ''}`} onClick={closeConfirm}>
+                        {t.cancelModalBtn}
+                    </button>
+                    <button className={`${styles.confirmBtn} ${theme === 'retro' ? `${styles.btnRetro} ${styles.confirmRetro}` : ''}`} onClick={handleConfirm}>
+                        {t.confirmBtn}
+                    </button>
+                </div>
             </div>
         </div>
     );

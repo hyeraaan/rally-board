@@ -1,76 +1,143 @@
+/* src/components/MatchHistoryModal.module.css */
 .modalOverlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.6);
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
     display: flex;
+    align-items: center;
     justify-content: center;
-    align-items: center;
-    z-index: 9999;
+    z-index: 2000;
+    animation: fadeIn 0.15s ease;
 }
 
-.modalContent {
-    background-color: #fff;
-    width: 90%;
-    max-width: 500px;
-    max-height: 80vh;
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
 
-.modalHeader {
-    padding: 16px 20px;
-    border-bottom: 1px solid #e1e4e8;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #f8f9fa;
-}
-
-.modalHeader h2 {
-    margin: 0;
-    font-size: 1.2rem;
-    color: #24292e;
-}
-
-.closeBtn {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: #586069;
-}
-
-.closeBtn:hover {
-    color: #d73a49;
-}
-
-.historyList {
-    padding: 20px;
-    overflow-y: auto;
+.modalCard {
+    width: 480px; /* 좀 더 넓게 설정 */
+    max-width: calc(100vw - 32px);
+    max-height: 85vh; /* 상하 스크롤을 위해 높이 제한 */
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    padding: 24px;
     display: flex;
     flex-direction: column;
     gap: 16px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+    animation: slideUp 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(24px) scale(0.95); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modalCard.retro {
+    background: white;
+    border: 4px solid #212529;
+    border-radius: 0;
+    box-shadow: 8px 8px 0 #212529;
+}
+
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.modalTitle {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: white;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+}
+
+.modalCard.retro .modalTitle {
+    color: #212529;
+    font-size: 0.9rem;
+}
+
+.modalCloseBtn {
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    color: rgba(255, 255, 255, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.2s;
+}
+
+.modalCloseBtn:hover {
+    background: rgba(239, 68, 68, 0.3);
+    border-color: #ef4444;
+    color: #ef4444;
+}
+
+.modalCard.retro .modalCloseBtn {
+    background: transparent;
+    border: 2px solid #212529;
+    border-radius: 0;
+    color: #212529;
+}
+
+/* 히스토리 전용 */
+.historyList {
+    padding-right: 4px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
     flex: 1;
+}
+
+.historyList::-webkit-scrollbar {
+    width: 6px;
+}
+.historyList::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+.modalCard.retro .historyList::-webkit-scrollbar-thumb {
+    background: #212529;
+    border-radius: 0;
 }
 
 .emptyMessage {
     text-align: center;
-    color: #6a737d;
-    padding: 40px 0;
+    color: rgba(255, 255, 255, 0.5);
+    padding: 32px 0;
     font-size: 0.95rem;
+    font-weight: 500;
+}
+.modalCard.retro .emptyMessage {
+    color: rgba(33, 37, 41, 0.6);
 }
 
 .historyItem {
-    border: 1px solid #e1e4e8;
-    border-radius: 8px;
-    padding: 16px;
-    background-color: #fdfdfd;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 12px;
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+.modalCard.retro .historyItem {
+    background-color: #f8f9fa;
+    border: 2px solid #dee2e6;
+    border-radius: 0;
 }
 
 .itemHeader {
@@ -79,21 +146,36 @@
     align-items: center;
     margin-bottom: 12px;
     padding-bottom: 8px;
-    border-bottom: 1px dashed #e1e4e8;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
+}
+
+.modalCard.retro .itemHeader {
+    border-bottom: 2px dashed #dee2e6;
 }
 
 .courtBadge {
-    font-weight: 600;
-    color: #0366d6;
+    font-weight: 800;
+    color: #60a5fa;
     font-size: 0.9rem;
 }
 
+.modalCard.retro .courtBadge {
+    color: #0366d6;
+}
+
 .timeBadge {
-    color: #586069;
-    font-size: 0.85rem;
-    background-color: #f1f8ff;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.8rem;
+    font-weight: 600;
+    background-color: rgba(0, 0, 0, 0.2);
     padding: 2px 8px;
     border-radius: 12px;
+}
+
+.modalCard.retro .timeBadge {
+    color: #586069;
+    background-color: #e1e4e8;
+    border-radius: 0;
 }
 
 .playerGrid {
@@ -107,48 +189,42 @@
     align-items: center;
     gap: 8px;
     padding: 6px 10px;
-    border-radius: 4px;
-    background-color: #f6f8fa;
-    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* 레트로 테마용 오버라이드 */
-.retroTag {
+.modalCard.retro .playerTag {
     background-color: #fff;
     border: 2px solid #212529;
     border-radius: 0;
 }
 
 .tierBadge {
-    font-weight: 700;
+    font-weight: 800;
     font-size: 0.75rem;
     padding: 2px 6px;
     border-radius: 4px;
     color: white;
 }
 
-.tierBadge[data-tier="A"] {
-    background-color: #ef4444;
-}
+.tierBadge[data-tier="A"] { background-color: #ef4444; }
+.tierBadge[data-tier="B"] { background-color: #f97316; }
+.tierBadge[data-tier="C"] { background-color: #eab308; }
+.tierBadge[data-tier="D"] { background-color: #22c55e; }
+.tierBadge[data-tier="E"] { background-color: #3b82f6; }
 
-.tierBadge[data-tier="B"] {
-    background-color: #f97316;
-}
-
-.tierBadge[data-tier="C"] {
-    background-color: #eab308;
-}
-
-.tierBadge[data-tier="D"] {
-    background-color: #22c55e;
-}
-
-.tierBadge[data-tier="E"] {
-    background-color: #3b82f6;
+.modalCard.retro .tierBadge {
+    border-radius: 0;
+    border: 1px solid #000;
 }
 
 .playerName {
     font-size: 0.9rem;
-    color: #24292e;
-    font-weight: 500;
+    color: white;
+    font-weight: 600;
+}
+
+.modalCard.retro .playerName {
+    color: #212529;
 }
