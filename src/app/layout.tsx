@@ -3,6 +3,7 @@ import { Press_Start_2P, Noto_Sans_KR } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/providers/ThemeProvider';
 import { LanguageProvider } from '@/providers/LanguageProvider';
+import { AuthProvider } from '@/providers/AuthProvider';
 
 const notoSansKR = Noto_Sans_KR({
   subsets: ['latin'],
@@ -32,11 +33,13 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={`${notoSansKR.variable} ${pressStart2P.variable}`}>
-        <ThemeProvider>
-          <LanguageProvider>
-            {children}
-          </LanguageProvider>
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider>
+            <LanguageProvider>
+              {children}
+            </LanguageProvider>
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );

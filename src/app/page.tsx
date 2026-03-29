@@ -16,14 +16,18 @@ import {
 } from '@dnd-kit/core';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
 import {
-  Shuffle, Eraser, Globe, Monitor, Gamepad2, History, ChevronLeft, ChevronRight, Play, PlayCircle, Square, Trophy, Clock, X
+  Shuffle, Eraser, Globe, Monitor, Gamepad2, History, ChevronLeft, ChevronRight, Play, PlayCircle, Square, Trophy, Clock, X, LogOut, Settings
 } from 'lucide-react';
+import { useSession, signOut } from 'next-auth/react';
+import Link from 'next/link';
 
 import { useBoardStore, Tier, Player } from '@/store/useBoardStore';
 
 export default function Home() {
+  const { data: session } = useSession();
   const { theme, toggleTheme } = useTheme();
   const { lang, t, toggleLang } = useLanguage();
+// ... (omitted for short replacement, but I will include the full block below)
   const {
     courts,
     waitingList,
@@ -286,6 +290,28 @@ export default function Home() {
                   >
                     <Gamepad2 size={20} />
                   </button>
+
+                  <div className={styles.authActions}>
+                    {session?.user?.isAdmin && (
+                      <Link
+                        href="/admin"
+                        className={theme === 'retro' ? `nes-btn is-warning ${styles.retroHeaderBtn}` : styles.themeIconBtn}
+                        style={theme === 'retro' ? { width: '36px', height: '36px', fontSize: '16px', padding: 0, display: 'flex', justifyContent: 'center', alignItems: 'center' } : undefined}
+                        title="관리자 설정"
+                      >
+                        <Settings size={20} />
+                      </Link>
+                    )}
+                    <button
+                      type="button"
+                      className={theme === 'retro' ? `nes-btn is-error ${styles.retroHeaderBtn}` : styles.themeIconBtn}
+                      onClick={() => signOut()}
+                      style={theme === 'retro' ? { width: '36px', height: '36px', fontSize: '16px', padding: 0, display: 'flex', justifyContent: 'center', alignItems: 'center' } : undefined}
+                      title="로그아웃"
+                    >
+                      <LogOut size={20} />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

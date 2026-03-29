@@ -15,9 +15,13 @@
 
 ### 영속성 (Persistence)
 - `zustand/middleware`의 `persist`를 사용하여 `LocalStorage`에 데이터를 자동 저장합니다.
+- **서버 연동:** 실제 사용자 승인 상태 및 프로필 정보는 **Supabase PostgreSQL**에서 관리됩니다.
 - **Hydration 이슈 대응:** 서버와 클라이언트의 데이터 불일치를 방지하기 위해 `page.tsx`에서 `isMounted` 상태를 통해 클라이언트 렌더링을 보장합니다.
 
 ## 3. 핵심 기술 (Core Technologies)
+- **Framework:** Next.js 15+ (App Router)
+- **Authentication:** Auth.js (NextAuth v5 Beta)
+- **Database/Auth Provider:** Supabase (PostgreSQL)
 - **Drag & Drop:** `@dnd-kit/core` 및 `@dnd-kit/sortable`을 사용합니다.
   - `PlayerMagnet`: 드래그 가능한 플레이어 유닛
   - `BadmintonCourt`: 드롭 가능한 대상
