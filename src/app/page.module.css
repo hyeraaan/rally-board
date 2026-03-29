@@ -41,7 +41,7 @@
 .inputMirror {
     font-size: 1.5rem;
     font-weight: 800;
-    padding: 0.25rem 0.8rem 0.25rem 0.5rem; /* 우측 패딩 약간 추가 */
+    padding: 0.25rem 0.75rem; /* 좌우 대칭 패딩 */
     visibility: hidden;
     white-space: pre;
     min-width: 50px;
@@ -61,7 +61,7 @@
     color: white;
     font-size: 1.5rem;
     font-weight: 800;
-    padding: 0.25rem 0.8rem 0.25rem 0.5rem; /* 우측 패딩 약간 추가 */
+    padding: 0.25rem 0.75rem; /* 좌우 대칭 패딩 */
     outline: none;
     transition: border-bottom-color 0.2s;
     box-sizing: border-box;
@@ -89,13 +89,13 @@
     border: 4px solid #000;
     box-shadow: 4px 4px 0 rgba(0,0,0,0.2);
     margin: 10px 0;
-    padding-right: 15px; /* RALLY BOARD와의 조화를 위해 */
+    padding: 0 12px; /* 좌우 대칭 패딩 12px */
 }
 
 :global(.retro-theme) .inputMirror {
     font-family: inherit;
     font-size: 1rem;
-    padding: 8px;
+    padding: 8px 0; /* 좌우 패딩은 래퍼에서 관리 */
     height: auto;
 }
 
