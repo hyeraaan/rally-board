@@ -209,6 +209,20 @@
     color: white !important;
 }
 
+.authActions {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: 0.5rem;
+  padding-left: 0.5rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+:global(.retro) .authActions {
+  border-left: 4px solid #212529;
+  margin-left: 10px;
+  padding-left: 10px;
+}
+
 /* 코트 그리드 반응형을 위한 클래스 추가 */
 .courtGrid {
     display: flex;

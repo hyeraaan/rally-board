@@ -16,14 +16,18 @@ import {
 } from '@dnd-kit/core';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
 import {
-  Shuffle, Eraser, Globe, Monitor, Gamepad2, History, ChevronLeft, ChevronRight, Play, PlayCircle, Square, Trophy, Clock, X, Plus, Minus
+  Shuffle, Eraser, Globe, Monitor, Gamepad2, History, ChevronLeft, ChevronRight, Play, PlayCircle, Square, Trophy, Clock, X, LogOut, Settings, Plus, Minus
 } from 'lucide-react';
+import { useSession, signOut } from 'next-auth/react';
+import Link from 'next/link';
 
 import { useBoardStore, Tier, Player } from '@/store/useBoardStore';
 
 export default function Home() {
+  const { data: session } = useSession();
   const { theme, toggleTheme } = useTheme();
   const { lang, t, toggleLang } = useLanguage();
+// ... (omitted for short replacement, but I will include the full block below)
   const {
     courts,
     waitingList,
@@ -33,7 +37,6 @@ export default function Home() {
     addCourt,
     deleteCourt,
     deletePlayer,
-    clearWaitingList,
     addPlayer,
     movePlayer,
     randomMatch,
@@ -52,7 +55,8 @@ export default function Home() {
     initializeData,
     setActivePopoverPlayerId,
     tournamentTitle,
-    setTournamentTitle
+    setTournamentTitle,
+    clearWaitingList
   } = useBoardStore();
 
   const [eventTime, setEventTime] = useState('00:00:00');
@@ -78,9 +82,9 @@ export default function Home() {
 
   const [activeId, setActiveId] = useState<string | null>(null);
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
-  const [isAddFormOpen, setIsAddFormOpen] = useState(false);
   const [isWaitingListOpen, setIsWaitingListOpen] = useState(true);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [isAddFormOpen, setIsAddFormOpen] = useState(false);
   const [currentGroupPage, setCurrentGroupPage] = useState(0); // 슬라이더 현재 페이지(0-indexed)
   const sliderContainerRef = useRef<HTMLDivElement>(null); // 뷰포트 참조
 
@@ -335,6 +339,28 @@ export default function Home() {
                   >
                     <Gamepad2 size={20} />
                   </button>
+
+                  <div className={styles.authActions}>
+                    {session?.user?.isAdmin && (
+                      <Link
+                        href="/admin"
+                        className={theme === 'retro' ? `nes-btn is-warning ${styles.retroHeaderBtn}` : styles.themeIconBtn}
+                        style={theme === 'retro' ? { width: '36px', height: '36px', fontSize: '16px', padding: 0, display: 'flex', justifyContent: 'center', alignItems: 'center' } : undefined}
+                        title="관리자 설정"
+                      >
+                        <Settings size={20} />
+                      </Link>
+                    )}
+                    <button
+                      type="button"
+                      className={theme === 'retro' ? `nes-btn is-error ${styles.retroHeaderBtn}` : styles.themeIconBtn}
+                      onClick={() => signOut()}
+                      style={theme === 'retro' ? { width: '36px', height: '36px', fontSize: '16px', padding: 0, display: 'flex', justifyContent: 'center', alignItems: 'center' } : undefined}
+                      title="로그아웃"
+                    >
+                      <LogOut size={20} />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
