@@ -224,7 +224,7 @@ export default function Home() {
         <div className={styles.contentWrapper}>
           {/* 1. 왼쪽 영역 코트 판 */}
           <section
-            className={styles.courtArea}
+            className={`${styles.courtArea} ${isWaitingListOpen ? styles.shifted : ''}`}
             onClick={() => {
               if (isWaitingListOpen) setIsWaitingListOpen(false);
               setActivePopoverPlayerId(null);
