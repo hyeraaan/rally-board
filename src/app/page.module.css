@@ -267,6 +267,11 @@
     overflow-y: auto;
     display: flex;
     flex-direction: column;
+    transition: padding-bottom 0.3s ease;
+}
+
+.courtArea.shifted {
+    padding-bottom: 260px; /* 현황판 높이 240px + 기본 여백 20px */
 }
 
 .waitingArea {
@@ -275,7 +280,7 @@
     left: 0;
     width: 100%;
     max-width: 100%;
-    height: 480px;
+    height: 240px;
     max-height: 80vh;
     display: flex;
     flex-direction: column;
@@ -300,7 +305,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 24px 32px;
+    padding: 16px 24px;
     overflow-y: auto;
     overflow-x: hidden;
     background-color: var(--bg-primary);
