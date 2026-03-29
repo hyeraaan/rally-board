@@ -140,14 +140,39 @@
     place-items: center;
 }
 
+@media (max-width: 1024px) {
+    .courtWrapper {
+        padding: 12px;
+        gap: 8px;
+    }
+    .courtHeader h3 {
+        font-size: 1.1rem;
+    }
+    .playersContainer {
+        gap: 10px;
+        padding: 10px;
+    }
+    .emptySlot {
+        width: 75px;
+        height: 85px;
+    }
+    .courtField {
+        min-height: 220px;
+    }
+}
+
 @media (max-width: 480px) {
     .playersContainer {
-        gap: 8px;
+        gap: 6px;
         padding: 8px;
     }
 
     .courtField {
-        min-height: 220px;
+        min-height: 200px;
+    }
+    .emptySlot {
+        width: 70px;
+        height: 80px;
     }
 }
 
