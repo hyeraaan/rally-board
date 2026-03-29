@@ -72,7 +72,7 @@
 }
 
 :global(.retro) .areaTitle {
-    font-size: 1rem;
+    font-size: 0.7rem; /* 크기 축소 */
     opacity: 1;
     color: #444;
 }
