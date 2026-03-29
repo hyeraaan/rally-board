@@ -640,7 +640,8 @@ export const useBoardStore = create<BoardState>()(
                 matchHistory: state.matchHistory,
                 lastUpdated: state.lastUpdated,
                 isEventRunning: state.isEventRunning,
-                eventStartTime: state.eventStartTime
+                eventStartTime: state.eventStartTime,
+                tournamentTitle: state.tournamentTitle
             }),
         }
     )
