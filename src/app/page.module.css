@@ -35,6 +35,7 @@
     align-items: center;
     position: relative;
     max-width: 100%;
+    padding-right: 20px; /* 워터마크 우측 여백 확보 */
 }
 
 /* 입력을 위한 투명 거울 (너비 측정용) */
@@ -89,7 +90,7 @@
     border: 4px solid #000;
     box-shadow: 4px 4px 0 rgba(0,0,0,0.2);
     margin: 10px 0;
-    padding: 0 12px; /* 좌우 대칭 패딩 12px */
+    padding: 0 20px; /* 좌우 대칭 패딩 강화 20px */
 }
 
 :global(.retro-theme) .inputMirror {
