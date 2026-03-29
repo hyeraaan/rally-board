@@ -16,7 +16,7 @@ import {
 } from '@dnd-kit/core';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
 import {
-  Shuffle, Eraser, Globe, Monitor, Gamepad2, History, ChevronLeft, ChevronRight, Play, PlayCircle, Square, Trophy, Clock, X
+  Shuffle, Eraser, Globe, Monitor, Gamepad2, History, ChevronLeft, ChevronRight, Play, PlayCircle, Square, Trophy, Clock, X, Plus, Minus
 } from 'lucide-react';
 
 import { useBoardStore, Tier, Player } from '@/store/useBoardStore';
@@ -33,6 +33,7 @@ export default function Home() {
     addCourt,
     deleteCourt,
     deletePlayer,
+    clearWaitingList,
     addPlayer,
     movePlayer,
     randomMatch,
@@ -77,6 +78,7 @@ export default function Home() {
 
   const [activeId, setActiveId] = useState<string | null>(null);
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
+  const [isAddFormOpen, setIsAddFormOpen] = useState(false);
   const [isWaitingListOpen, setIsWaitingListOpen] = useState(true);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
@@ -332,6 +334,27 @@ export default function Home() {
                   {t.waitingList} ({waitingList.length})
                 </h2>
                 <div className={styles.sidebarButtonGroup}>
+                  {/* + 선수 추가 버튼 */}
+                  <button
+                    type="button"
+                    className={theme === 'retro' ? 'nes-btn is-success' : styles.addPlayerBtn}
+                    onClick={() => setIsAddFormOpen(true)}
+                    title={t.addPlayerTooltip}
+                  >
+                    <Plus size={16} />
+                  </button>
+                  {/* - 전체 삭제 버튼 */}
+                  <button
+                    type="button"
+                    className={theme === 'retro' ? 'nes-btn is-error' : styles.clearPlayerBtn}
+                    onClick={() => openConfirm(
+                      theme === 'retro' ? 'CLEAR ALL?' : '모든 대기 명단을 삭제하시겠습니까?',
+                      () => clearWaitingList()
+                    )}
+                    title="전체 명단 삭제"
+                  >
+                    <Minus size={16} />
+                  </button>
                   <button
                     type="button"
                     className={theme === 'retro' ? 'nes-btn is-warning' : styles.randomBtn}
@@ -418,8 +441,10 @@ export default function Home() {
                   )}
                 </SortableContext>
               </div>
-              {/* 선수 추가 폼 (원래대로 하단 배치) */}
-              <AddPlayerForm />
+              {/* 선수 추가 폼 (+ 버튼 클릭 시 표시) */}
+              {isAddFormOpen && (
+                <AddPlayerForm onClose={() => setIsAddFormOpen(false)} />
+              )}
             </div>
           </aside>
         </div>

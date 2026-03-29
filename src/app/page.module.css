@@ -355,6 +355,48 @@
     }
 }
 
+.addPlayerBtn {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background-color: rgba(16, 185, 129, 0.2);
+    border: 1px solid rgba(16, 185, 129, 0.5);
+    color: #10b981;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.addPlayerBtn:hover {
+    background-color: #10b981;
+    color: white;
+    transform: scale(1.05);
+}
+
+.clearPlayerBtn {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background-color: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #ef4444;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.clearPlayerBtn:hover {
+    background-color: #ef4444;
+    color: white;
+    transform: scale(1.05);
+}
+
 .randomBtn {
     background-color: #f59e0b;
     color: white;

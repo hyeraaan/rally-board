@@ -4,16 +4,15 @@ import { useState } from 'react';
 import styles from './AddPlayerForm.module.css';
 import { useTheme } from '@/providers/ThemeProvider';
 import { useLanguage } from '@/providers/LanguageProvider';
-import { Plus, Minus, Check, X } from 'lucide-react';
+import { Check, X } from 'lucide-react';
 import { useBoardStore, Tier } from '@/store/useBoardStore';
 
 const TIERS: Tier[] = ['A', 'B', 'C', 'D', 'E'];
 
-export default function AddPlayerForm() {
+export default function AddPlayerForm({ onClose }: { onClose: () => void }) {
     const { theme } = useTheme();
     const { t } = useLanguage();
-    const { addPlayer, clearWaitingList, addPlayersBulk, openConfirm } = useBoardStore();
-    const [open, setOpen] = useState(false);
+    const { addPlayer, clearWaitingList, addPlayersBulk } = useBoardStore();
     const [name, setName] = useState('');
     const [tier, setTier] = useState<Tier>('C');
 
@@ -31,45 +30,13 @@ export default function AddPlayerForm() {
         
         setName('');
         setTier('C');
-        setOpen(false);
-    };
-
-    const handleClearAll = () => {
-        openConfirm(
-            theme === 'retro' ? 'CLEAR ALL?' : '모든 대기 명단을 삭제하시겠습니까?',
-            () => clearWaitingList()
-        );
+        onClose();
     };
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter') handleSubmit();
-        if (e.key === 'Escape') setOpen(false);
+        if (e.key === 'Escape') onClose();
     };
-
-    if (!open) {
-        return (
-            <div className={styles.addBtnGroup}>
-                <button
-                    type="button"
-                    className={theme === 'retro' ? `nes-btn ${styles.addBtnRetro}` : styles.addBtn}
-                    onClick={() => setOpen(true)}
-                    aria-label={t.addPlayerTooltip}
-                    style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <Plus size={theme === 'retro' ? 32 : 24} />
-                </button>
-                <button
-                    type="button"
-                    className={theme === 'retro' ? `nes-btn is-error ${styles.clearBtnRetro}` : styles.clearBtn}
-                    onClick={handleClearAll}
-                    title="전체 명단 삭제"
-                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                >
-                    <Minus size={theme === 'retro' ? 32 : 24} />
-                </button>
-            </div>
-        );
-    }
 
     return (
         <div className={`${styles.formWrapper} ${theme === 'retro' ? styles.retro : ''}`}>
@@ -111,7 +78,7 @@ export default function AddPlayerForm() {
                 <button
                     type="button"
                     className={`${theme === 'retro' ? `nes-btn ${styles.btnRetro}` : styles.cancelBtn}`}
-                    onClick={() => setOpen(false)}
+                    onClick={onClose}
                     title={theme === 'retro' ? 'X' : t.cancelBtn}
                     style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}
                 >
