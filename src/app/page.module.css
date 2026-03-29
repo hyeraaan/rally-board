@@ -45,13 +45,16 @@
     visibility: hidden;
     white-space: pre;
     min-width: 50px;
+    height: 100%;
+    /* Mirror가 실제 공간을 차지함 */
 }
 
 .tournamentTitleInput {
     position: absolute;
     left: 0;
     top: 0;
-    bottom: 0;
+    width: 100%;
+    height: 100%;
     background: transparent;
     border: none;
     border-bottom: 2px solid rgba(255, 255, 255, 0.2);
@@ -59,9 +62,9 @@
     font-size: 1.5rem;
     font-weight: 800;
     padding: 0.25rem 0.5rem;
-    width: 100%;
     outline: none;
     transition: border-bottom-color 0.2s;
+    box-sizing: border-box;
 }
 
 .serviceWatermark {
@@ -81,7 +84,7 @@
     background-color: rgba(0, 0, 0, 0.1);
 }
 
-:global(.retro) .tournamentTitleWrapper {
+:global(.retro-theme) .tournamentTitleWrapper {
     background-color: #fff;
     border: 4px solid #000;
     box-shadow: 4px 4px 0 rgba(0,0,0,0.2);
@@ -89,13 +92,14 @@
     padding-right: 15px; /* RALLY BOARD와의 조화를 위해 */
 }
 
-:global(.retro) .inputMirror {
+:global(.retro-theme) .inputMirror {
     font-family: inherit;
     font-size: 1rem;
     padding: 8px;
+    height: auto;
 }
 
-:global(.retro) .tournamentTitleInput {
+:global(.retro-theme) .tournamentTitleInput {
     border: none;
     color: #000 !important;
     font-family: inherit;
@@ -106,7 +110,7 @@
     background-color: transparent !important;
 }
 
-:global(.retro) .serviceWatermark {
+:global(.retro-theme) .serviceWatermark {
     color: #000;
     opacity: 0.3;
 }
