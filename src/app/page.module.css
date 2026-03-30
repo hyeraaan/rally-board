@@ -563,7 +563,7 @@
 
 .floatBtn {
     width: 64px;
-    height: 36px;
+    height: 28px;
     border-radius: 12px 12px 0 0; /* 상단만 라운드 (붙박이 느낌) */
     background-color: rgba(6, 126, 92, 0.85);
     backdrop-filter: blur(12px);
@@ -581,7 +581,7 @@
 
 .floatBtn:hover {
     background-color: rgba(6, 126, 92, 1);
-    height: 42px; /* 살짝 솟아오름 */
+    height: 34px; /* 살짝 솟아오름 */
 }
 
 .floatBtn:active {
@@ -591,13 +591,13 @@
 .activeFloatBtn {
     background-color: var(--accent-blue) !important;
     border-color: rgba(255, 255, 255, 0.4) !important;
-    height: 48px; /* 열렸을 때는 더 확실히 솟아오른 탭 느낌 */
+    height: 40px; /* 열렸을 때는 더 확실히 솟아오른 탭 느낌 */
 }
 
 /* 레트로 테마용 하단 중앙 버튼 */
 :global(.retro-theme) .floatBtn {
     width: 80px;
-    height: 40px;
+    height: 32px;
     border-radius: 0;
     background-color: #fff !important;
     border: 4px solid #212529 !important;
@@ -608,13 +608,13 @@
 
 :global(.retro-theme) .floatBtn:hover {
     background-color: #f59e0b !important;
-    height: 44px;
+    height: 36px;
 }
 
 :global(.retro-theme) .activeFloatBtn {
     background-color: #28a745 !important;
     color: white !important;
-    height: 48px;
+    height: 40px;
 }
 
 @media (max-width: 640px) {
@@ -623,7 +623,7 @@
     }
     .floatBtn {
         width: 56px;
-        height: 32px;
+        height: 26px;
     }
 }
 
