@@ -96,19 +96,22 @@ export default function Home() {
     if (clientWidth === 0) return;
     
     setIsScrollable(scrollWidth > clientWidth + 2); // 2px 여유
-    setCanScrollLeft(scrollLeft > 2); // 오차 및 바운스 방지를 위해 2px 임계값 적용
-    setCanScrollRight(Math.ceil(scrollLeft + clientWidth) < scrollWidth - 2); // 2px 오차 허용
+    // Math.round를 사용하여 소수점 오차로 인한 판정 누락 방지
+    const roundedScrollLeft = Math.round(scrollLeft);
+    const roundedMaxScroll = Math.round(scrollWidth - clientWidth);
+    
+    setCanScrollLeft(roundedScrollLeft > 2); // 2px 임계값
+    setCanScrollRight(roundedScrollLeft < roundedMaxScroll - 2); 
   }, []);
 
   useEffect(() => {
     const el = sliderContainerRef.current;
     if (el) {
-      el.addEventListener('scroll', handleScroll, { passive: true });
+      // scroll 리스너는 이제 JSX의 onScroll에서 처리함
       window.addEventListener('resize', handleScroll);
       // 초기 렌더링 이후 레이아웃 확정 시점에 화살표 렌더링
       const timer = setTimeout(handleScroll, 100);
       return () => {
-        el.removeEventListener('scroll', handleScroll);
         window.removeEventListener('resize', handleScroll);
         clearTimeout(timer);
       };
@@ -518,7 +521,7 @@ export default function Home() {
                     )}
 
                     {/* 슬라이더 뷰포트 */}
-                    <div className={styles.playerListContainer} ref={sliderContainerRef}>
+                    <div className={styles.playerListContainer} ref={sliderContainerRef} onScroll={handleScroll}>
                       <SortableContext items={waitingList.map((p) => p.id)} strategy={rectSortingStrategy}>
                         {waitingList.length > 0 ? (
                           <div className={styles.playerSlideTrack}>

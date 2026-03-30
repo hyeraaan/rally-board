@@ -579,8 +579,7 @@
 .playerSlideTrack {
     display: flex;
     gap: 20px;
-    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-    will-change: transform;
+    will-change: scroll-position;
 }
 
 .playerGroup {
