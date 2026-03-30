@@ -42,6 +42,8 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  touch-action: manipulation; /* 모바일 브라우저 더블 탭 줌인 완벽 방지 */
+  overscroll-behavior: none; /* 바운스 스크롤 효과(당겨서 새로고침 느낌) 차단으로 앱 같은 느낌 강화 */
 }
 
 body {
@@ -61,8 +63,15 @@ button {
   background: none;
   border: none;
   cursor: pointer;
+  font-size: 16px;
   font-family: inherit;
   outline: none !important;
+  touch-action: manipulation;
+}
+
+input, select, textarea {
+  font-size: 16px !important; /* iOS Safari 폼 포커스 시 자동 줌인 원천 차단 */
+  touch-action: manipulation;
 }
 
 button:focus,
