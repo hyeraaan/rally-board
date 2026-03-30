@@ -795,61 +795,7 @@
     margin-top: 0px !important;
 }
 
-/* 퀵 코트 배치 메뉴 */
-.quickAddContainer {
-    background-color: rgba(30, 41, 59, 0.8);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 16px;
-    animation: slideDown 0.3s ease-out;
-}
 
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.quickAddTitle {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 12px;
-    display: block;
-    font-weight: 500;
-}
-
-.quickAddButtons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.quickAddBtn {
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: white;
-    padding: 6px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.85rem;
-    transition: all 0.2s;
-    flex: 1;
-    min-width: 80px;
-    text-align: center;
-}
-
-.quickAddBtn:hover {
-    background-color: var(--accent-blue);
-    border-color: var(--accent-blue);
-}
 
 /* 대기 명단 비어있을 때 안내 UI */
 .emptyState {
@@ -915,22 +861,4 @@
     color: #28a745;
     border: 2px solid #28a745;
     border-radius: 0;
-}
-
-/* 레트로 테마용 퀵 메뉴 */
-:global(.retro-theme) .quickAddContainer {
-    background-color: white !important;
-    border: 4px solid #212529 !important;
-    box-shadow: 4px 4px 0 #212529;
-    border-radius: 0;
-    backdrop-filter: none;
-}
-
-:global(.retro-theme) .quickAddTitle {
-    color: #212529 !important;
-}
-
-:global(.retro-theme) .quickAddBtn {
-    border-radius: 0;
-    border-width: 2px;
 }
