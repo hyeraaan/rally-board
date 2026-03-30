@@ -672,6 +672,19 @@ export default function Home() {
           </div>
         )
       }
+      {/* 플로팅 버튼 그룹 */}
+      <div className={styles.floatingBtns}>
+        <button
+          type="button"
+          className={`${styles.floatBtn} ${isWaitingListOpen ? styles.activeFloatBtn : ''} ${theme === 'retro' ? 'nes-btn' : ''}`}
+          onClick={() => setIsWaitingListOpen(!isWaitingListOpen)}
+          title={isWaitingListOpen ? t.closeWaitingListTooltip : t.openWaitingListTooltip}
+          aria-label={isWaitingListOpen ? t.closeWaitingListTooltip : t.openWaitingListTooltip}
+        >
+          {isWaitingListOpen ? <X size={24} /> : <Monitor size={24} />}
+        </button>
+      </div>
+
     </main>
   );
 }
