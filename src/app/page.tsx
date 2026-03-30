@@ -12,15 +12,31 @@ import SettingsModal from '@/components/SettingsModal';
 import { useTheme } from '@/providers/ThemeProvider';
 import { useLanguage } from '@/providers/LanguageProvider';
 import {
-  DndContext, DragEndEvent, DragStartEvent, useDroppable,
+  DndContext, DragEndEvent, DragStartEvent, useDroppable, useDraggable,
   DragOverlay, useSensors, useSensor, PointerSensor, TouchSensor, closestCorners
 } from '@dnd-kit/core';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
 import {
-  Shuffle, Eraser, Globe, Monitor, Gamepad2, History, ChevronLeft, ChevronRight, ChevronUp, ChevronDown, Play, Trophy, Clock, X, Plus, Minus, Settings
+  Shuffle, Eraser, Globe, Monitor, Gamepad2, History, ChevronLeft, ChevronRight, ChevronUp, ChevronDown, Play, Trophy, Clock, X, Plus, Minus, Settings, GripVertical
 } from 'lucide-react';
 
 import { useBoardStore, Player } from '@/store/useBoardStore';
+
+function GroupDragHandle({ id, label }: { id: string, label: string }) {
+  const { attributes, listeners, setNodeRef, isDragging } = useDraggable({ id });
+  
+  return (
+    <div 
+      ref={setNodeRef} 
+      {...attributes} 
+      {...listeners} 
+      className={`${styles.groupBadge} ${isDragging ? styles.groupDragging : ''}`}
+    >
+      <GripVertical size={12} />
+      {label}
+    </div>
+  );
+}
 
 export default function Home() {
   const { theme, toggleTheme } = useTheme();
@@ -171,11 +187,22 @@ export default function Home() {
 
   const handleDragStart = (event: DragStartEvent) => {
     const { active } = event;
-    setActiveId(active.id as string);
+    const id = active.id.toString();
 
-    // 드래그한 원소가 선택 목록에 없다면 선택 목록 초기화
-    if (!selectedIds.includes(active.id as string)) {
-      setSelectedIds([]);
+    if (id.startsWith('group-')) {
+      const groupIndex = parseInt(id.split('-')[1]);
+      const group = waitingList.slice(groupIndex * 4, groupIndex * 4 + 4);
+      if (group.length > 0) {
+        const ids = group.map(p => p.id);
+        setSelectedIds(ids);
+        setActiveId(ids[0]); // 첫 번째 선수를 비주얼 앵커로 설정
+      }
+    } else {
+      setActiveId(id);
+      // 드래그한 원소가 선택 목록에 없다면 선택 목록 초기화
+      if (!selectedIds.includes(id)) {
+        setSelectedIds([]);
+      }
     }
   };
 
@@ -184,11 +211,20 @@ export default function Home() {
     const { active, over } = event;
     if (!over) return;
 
-    const activeId = active.id as string;
+    const activeIdVal = active.id.toString();
     const overId = over.id as string | number;
 
-    if (activeId !== overId) {
-      if (typeof overId === 'number' && selectedIds.length > 0 && selectedIds.includes(activeId)) {
+    if (activeIdVal.startsWith('group-')) {
+      // 그룹 드래그 처리 (코트로 드롭했을 때만)
+      if (typeof overId === 'number' && selectedIds.length > 0) {
+        if (useBoardStore.getState().moveMultiplePlayers) {
+          useBoardStore.getState().moveMultiplePlayers(selectedIds, overId);
+          setSelectedIds([]); // 이동 후 선택 해제
+        }
+      }
+    } else if (activeIdVal !== overId.toString()) {
+      // 일반 드래그 처리
+      if (typeof overId === 'number' && selectedIds.length > 0 && selectedIds.includes(activeIdVal)) {
         // 다중 이동 (코트로 드롭했을 때만)
         if (useBoardStore.getState().moveMultiplePlayers) {
           useBoardStore.getState().moveMultiplePlayers(selectedIds, overId);
@@ -197,7 +233,7 @@ export default function Home() {
       } else {
         // 단일 이동
         if (movePlayer) {
-          movePlayer(activeId, overId);
+          movePlayer(activeIdVal, overId);
         }
       }
     }
@@ -505,9 +541,10 @@ export default function Home() {
                                 key={`group-${groupIndex}`}
                                 className={styles.playerGroup}
                               >
-                                <div className={styles.groupBadge}>
-                                  {theme === 'retro' ? `MATCH ${groupIndex + 1}` : `Match ${groupIndex + 1}`}
-                                </div>
+                                <GroupDragHandle 
+                                  id={`group-${groupIndex}`} 
+                                  label={theme === 'retro' ? `MATCH ${groupIndex + 1}` : `Match ${groupIndex + 1}`} 
+                                />
                                 {group.map((player) => (
                                   <PlayerMagnet
                                     key={player.id}
