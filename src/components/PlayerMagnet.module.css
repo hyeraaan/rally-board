@@ -1,12 +1,12 @@
 .magnetWrapper {
-    width: 80px;
-    height: 90px;
-    min-width: 80px; /* 강제 크기 고정 */
-    max-width: 80px;
-    min-height: 90px;
-    max-height: 90px;
+    width: 100px;
+    height: 110px;
+    min-width: 100px; /* 강제 크기 고정 */
+    max-width: 100px;
+    min-height: 110px;
+    max-height: 110px;
     background-color: white;
-    border-radius: 8px;
+    border-radius: 10px;
     box-shadow: var(--shadow-magnet);
     display: flex;
     flex-direction: column;
@@ -16,7 +16,7 @@
     flex-shrink: 0;
     flex-grow: 0; /* 확장 방지 */
     /* flex container에서 찌그러지지 방지 */
-    margin: 4px;
+    margin: 6px;
     position: relative;
     border: 2px solid transparent;
     touch-action: none; /* 터치 기기에서 드래그 시 스크롤 방지 */
@@ -26,24 +26,24 @@
 
 @media (max-width: 1200px) {
     .magnetWrapper {
-        width: 75px; 
-        height: 85px;
-        min-width: 75px;
-        max-width: 75px;
-        min-height: 85px;
-        max-height: 85px;
+        width: 90px; 
+        height: 100px;
+        min-width: 90px;
+        max-width: 90px;
+        min-height: 100px;
+        max-height: 100px;
     }
 }
 
 @media (max-width: 480px) {
     .magnetWrapper {
-        width: 60px;
-        height: 70px;
-        min-width: 60px;
-        max-width: 60px;
-        min-height: 70px;
-        max-height: 70px;
-        margin: 1px;
+        width: 70px;
+        height: 80px;
+        min-width: 70px;
+        max-width: 70px;
+        min-height: 80px;
+        max-height: 80px;
+        margin: 2px;
     }
 }
 
@@ -140,7 +140,7 @@
 .playerName {
     color: #171717;
     font-weight: 800;
-    font-size: 1.1rem;
+    font-size: 1.25rem;
     /* 뱃지 공간 확보를 위해 살짝 축소 */
     text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.1);
 }
@@ -373,7 +373,7 @@
     top: -10px; /* 위로 살짝 더 띄움 */
     left: 50%;
     transform: translateX(-50%);
-    width: 140px; /* 클릭 면적을 위해 너비 대폭 확장 */
+    width: 180px; /* 2열 배치를 위해 너비 확장 */
     min-height: 100%;
     background: rgba(255, 255, 255, 1);
     backdrop-filter: blur(10px);
@@ -431,9 +431,9 @@
 }
 
 .courtButtons {
-    display: flex;
-    flex-direction: column; /* 세로 배치 */
-    gap: 6px; /* 버튼 간 클릭 미스 방지를 위해 간격 확보 */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2열 배치 적용 */
+    gap: 8px; /* 버튼 간 클릭 미스 방지를 위해 간격 확보 */
 }
 
 .courtBtn {
@@ -470,7 +470,7 @@
     left: 50% !important;
     right: auto !important;
     transform: translateX(-50%) !important;
-    width: 156px !important; 
+    width: 200px !important; 
     min-height: calc(100% + 8px) !important;
     background: white !important;
     border: 4px solid #212529 !important;
@@ -496,9 +496,9 @@
 }
 
 :global(.retro-theme) .courtButtons {
-    display: flex;
-    flex-direction: column;
-    gap: 6px !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
 }
 
 :global(.retro-theme) .courtButtons .nes-btn {
