@@ -36,12 +36,6 @@
     to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-.modalCard.retro {
-    background: white;
-    border: 4px solid #212529;
-    border-radius: 0;
-    box-shadow: 8px 8px 0 #212529;
-}
 
 .modalHeader {
     display: flex;
@@ -61,10 +55,6 @@
     margin: 0;
 }
 
-.modalCard.retro .modalTitle {
-    color: #212529;
-    font-size: 0.9rem;
-}
 
 .modalCloseBtn {
     width: 28px;
@@ -87,12 +77,6 @@
     color: #ef4444;
 }
 
-.modalCard.retro .modalCloseBtn {
-    background: transparent;
-    border: 2px solid #212529;
-    border-radius: 0;
-    color: #212529;
-}
 
 /* 히스토리 전용 */
 .historyList {
@@ -111,10 +95,6 @@
     background: rgba(255, 255, 255, 0.2);
     border-radius: 4px;
 }
-.modalCard.retro .historyList::-webkit-scrollbar-thumb {
-    background: #212529;
-    border-radius: 0;
-}
 
 .emptyMessage {
     text-align: center;
@@ -122,9 +102,6 @@
     padding: 32px 0;
     font-size: 0.95rem;
     font-weight: 500;
-}
-.modalCard.retro .emptyMessage {
-    color: rgba(33, 37, 41, 0.6);
 }
 
 .historyItem {
@@ -134,11 +111,6 @@
     background-color: rgba(255, 255, 255, 0.03);
 }
 
-.modalCard.retro .historyItem {
-    background-color: #f8f9fa;
-    border: 2px solid #dee2e6;
-    border-radius: 0;
-}
 
 .itemHeader {
     display: flex;
@@ -149,9 +121,6 @@
     border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
 }
 
-.modalCard.retro .itemHeader {
-    border-bottom: 2px dashed #dee2e6;
-}
 
 .courtBadge {
     font-weight: 800;
@@ -159,9 +128,6 @@
     font-size: 0.9rem;
 }
 
-.modalCard.retro .courtBadge {
-    color: #0366d6;
-}
 
 .timeBadge {
     color: rgba(255, 255, 255, 0.6);
@@ -172,11 +138,6 @@
     border-radius: 12px;
 }
 
-.modalCard.retro .timeBadge {
-    color: #586069;
-    background-color: #e1e4e8;
-    border-radius: 0;
-}
 
 .playerGrid {
     display: grid;
@@ -194,11 +155,6 @@
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.modalCard.retro .playerTag {
-    background-color: #fff;
-    border: 2px solid #212529;
-    border-radius: 0;
-}
 
 .tierBadge {
     font-weight: 800;
@@ -214,17 +170,9 @@
 .tierBadge[data-tier="D"] { background-color: #22c55e; }
 .tierBadge[data-tier="E"] { background-color: #3b82f6; }
 
-.modalCard.retro .tierBadge {
-    border-radius: 0;
-    border: 1px solid #000;
-}
 
 .playerName {
     font-size: 0.9rem;
     color: white;
     font-weight: 600;
-}
-
-.modalCard.retro .playerName {
-    color: #212529;
 }

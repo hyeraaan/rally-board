@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './PlayerMagnet.module.css';
 import { useLanguage } from '@/providers/LanguageProvider';
-import { useTheme } from '@/providers/ThemeProvider';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { CircleMinus, Trash2, LayoutGrid } from 'lucide-react';
@@ -20,7 +19,6 @@ interface PlayerMagnetProps {
 }
 
 export default function PlayerMagnet({ id, name, tier, matchCount = 0, onSelect, isSelected, onDelete, isEditMode, waitingStartTime }: PlayerMagnetProps) {
-    const { theme } = useTheme();
     const { t } = useLanguage();
     const { courts, movePlayer, activePopoverPlayerId, setActivePopoverPlayerId } = useBoardStore();
     const [elapsedTime, setElapsedTime] = useState(0);
@@ -69,19 +67,13 @@ export default function PlayerMagnet({ id, name, tier, matchCount = 0, onSelect,
                     tier === 'D' ? styles.tierD :
                         styles.tierE;
 
-    const nesBadgeColor =
-        tier === 'A' ? 'is-error' :
-            tier === 'B' ? 'is-primary' :
-                tier === 'C' ? 'is-warning' :
-                    tier === 'D' ? 'is-success' : 'is-dark';
-
     return (
         <div
             ref={setNodeRef}
             style={style}
             {...(!isEditMode ? attributes : {})}
             {...(!isEditMode ? listeners : {})}
-            className={`${styles.magnetWrapper} ${theme === 'retro' ? 'nes-container is-rounded' : tierClass} ${isEditMode ? styles.editMode : ''} ${isDragging ? styles.dragging : ''} ${isSelected ? styles.selected : ''}`}
+            className={`${styles.magnetWrapper} ${tierClass} ${isEditMode ? styles.editMode : ''} ${isDragging ? styles.dragging : ''} ${isSelected ? styles.selected : ''}`}
             onClick={(e) => {
                 if (isEditMode && onDelete) {
                     e.stopPropagation();
@@ -92,79 +84,30 @@ export default function PlayerMagnet({ id, name, tier, matchCount = 0, onSelect,
                 }
             }}
         >
-            {/* 코트 선택 팝오버 */}
-            {isPopoverOpen && !isDragging && (
-                <div className={styles.courtPopover} onClick={(e) => e.stopPropagation()}>
-                    <div className={styles.popoverHeader}>
-                        <span>{theme === 'retro' ? 'SELECT' : '코트 선택'}</span>
-                        <button className={styles.popoverClose} onClick={() => setActivePopoverPlayerId(null)}>×</button>
-                    </div>
-                    <div className={styles.courtButtons}>
-                        {courts.map((court) => (
-                            <button
-                                key={court.id}
-                                className={theme === 'retro' ? `nes-btn ${court.players.length >= 4 ? 'is-disabled' : 'is-primary'}` : `${styles.courtBtn} ${court.players.length >= 4 ? styles.disabled : ''}`}
-                                onClick={() => {
-                                    if (court.players.length < 4) {
-                                        movePlayer(id, court.id);
-                                        setActivePopoverPlayerId(null);
-                                    }
-                                }}
-                                disabled={court.players.length >= 4}
-                            >
-                                {court.id}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-            )}
+            {/* 코트 선택 팝오버는 이제 page.tsx에서 전역으로 렌더링됨 */}
             {isEditMode && (
                 <div className={styles.deleteIconOverlay} title="삭제">
-                    <CircleMinus size={20} color={theme === 'retro' ? '#212529' : '#ef4444'} fill="white" />
+                    <CircleMinus size={20} color="#ef4444" fill="white" />
                 </div>
             )}
-            {theme === 'retro' ? (
-                <div className={styles.retroContainer}>
-                    <div className={`${styles.retroTop} ${tier === 'A' ? styles.retroTierA :
-                        tier === 'B' ? styles.retroTierB :
-                            tier === 'C' ? styles.retroTierC :
-                                tier === 'D' ? styles.retroTierD : styles.retroTierE
-                        }`}
-                        onClick={(e) => {
-                            if (!isDragging && !isEditMode) {
-                                e.stopPropagation();
-                                setActivePopoverPlayerId(isPopoverOpen ? null : id);
-                            }
-                        }}
-                    >
-                        {tier}
-                    </div>
-                    <div className={styles.retroBottom}>
-                        <span className={styles.retroName}>{name}</span>
-                        {waitingStartTime && <span className={styles.retroWaiting}>{t.waitingTime(elapsedTime)}</span>}
-                        <span className={styles.retroMatchCount}>{matchCount}</span>
-                    </div>
-                </div>
-            ) : (
-                <>
-                    <div 
-                        className={styles.magnetTop}
-                        onClick={(e) => {
-                            if (!isDragging && !isEditMode) {
-                                e.stopPropagation();
-                                setActivePopoverPlayerId(isPopoverOpen ? null : id);
-                            }
-                        }}
-                    >
-                        <span className={styles.tierBadge}>{tier}</span>
-                    </div>
-                    <div className={styles.magnetBottom}>
-                        <span className={styles.playerName}>{name}</span>
-                        {waitingStartTime && <span className={styles.waitingBadge}>{t.waitingTime(elapsedTime)}</span>}
-                        <span className={styles.matchCountBadge}>{matchCount}</span>
-                    </div>
-                </>
-            )}
+            <div 
+                className={styles.magnetTop}
+                onClick={(e) => {
+                    if (!isDragging && !isEditMode) {
+                        e.stopPropagation();
+                        const rect = e.currentTarget.getBoundingClientRect();
+                        const anchor = { x: rect.left + rect.width / 2, y: rect.top, width: rect.width };
+                        setActivePopoverPlayerId(isPopoverOpen ? null : id, anchor);
+                    }
+                }}
+            >
+                <span className={styles.tierBadge}>{tier}</span>
+            </div>
+            <div className={styles.magnetBottom}>
+                <span className={styles.playerName}>{name}</span>
+                {waitingStartTime && <span className={styles.waitingBadge}>{t.waitingTime(elapsedTime)}</span>}
+                <span className={styles.matchCountBadge}>{matchCount}</span>
+            </div>
         </div>
     );
 }

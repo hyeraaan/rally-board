@@ -4,12 +4,10 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import styles from './page.module.css';
 import BadmintonCourt from '@/components/BadmintonCourt';
 import PlayerMagnet from '@/components/PlayerMagnet';
-import AddCourtButton from '@/components/AddCourtButton';
 import AddPlayerForm from '@/components/AddPlayerForm';
 import MatchHistoryModal from '@/components/MatchHistoryModal';
 import ConfirmModal from '@/components/ConfirmModal';
 import SettingsModal from '@/components/SettingsModal';
-import { useTheme } from '@/providers/ThemeProvider';
 import { useLanguage } from '@/providers/LanguageProvider';
 import {
   DndContext, DragEndEvent, DragStartEvent, useDroppable, useDraggable,
@@ -39,8 +37,8 @@ function GroupDragHandle({ id, label }: { id: string, label: string }) {
 }
 
 export default function Home() {
-  const { theme, toggleTheme } = useTheme();
   const { lang, t, toggleLang } = useLanguage();
+  const theme = 'classic'; // 테마 고정
 
   const {
     courts,
@@ -65,6 +63,8 @@ export default function Home() {
     moveMultiplePlayers,
     initializeData,
     setActivePopoverPlayerId,
+    activePopoverPlayerId,
+    popoverAnchor,
     tournamentTitle,
     setTournamentTitle,
     clearWaitingList
@@ -290,15 +290,19 @@ export default function Home() {
   }
 
   return (
-        <main className={`${styles.mainContainer} ${theme === 'retro' ? styles.retroMain : ''}`}>
+        <main className={styles.mainContainer}>
             <DndContext sensors={sensors} collisionDetection={closestCorners} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
                 <div className={styles.contentWrapper}>
                     {/* 1. 왼쪽 영역 코트 판 */}
                     <section
                         className={`${styles.courtArea} ${isWaitingListOpen ? styles.shifted : ''}`}
-                        onClick={() => {
+                        onClick={(e) => {
+                            // 팝오버가 열려있는 경우 배경 클릭 시 닫기
+                            if (activePopoverPlayerId) {
+                                setActivePopoverPlayerId(null);
+                                return;
+                            }
                             if (isWaitingListOpen) setIsWaitingListOpen(false);
-                            setActivePopoverPlayerId(null);
                         }}
                     >
                         <div className={styles.titleRow}>
@@ -320,67 +324,73 @@ export default function Home() {
                                     </div>
                                 </div>
                                 <div className={styles.buttonGroup}>
-                                    {isEventRunning && (
                                         <div style={{
                                             display: 'flex',
                                             alignItems: 'center',
                                             gap: '8px',
-                                            backgroundColor: theme === 'retro' ? '#fff' : 'rgba(0,0,0,0.5)',
+                                            backgroundColor: 'rgba(0,0,0,0.5)',
                                             padding: '4px 12px',
-                                            borderRadius: theme === 'retro' ? '0' : '20px',
-                                            border: theme === 'retro' ? '3px solid #000' : '1px solid rgba(255,255,255,0.2)',
-                                            color: theme === 'retro' ? '#000' : '#10b981',
+                                            borderRadius: '20px',
+                                            border: '1px solid rgba(255,255,255,0.2)',
+                                            color: '#10b981',
                                             fontWeight: 800,
                                             fontSize: '1.2rem',
                                         }}>
                                             <Clock size={20} />
                                             {eventTime}
                                         </div>
-                                    )}
                                     {isEventRunning ? (
                                         <button
                                             type="button"
-                                            className={theme === 'retro' ? 'nes-btn is-error' : styles.themeToggleBtn}
-                                            style={theme === 'retro' ? { display: 'flex', gap: '6px', alignItems: 'center', padding: '4px 8px', fontSize: '12px', height: '36px' } : { backgroundColor: '#ef4444', color: 'white' }}
+                                            className={styles.themeToggleBtn}
+                                            style={{ backgroundColor: '#ef4444', color: 'white' }}
                                             onClick={handleEndTournament}
                                             title={t.endTournamentTooltip}
                                         >
-                                            <Trophy size={theme === 'retro' ? 20 : 16} fill={theme === 'retro' ? 'currentColor' : 'white'} /> {t.tournamentEnd}
+                                            <Trophy size={16} fill="white" /> {t.tournamentEnd}
                                         </button>
                                     ) : (
                                         <button
                                             type="button"
-                                            className={theme === 'retro' ? 'nes-btn is-primary' : styles.themeToggleBtn}
-                                            style={theme === 'retro' ? { display: 'flex', gap: '8px', alignItems: 'center', padding: '4px 16px', fontSize: '12px', height: '36px', whiteSpace: 'nowrap' } : { backgroundColor: '#10b981', color: 'white', whiteSpace: 'nowrap' }}
+                                            className={styles.themeToggleBtn}
+                                            style={{ backgroundColor: '#10b981', color: 'white', whiteSpace: 'nowrap' }}
                                             onClick={handleStartTournament}
                                             title={t.startTournamentTooltip}
                                         >
-                                            <Play size={theme === 'retro' ? 20 : 16} fill={theme === 'retro' ? 'currentColor' : 'white'} /> {t.tournamentStart}
+                                            <Play size={16} fill="white" /> {t.tournamentStart}
                                         </button>
                                     )}
                                     <button
                                         type="button"
-                                        className={theme === 'retro' ? 'nes-btn' : styles.themeToggleBtn}
-                                        style={theme === 'retro' ? { display: 'flex', gap: '8px', alignItems: 'center', padding: '4px 16px', fontSize: '12px', height: '36px', whiteSpace: 'nowrap' } : { whiteSpace: 'nowrap' }}
+                                        className={styles.themeToggleBtn}
+                                        style={{ whiteSpace: 'nowrap' }}
                                         onClick={() => setIsHistoryModalOpen(true)}
                                         title={t.historyTooltip}
                                     >
-                                        <History size={theme === 'retro' ? 20 : 16} /> {t.historyBtn} ({matchHistory.length})
+                                        <History size={16} /> {t.historyBtn} ({matchHistory.length})
                                     </button>
                                     <button
                                         type="button"
-                                        className={theme === 'retro' ? `nes-btn ${isWaitingListOpen ? 'is-success' : ''}` : `${styles.themeToggleBtn} ${isWaitingListOpen ? styles.activeHeaderBtn : ''}`}
-                                        style={theme === 'retro' ? { display: 'flex', gap: '8px', alignItems: 'center', padding: '4px 16px', fontSize: '12px', height: '36px', whiteSpace: 'nowrap' } : { whiteSpace: 'nowrap' }}
+                                        className={`${styles.themeToggleBtn} ${isWaitingListOpen ? styles.activeHeaderBtn : ''}`}
+                                        style={{ whiteSpace: 'nowrap' }}
                                         onClick={() => setIsWaitingListOpen(!isWaitingListOpen)}
                                         title={isWaitingListOpen ? t.closeWaitingListTooltip : t.openWaitingListTooltip}
                                     >
-                                        <Monitor size={theme === 'retro' ? 20 : 16} /> {t.waitingList}
+                                        <Monitor size={16} /> {t.waitingList}
                                     </button>
+                                     <button
+                                         type="button"
+                                         className={styles.themeToggleBtn}
+                                         style={{ whiteSpace: "nowrap" }}
+                                         onClick={addCourt}
+                                         title="코트 추가"
+                                     >
+                                         <Plus size={16} /> 코트 추가
+                                     </button>
                                     <button
                                         type="button"
-                                        className={theme === 'retro' ? `nes-btn ${isEditMode ? 'is-error' : ''} ${styles.retroHeaderBtn}` : `${styles.themeIconBtn} ${isEditMode ? styles.editActiveBtn : ''}`}
+                                        className={`${styles.themeIconBtn} ${isEditMode ? styles.editActiveBtn : ''}`}
                                         onClick={toggleEditMode}
-                                        style={theme === 'retro' ? { width: '36px', height: '36px', fontSize: '16px', padding: 0, display: 'flex', justifyContent: 'center', alignItems: 'center' } : undefined}
                                         title="선수 삭제 모드"
                                         aria-label="선수 삭제 모드"
                                     >
@@ -388,9 +398,8 @@ export default function Home() {
                                     </button>
                                     <button
                                         type="button"
-                                        className={theme === 'retro' ? `nes-btn ${styles.retroHeaderBtn}` : styles.themeIconBtn}
+                                        className={styles.themeIconBtn}
                                         onClick={toggleLang}
-                                        style={theme === 'retro' ? { width: '36px', height: '36px', fontSize: '16px', padding: 0, display: 'flex', justifyContent: 'center', alignItems: 'center' } : undefined}
                                         title={lang === 'ko' ? 'Switch to English' : '한국어로 전환'}
                                         aria-label={lang === 'ko' ? 'Switch to English' : '한국어로 전환'}
                                     >
@@ -398,19 +407,8 @@ export default function Home() {
                                     </button>
                                     <button
                                         type="button"
-                                        className={theme === 'retro' ? `nes-btn ${styles.retroHeaderBtn}` : styles.themeIconBtn}
-                                        onClick={toggleTheme}
-                                        style={theme === 'retro' ? { width: '36px', height: '36px', fontSize: '16px', padding: 0, display: 'flex', justifyContent: 'center', alignItems: 'center' } : undefined}
-                                        title={theme === 'retro' ? '클래식 모드로 전환' : '레트로 모드로 전환'}
-                                        aria-label={theme === 'retro' ? '클래식 모드로 전환' : '레트로 모드로 전환'}
-                                    >
-                                        <Gamepad2 size={20} />
-                                    </button>
-                                    <button
-                                        type="button"
-                                        className={theme === 'retro' ? `nes-btn ${styles.retroHeaderBtn}` : styles.themeIconBtn}
+                                        className={styles.themeIconBtn}
                                         onClick={() => setIsSettingsOpen(true)}
-                                        style={theme === 'retro' ? { width: '36px', height: '36px', fontSize: '16px', padding: 0, display: 'flex', justifyContent: 'center', alignItems: 'center' } : undefined}
                                         title={t.settingsTooltip}
                                         aria-label={t.settingsTitle}
                                     >
@@ -433,9 +431,6 @@ export default function Home() {
                   />
                 </div>
               ))}
-              <div className={styles.courtGridItem}>
-                <AddCourtButton onClick={addCourt} />
-              </div>
             </div>
           </section>
 
@@ -443,14 +438,14 @@ export default function Home() {
           <aside className={`${styles.waitingArea} ${isWaitingListOpen ? styles.isOpen : ''}`} ref={setWaitingListRef}>
             <div className={styles.sidebarContent}>
               <div className={styles.sidebarHeader}>
-                <h2 className={`${styles.areaTitle} ${theme === 'retro' ? 'nes-text is-primary' : ''}`}>
+                <h2 className={styles.areaTitle}>
                   {t.waitingList} ({waitingList.length})
                 </h2>
                 <div className={styles.sidebarButtonGroup}>
                   {/* + 선수 추가 버튼 */}
                   <button
                     type="button"
-                    className={theme === 'retro' ? 'nes-btn is-success' : styles.addPlayerBtn}
+                    className={styles.addPlayerBtn}
                     onClick={() => setIsAddFormOpen(true)}
                     title={t.addPlayerTooltip}
                   >
@@ -459,7 +454,7 @@ export default function Home() {
                   {/* - 전체 삭제 버튼 */}
                   <button
                     type="button"
-                    className={theme === 'retro' ? 'nes-btn is-error' : styles.clearPlayerBtn}
+                    className={styles.clearPlayerBtn}
                     onClick={() => openConfirm(
                       t.clearAllConfirm,
                       () => clearWaitingList()
@@ -470,20 +465,11 @@ export default function Home() {
                   </button>
                   <button
                     type="button"
-                    className={theme === 'retro' ? 'nes-btn is-warning' : styles.randomBtn}
+                    className={styles.randomBtn}
                     onClick={randomMatch}
                     title={t.randomMatchTooltip}
                   >
-                    <Shuffle size={theme === 'retro' ? 20 : 16} /> {t.randomMatchBtn}
-                  </button>
-                  <button
-                    type="button"
-                    className={theme === 'retro' ? 'nes-btn is-error' : styles.sidebarCloseBtn}
-                    style={theme === 'retro' ? { padding: '2px 8px', fontSize: '0.8rem' } : undefined}
-                    onClick={() => setIsWaitingListOpen(false)}
-                    title="대기명단 닫기"
-                  >
-                    {theme === 'retro' ? 'X' : <X size={20} />}
+                    <Shuffle size={16} /> {t.randomMatchBtn}
                   </button>
                 </div>
               </div>
@@ -644,11 +630,10 @@ export default function Home() {
             backdropFilter: 'blur(4px)'
           }}>
             <div
-              className={theme === 'retro' ? 'nes-text is-warning' : ''}
               style={{
                 fontSize: '12rem',
                 fontWeight: 900,
-                color: theme === 'retro' ? undefined : '#f59e0b',
+                color: '#f59e0b',
                 animation: 'pulse 1s infinite',
                 textShadow: '0 0 20px rgba(245, 158, 11, 0.5)'
               }}
@@ -669,7 +654,7 @@ export default function Home() {
       <div className={`${styles.floatingBtns} ${isWaitingListOpen ? styles.shiftedUp : ''}`}>
         <button
           type="button"
-          className={`${styles.floatBtn} ${isWaitingListOpen ? styles.activeFloatBtn : ''} ${theme === 'retro' ? 'nes-btn' : ''}`}
+          className={`${styles.floatBtn} ${isWaitingListOpen ? styles.activeFloatBtn : ''}`}
           onClick={() => setIsWaitingListOpen(!isWaitingListOpen)}
           title={isWaitingListOpen ? t.closeWaitingListTooltip : t.openWaitingListTooltip}
           aria-label={isWaitingListOpen ? t.closeWaitingListTooltip : t.openWaitingListTooltip}
@@ -678,6 +663,50 @@ export default function Home() {
         </button>
       </div>
 
+      {/* 전역 코트 선택 팝오버 (클리핑 방지용 fixed 레이어) */}
+      {activePopoverPlayerId && popoverAnchor && (
+        <div 
+          className={styles.globalCourtPopover} 
+          style={{ 
+            position: 'fixed',
+            left: `${popoverAnchor.x}px`,
+            top: `${popoverAnchor.y}px`, // 앵커(네임택 상단) 위치에 직접 배치
+            width: `${popoverAnchor.width}px`, // 네임택 너비와 동기화
+            transform: 'translate(-50%, 0)', // 상단 기준 정렬 (네임택을 덮음)
+            zIndex: 2001
+          }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className={styles.popoverHeader}>
+            <button className={styles.popoverClose} onClick={() => setActivePopoverPlayerId(null)}>×</button>
+          </div>
+          <div className={styles.courtButtons}>
+            {courts.map((court) => (
+              <button
+                key={court.id}
+                className={`${styles.courtBtn} ${court.players.length >= 4 ? styles.disabled : ''}`}
+                onClick={() => {
+                  if (court.players.length < 4) {
+                    movePlayer(activePopoverPlayerId, court.id);
+                    setActivePopoverPlayerId(null);
+                  }
+                }}
+                disabled={court.players.length >= 4}
+              >
+                {court.id}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* 코트 선택 전역 백드롭 */}
+      {activePopoverPlayerId && (
+        <div 
+          className={styles.popoverGlobalBackdrop} 
+          onClick={() => setActivePopoverPlayerId(null)}
+        />
+      )}
     </main>
   );
 }

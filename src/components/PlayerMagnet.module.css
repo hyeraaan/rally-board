@@ -1,10 +1,10 @@
 .magnetWrapper {
     width: 100px;
-    height: 110px;
-    min-width: 100px; /* 강제 크기 고정 */
+    height: 100px;
+    min-width: 100px;
     max-width: 100px;
-    min-height: 110px;
-    max-height: 110px;
+    min-height: 100px;
+    max-height: 100px;
     background-color: white;
     border-radius: 10px;
     box-shadow: var(--shadow-magnet);
@@ -14,35 +14,34 @@
     user-select: none;
     transition: transform 0.1s ease, box-shadow 0.1s ease;
     flex-shrink: 0;
-    flex-grow: 0; /* 확장 방지 */
-    /* flex container에서 찌그러지지 방지 */
+    flex-grow: 0;
     margin: 2px;
     position: relative;
     border: 2px solid transparent;
-    touch-action: none; /* 터치 기기에서 드래그 시 스크롤 방지 */
-    justify-self: center !important; /* 그리드 내에서 늘어남 방지 */
+    touch-action: none;
+    justify-self: center !important;
     align-self: center !important;
 }
 
 @media (max-width: 1200px) {
     .magnetWrapper {
         width: 90px; 
-        height: 100px;
+        height: 90px;
         min-width: 90px;
         max-width: 90px;
-        min-height: 100px;
-        max-height: 100px;
+        min-height: 90px;
+        max-height: 90px;
     }
 }
 
 @media (max-width: 480px) {
     .magnetWrapper {
         width: 70px;
-        height: 80px;
+        height: 70px;
         min-width: 70px;
         max-width: 70px;
-        min-height: 80px;
-        max-height: 80px;
+        min-height: 70px;
+        max-height: 70px;
         margin: 2px;
     }
 }
@@ -53,7 +52,6 @@
     transform: translateY(-2px);
 }
 
-/* 편집(지우개) 모드일 때 네임카드 흔들림 효과 및 휴지통 커서 */
 .editMode {
     cursor: pointer;
     animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both infinite;
@@ -61,27 +59,10 @@
 }
 
 @keyframes shake {
-
-    10%,
-    90% {
-        transform: translate3d(-0.5px, 0, 0) rotate(-1deg);
-    }
-
-    20%,
-    80% {
-        transform: translate3d(1px, 0, 0) rotate(1deg);
-    }
-
-    30%,
-    50%,
-    70% {
-        transform: translate3d(-2px, 0, 0) rotate(-2deg);
-    }
-
-    40%,
-    60% {
-        transform: translate3d(2px, 0, 0) rotate(2deg);
-    }
+    10%, 90% { transform: translate3d(-0.5px, 0, 0) rotate(-1deg); }
+    20%, 80% { transform: translate3d(1px, 0, 0) rotate(1deg); }
+    30%, 50%, 70% { transform: translate3d(-2px, 0, 0) rotate(-2deg); }
+    40%, 60% { transform: translate3d(2px, 0, 0) rotate(2deg); }
 }
 
 .magnetWrapper:hover {
@@ -100,12 +81,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    /* 컬러는 부모의 급수 클래스에 의해 덮어씌워짐 */
     background-color: #333;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     cursor: pointer;
     transition: filter 0.2s;
+    position: relative; /* dropdown anchor */
 }
 
 .magnetTop:hover {
@@ -123,25 +104,20 @@
     flex: 2;
     display: flex;
     flex-direction: column;
-    /* 이름과 하단 정보를 위한 방향 전환 */
     align-items: center;
     justify-content: flex-start;
-    /* 중앙에서 상단 정렬로 변경 */
     padding-top: 8px;
-    /* 위쪽 여백 */
     background-color: white;
     border-top: 1px solid rgba(0, 0, 0, 0.05);
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
     position: relative;
-    /* 뱃지 위치용 */
 }
 
 .playerName {
     color: #171717;
     font-weight: 800;
     font-size: 1.25rem;
-    /* 뱃지 공간 확보를 위해 살짝 축소 */
     text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.1);
 }
 
@@ -167,351 +143,22 @@
     font-weight: 700;
 }
 
-/* --- 각 급수별 테마 색상 (전역 CSS 변수 활용) --- */
-.tierA .magnetTop {
-    background-color: var(--badge-a);
-}
+.tierA .magnetTop { background-color: var(--badge-a); }
+.tierB .magnetTop { background-color: var(--badge-b); }
+.tierC .magnetTop { background-color: var(--badge-c); }
+.tierD .magnetTop { background-color: var(--badge-d); }
+.tierE .magnetTop { background-color: var(--badge-e); }
 
-.tierB .magnetTop {
-    background-color: var(--badge-b);
-}
-
-.tierC .magnetTop {
-    background-color: var(--badge-c);
-}
-
-.tierD .magnetTop {
-    background-color: var(--badge-d);
-}
-
-.tierE .magnetTop {
-    background-color: var(--badge-e);
-}
-
-/* --- 레트로 테마 오버라이드 --- */
-:global(.retro-theme) .magnetWrapper {
-    width: 80px;
-    height: 90px;
-    min-width: 80px !important;
-    max-width: 80px !important;
-    min-height: 90px !important;
-    max-height: 90px !important;
-    padding: 0 !important;
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    justify-self: center !important;
-    align-self: center !important;
-}
-
-@media (max-width: 1200px) {
-    :global(.retro-theme) .magnetWrapper {
-        width: 75px;
-        height: 85px;
-        min-width: 75px !important;
-        max-width: 75px !important;
-        min-height: 85px !important;
-        max-height: 85px !important;
-    }
-}
-
-@media (max-width: 480px) {
-    :global(.retro-theme) .magnetWrapper {
-        width: 60px;
-        height: 70px;
-        min-width: 60px !important;
-        max-width: 60px !important;
-        min-height: 70px !important;
-        max-height: 70px !important;
-    }
-
-    .retroName {
-        font-size: 0.7rem !important;
-        /* 공간 부족으로 다시 미세 축소 */
-    }
-
-    .playerName {
-        font-size: 1rem;
-    }
-}
-
-/* NES.css 컨테이너 스타일 오버라이드 */
-:global(.retro-theme) .magnetWrapper.nes-container {
-    padding: 0 !important;
-    border: 4px solid #212529;
-    box-sizing: border-box !important;
-}
-
-:global(.retro-theme) .magnetWrapper.selected {
-    border: 6px solid #212529 !important;
-    box-shadow: 0 0 0 4px #f59e0b !important;
-}
-
-.retroContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    height: 100%;
-    width: 100%;
-}
-
-.retroTop {
-    height: 35% !important;
-    width: 100% !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 10px !important;
-    font-weight: bold;
-    border-bottom: 2px solid #212529;
-    cursor: pointer;
-}
-
-.retroTop:hover {
-    filter: brightness(1.2);
-}
-
-.retroBottom {
-    height: 65% !important;
-    width: 100% !important;
-    background-color: transparent;
-    display: flex;
-    align-items: flex-start;
-    /* 상단 정렬 */
-    justify-content: center;
-    padding: 6px 4px 4px 4px;
-    /* 위쪽 패딩 살짝 추가 */
-    position: relative;
-    /* 숫자 위치용 */
-}
-
-.retroName {
-    font-size: 0.9rem !important;
-    /* 숫자 공간 확보를 위해 미세 축소 */
-    font-weight: bold;
-    color: #212529 !important;
-    line-height: 1.2;
-    text-align: center;
-    word-break: keep-all;
-}
-
-.retroMatchCount {
-    position: absolute;
-    bottom: 2px;
-    right: 4px;
-    font-size: 10px;
-    color: #7f8c8d;
-    font-family: inherit;
-}
-
-.retroWaiting {
-    position: absolute;
-    bottom: 2px;
-    left: 4px;
-    font-size: 8px;
-    color: #e74c3c;
-    font-weight: bold;
-}
-
-/* 레트로 급수 색상 (클래식 컬러와 동기화) */
-.retroTierA {
-    background-color: var(--badge-a) !important;
-}
-
-.retroTierB {
-    background-color: var(--badge-b) !important;
-}
-
-.retroTierC {
-    background-color: var(--badge-c) !important;
-    color: white !important;
-}
-
-.retroTierD {
-    background-color: var(--badge-d) !important;
-}
-
-.retroTierE {
-    background-color: var(--badge-e) !important;
-    color: white !important;
-}
-
-/* 삭제 아이콘 오버레이 (우측 상단) */
 .deleteIconOverlay {
     position: absolute;
     top: -10px;
     right: -10px;
     background-color: white;
     border-radius: 50%;
-    padding: 0px;
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 10;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
     transition: transform 0.1s ease;
-}
-
-.editMode:hover .deleteIconOverlay {
-    transform: scale(1.15);
-}
-
-/* 레트로 테마 전용 플로팅 아이콘 외곽선 오버라이드 */
-:global(.retro-theme) .deleteIconOverlay {
-    background-color: #212529;
-    /* 검은색 배경이 테두리가 됨 */
-    padding: 1.5px;
-    /* 아주 얇은 검정 테두리 효과 */
-    box-shadow: none;
-}
-
-/* 코트 선택 팝오버 스타일 */
-.courtPopover {
-    position: absolute;
-    top: -10px; /* 위로 살짝 더 띄움 */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 180px; /* 2열 배치를 위해 너비 확장 */
-    min-height: 100%;
-    background: rgba(255, 255, 255, 1);
-    backdrop-filter: blur(10px);
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-    padding: 8px 10px;
-    z-index: 100;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    animation: dropDown 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.1);
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    transform-origin: top center;
-}
-
-@keyframes dropDown {
-    from {
-        opacity: 0;
-        transform: translateX(-50%) translateY(-10px) scaleY(0.8);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0) scaleY(1);
-    }
-}
-
-.popoverHeader {
-    display: flex;
-    justify-content: flex-end; /* 닫기 버튼만 우측 정렬 (공간 절약) */
-    align-items: center;
-    padding: 0 2px 4px 2px;
-}
-
-.popoverHeader span {
-    display: none; /* 80px 너비에서는 텍스트 제거 */
-}
-
-.popoverClose {
-    background: #f1f5f9;
-    border: none;
-    width: 18px;
-    height: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    font-size: 12px;
-    cursor: pointer;
-    color: #94a3b8;
-    line-height: 1;
-}
-
-.popoverClose:hover {
-    color: #475569;
-}
-
-.courtButtons {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2열 배치 적용 */
-    gap: 8px; /* 버튼 간 클릭 미스 방지를 위해 간격 확보 */
-}
-
-.courtBtn {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    padding: 8px 0 !important; /* 위아래 패딩 확대 */
-    width: 100%;
-    font-size: 13px !important; /* 시인성을 위해 폰트 크기 확대 */
-    font-weight: 800;
-    color: #1e293b;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    line-height: 1;
-}
-
-.courtBtn:hover:not(.disabled) {
-    background: #3b82f6;
-    color: white;
-    border-color: #3b82f6;
-    transform: translateY(-2px);
-}
-
-.courtBtn.disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-    background: #f1f5f9;
-}
-
-/* 레트로 테마 오버라이드 */
-:global(.retro-theme) .courtPopover {
-    position: absolute !important;
-    top: -10px !important;
-    left: 50% !important;
-    right: auto !important;
-    transform: translateX(-50%) !important;
-    width: 200px !important; 
-    min-height: calc(100% + 8px) !important;
-    background: white !important;
-    border: 4px solid #212529 !important;
-    border-radius: 0 !important;
-    animation: none;
-    padding: 8px 10px !important;
-    box-sizing: border-box !important;
-    display: flex;
-    flex-direction: column;
-    z-index: 100;
-}
-
-:global(.retro-theme) .popoverHeader {
-    color: #212529;
-    font-size: 11px;
-    margin-bottom: 8px;
-    display: flex;
-    justify-content: flex-end;
-}
-
-:global(.retro-theme) .popoverHeader span {
-    display: none;
-}
-
-:global(.retro-theme) .courtButtons {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 8px !important;
-}
-
-:global(.retro-theme) .courtButtons .nes-btn {
-    min-width: 0;
-    padding: 6px !important;
-    width: 100%;
-    font-size: 10px !important; /* 7px -> 10px */
-    margin: 0 !important;
-    line-height: 1.2;
-}
-
-:global(.retro-theme) .popoverClose {
-    font-weight: bold;
-    color: #212529;
-    font-family: inherit;
 }

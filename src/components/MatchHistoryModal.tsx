@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { useBoardStore } from '@/store/useBoardStore';
-import { useTheme } from '@/providers/ThemeProvider';
 import { useLanguage } from '@/providers/LanguageProvider';
 import { X, History } from 'lucide-react';
 import styles from './MatchHistoryModal.module.css';
@@ -14,7 +13,6 @@ interface Props {
 
 export default function MatchHistoryModal({ isOpen, onClose }: Props) {
   const { matchHistory } = useBoardStore();
-  const { theme } = useTheme();
   const { t } = useLanguage();
 
   if (!isOpen) return null;
@@ -22,12 +20,12 @@ export default function MatchHistoryModal({ isOpen, onClose }: Props) {
   return (
     <div className={styles.modalOverlay} onClick={onClose}>
       <div 
-        className={`${styles.modalCard} ${theme === 'retro' ? styles.retro : ''}`} 
+        className={styles.modalCard} 
         onClick={(e) => e.stopPropagation()}
       >
         <div className={styles.modalHeader}>
           <h2 className={styles.modalTitle}>
-            <History size={20} color={theme === 'retro' ? "#212529" : "currentColor"} />
+            <History size={20} />
             {t.historyTitle}
           </h2>
           <button type="button" className={styles.modalCloseBtn} onClick={onClose}>
@@ -42,7 +40,7 @@ export default function MatchHistoryModal({ isOpen, onClose }: Props) {
             matchHistory.map((record) => (
               <div key={record.id} className={styles.historyItem}>
                 <div className={styles.itemHeader}>
-                  <span className={styles.courtBadge}>{theme === 'retro' ? `MATCH ${record.courtId}` : `Match ${record.courtId}`}</span>
+                  <span className={styles.courtBadge}>{`Match ${record.courtId}`}</span>
                   <span className={styles.timeBadge}>{record.startTimeStr}</span>
                 </div>
                 <div className={styles.playerGrid}>

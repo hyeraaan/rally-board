@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import styles from './AddPlayerForm.module.css';
-import { useTheme } from '@/providers/ThemeProvider';
 import { useLanguage } from '@/providers/LanguageProvider';
 import { Check, X } from 'lucide-react';
 import { useBoardStore, Tier } from '@/store/useBoardStore';
@@ -10,7 +9,6 @@ import { useBoardStore, Tier } from '@/store/useBoardStore';
 const TIERS: Tier[] = ['A', 'B', 'C', 'D', 'E'];
 
 export default function AddPlayerForm({ onClose }: { onClose: () => void }) {
-    const { theme } = useTheme();
     const { t } = useLanguage();
     const { addPlayer, clearWaitingList, addPlayersBulk } = useBoardStore();
     const [name, setName] = useState('');
@@ -41,12 +39,12 @@ export default function AddPlayerForm({ onClose }: { onClose: () => void }) {
     return (
         <div className={styles.modalOverlay} onClick={onClose}>
             <div
-                className={`${styles.modalCard} ${theme === 'retro' ? styles.retro : ''}`}
+                className={styles.modalCard}
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className={styles.modalHeader}>
                     <span className={styles.modalTitle}>
-                        {theme === 'retro' ? `+ ${t.addPlayerTitle.toUpperCase()}` : t.addPlayerTitle}
+                        {t.addPlayerTitle}
                     </span>
                     <button type="button" className={styles.modalCloseBtn} onClick={onClose}>
                         <X size={16} />
@@ -54,7 +52,7 @@ export default function AddPlayerForm({ onClose }: { onClose: () => void }) {
                 </div>
                 <input
                     type="text"
-                    className={theme === 'retro' ? `nes-input ${styles.nameInputRetro}` : styles.nameInput}
+                    className={styles.nameInput}
                     placeholder={t.bulkAddPlaceholder}
                     value={name}
                     onChange={(e) => setName(e.target.value)}
@@ -68,7 +66,7 @@ export default function AddPlayerForm({ onClose }: { onClose: () => void }) {
                             <button
                                 key={t}
                                 type="button"
-                                className={`${styles.tierBtn} ${styles[`tier${t}`]} ${tier === t ? styles.selected : ''} ${theme === 'retro' ? styles.tierBtnRetro : ''}`}
+                                className={`${styles.tierBtn} ${styles[`tier${t}`]} ${tier === t ? styles.selected : ''}`}
                                 onClick={() => setTier(t)}
                             >
                                 {t}
@@ -79,19 +77,19 @@ export default function AddPlayerForm({ onClose }: { onClose: () => void }) {
                 <div className={styles.actionRow}>
                     <button
                         type="button"
-                        className={`${theme === 'retro' ? `nes-btn is-success ${styles.btnRetro} ${styles.confirmRetro}` : styles.confirmBtn}`}
+                        className={styles.confirmBtn}
                         onClick={handleSubmit}
                         style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}
                     >
-                        <Check size={theme === 'retro' ? 20 : 16} /> {name.includes(',') ? t.bulkAddBtnText : t.addBtn}
+                        <Check size={16} /> {name.includes(',') ? t.bulkAddBtnText : t.addBtn}
                     </button>
                     <button
                         type="button"
-                        className={`${theme === 'retro' ? `nes-btn ${styles.btnRetro}` : styles.cancelBtn}`}
+                        className={styles.cancelBtn}
                         onClick={onClose}
                         style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}
                     >
-                        <X size={theme === 'retro' ? 20 : 16} /> {t.cancelBtn}
+                        <X size={16} /> {t.cancelBtn}
                     </button>
                 </div>
             </div>

@@ -3,7 +3,6 @@
 import React from 'react';
 import styles from './SettingsModal.module.css';
 import { useBoardStore } from '@/store/useBoardStore';
-import { useTheme } from '@/providers/ThemeProvider';
 import { useLanguage } from '@/providers/LanguageProvider';
 import { X, Settings, AlertTriangle, RotateCcw } from 'lucide-react';
 
@@ -12,7 +11,6 @@ interface Props {
 }
 
 export default function SettingsModal({ onClose }: Props) {
-    const { theme } = useTheme();
     const { t } = useLanguage();
     const resetAll = useBoardStore(state => state.resetAll);
 
@@ -27,7 +25,7 @@ export default function SettingsModal({ onClose }: Props) {
     return (
         <div className={styles.modalOverlay} onClick={onClose}>
             <div
-                className={`${styles.modalCard} ${theme === 'retro' ? styles.retro : ''}`}
+                className={styles.modalCard}
                 onClick={e => e.stopPropagation()}
             >
                 <div className={styles.modalHeader}>
@@ -45,15 +43,11 @@ export default function SettingsModal({ onClose }: Props) {
                 </div>
 
                 <div className={styles.content}>
-                    <div className={theme === 'retro' ? 'nes-container is-dark with-title' : styles.dangerZone}>
-                        {theme === 'retro' && <p className="title" style={{ color: '#ef4444' }}>DANGER</p>}
-                        
-                        {theme !== 'retro' && (
-                            <h3 className={styles.dangerTitle}>
-                                <AlertTriangle size={20} />
-                                {t.dangerZoneTitle}
-                            </h3>
-                        )}
+                    <div className={styles.dangerZone}>
+                        <h3 className={styles.dangerTitle}>
+                            <AlertTriangle size={20} />
+                            {t.dangerZoneTitle}
+                        </h3>
                         
                         <p className={styles.dangerDesc}>
                             {t.dangerZoneDesc}
@@ -61,9 +55,8 @@ export default function SettingsModal({ onClose }: Props) {
                         
                         <button
                             type="button"
-                            className={theme === 'retro' ? 'nes-btn is-error' : styles.resetBtn}
+                            className={styles.resetBtn}
                             onClick={handleReset}
-                            style={theme === 'retro' ? { width: '100%', marginTop: '16px' } : undefined}
                         >
                             <RotateCcw size={18} />
                             {t.resetAllBtn}

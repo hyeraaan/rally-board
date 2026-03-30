@@ -28,10 +28,6 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-:global(.retro-theme) .titleRow {
-    background-color: rgba(231, 231, 231, 0.8) !important;
-    border-bottom: 4px solid #000;
-}
 
 .headerContainer {
     display: flex;
@@ -103,36 +99,9 @@
     background-color: rgba(0, 0, 0, 0.1);
 }
 
-:global(.retro-theme) .tournamentTitleWrapper {
-    background-color: #fff;
-    border: 4px solid #000;
-    box-shadow: 4px 4px 0 rgba(0,0,0,0.2);
-    margin: 10px 0;
-    padding: 0 10px; /* 좌우 대칭 패딩 강화 10px */
-}
 
-:global(.retro-theme) .inputMirror {
-    font-family: inherit;
-    font-size: 1rem;
-    padding: 8px 0; /* 좌우 패딩은 래퍼에서 관리 */
-    height: auto;
-}
 
-:global(.retro-theme) .tournamentTitleInput {
-    border: none;
-    color: #000 !important;
-    font-family: inherit;
-    font-size: 1rem;
-    padding: 8px;
-    margin: 0;
-    box-shadow: none;
-    background-color: transparent !important;
-}
 
-:global(.retro-theme) .serviceWatermark {
-    color: #000;
-    opacity: 0.3;
-}
 
 .areaTitle {
     font-size: 0.9rem; /* 서비스 이름은 조금 작게 */
@@ -143,11 +112,6 @@
     text-transform: uppercase;
 }
 
-:global(.retro) .areaTitle {
-    font-size: 0.7rem; /* 크기 축소 */
-    opacity: 1;
-    color: #444;
-}
 
 .buttonGroup {
     display: flex;
@@ -195,29 +159,23 @@
     flex-shrink: 0;
 }
 
-.themeToggleBtn:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.5);
-}
-
-/* 아이콘 전용 토글 버튼 */
 .themeIconBtn {
     width: 36px;
     height: 36px;
-    border-radius: 6px;
     background-color: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.3);
     color: white;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s ease;
-    cursor: pointer;
+    transition: all 0.2s;
     flex-shrink: 0;
 }
 
 .themeIconBtn:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.15);
     border-color: rgba(255, 255, 255, 0.5);
 }
 
@@ -235,11 +193,6 @@
   border-left: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-:global(.retro) .authActions {
-  border-left: 4px solid #212529;
-  margin-left: 10px;
-  padding-left: 10px;
-}
 
 /* 코트 그리드 반응형 (1/2/3/4열) */
 .courtGrid {
@@ -464,14 +417,6 @@
     transform: scale(1.05);
 }
 
-:global(.retro-theme) .randomBtn.nes-btn {
-    height: 32px;
-    padding: 2px 8px;
-    font-size: 10px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
 
 /* 영역 타이틀 (기본 흰색) */
 .areaTitle {
@@ -482,27 +427,6 @@
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* 레트로 테마 레이아웃 오버라이드 */
-.retroMain .sidebarContent {
-    border-top: 4px solid #212529 !important;
-    background-color: white !important;
-    box-shadow: none !important;
-}
-
-.retroMain .courtArea {
-    background-color: transparent !important;
-    border-color: #212529 !important;
-}
-
-.retroMain .areaTitle {
-    color: #212529 !important;
-    text-shadow: none !important;
-}
-
-/* 클릭 시 위치 이동 효과 제거 (필요한 경우) */
-:global(.retro-theme) .sidebarToggle:active {
-    transform: translateY(-50%) !important;
-}
 
 /* 오른쪽 하단 플로팅 버튼 그룹 */
 .floatingBtns {
@@ -558,7 +482,7 @@
 
 /* 대기 명단이 열렸을 때 버튼을 위로 올림 */
 .floatingBtns.shiftedUp {
-    bottom: 320px; /* waitingArea 높이만큼 상승 */
+    bottom: 318px; /* 320px(높이) - 2px(테두리)로 보정하여 경계선 가림 */
 }
 
 .floatBtn {
@@ -589,33 +513,14 @@
 }
 
 .activeFloatBtn {
-    background-color: var(--accent-blue) !important;
-    border-color: rgba(255, 255, 255, 0.4) !important;
-    height: 40px; /* 열렸을 때는 더 확실히 솟아오른 탭 느낌 */
-}
-
-/* 레트로 테마용 하단 중앙 버튼 */
-:global(.retro-theme) .floatBtn {
-    width: 80px;
-    height: 32px;
-    border-radius: 0;
-    background-color: #fff !important;
-    border: 4px solid #212529 !important;
+    background-color: var(--bg-primary) !important;
+    border: 2px solid var(--border-color) !important;
     border-bottom: none !important;
-    box-shadow: none !important;
-    color: #212529 !important;
+    color: var(--text-primary) !important;
+    height: 42px; /* 살짝 더 높게 하여 탭 느낌 강조 */
+    box-shadow: none !important; /* 현황판과 일체화를 위해 그림자 제거 */
 }
 
-:global(.retro-theme) .floatBtn:hover {
-    background-color: #f59e0b !important;
-    height: 36px;
-}
-
-:global(.retro-theme) .activeFloatBtn {
-    background-color: #28a745 !important;
-    color: white !important;
-    height: 40px;
-}
 
 @media (max-width: 640px) {
     .floatingBtns.shiftedUp {
@@ -767,20 +672,6 @@
     transform: scale(0.95);
 }
 
-:global(.retro-theme) .playerGroup {
-    border: 4px solid #000;
-    background-color: #fff;
-    border-radius: 0;
-    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.1);
-}
-
-:global(.retro-theme) .groupBadge {
-    border: 2px solid #000;
-    background-color: #212529;
-    border-radius: 0;
-    top: -12px;
-    left: 12px;
-}
 
 
 
@@ -798,6 +689,105 @@
 
 
 /* 대기 명단 비어있을 때 안내 UI */
+
+/* 전역 코트 선택 팝오버 디자인 (클리핑 해결용 fixed 레이어) */
+.globalCourtPopover {
+    box-sizing: border-box !important; /* 너비가 패딩을 포함하도록 강제 */
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    animation: popInFixed 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+@keyframes popInFixed {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -5%) scale(0.95); /* 위에서 아래로 살짝 떨어지는 효과 */
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0) scale(1);
+    }
+}
+
+.popoverHeader {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-bottom: 2px;
+}
+
+.popoverClose {
+    background: #f1f5f9;
+    border: none;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 10px;
+    cursor: pointer;
+    color: #94a3b8;
+    line-height: 1;
+    transition: all 0.2s;
+}
+
+.popoverClose:hover {
+    background: #e2e8f0;
+    color: #475569;
+}
+
+.courtButtons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.courtBtn {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 6px 0 !important;
+    width: 100%;
+    font-size: 13px !important;
+    font-weight: 800;
+    color: #1e293b;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    line-height: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.courtBtn:hover:not(.disabled) {
+    background: var(--accent-blue);
+    color: white;
+    border-color: var(--accent-blue);
+    transform: translateY(-2px);
+}
+
+.courtBtn.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background: #f1f5f9;
+}
+
+
+.popoverGlobalBackdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background: transparent;
+}
 .emptyState {
     grid-column: 1 / -1; /* 전체 너비 차지 */
     display: flex;
@@ -840,25 +830,3 @@
     font-weight: 800;
 }
 
-/* 레트로 테마 오버라이드 */
-:global(.retro-theme) .emptyState {
-    background: #fff;
-    border: 4px solid #000;
-    box-shadow: 4px 4px 0 #000;
-    border-radius: 0;
-}
-
-:global(.retro-theme) .emptyStateTitle {
-    color: #212529;
-}
-
-:global(.retro-theme) .emptyStateDesc {
-    color: #757575;
-}
-
-:global(.retro-theme) .emptyStateTip {
-    background: #e7f9ed;
-    color: #28a745;
-    border: 2px solid #28a745;
-    border-radius: 0;
-}

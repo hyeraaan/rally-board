@@ -34,12 +34,6 @@
     to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-.modalCard.retro {
-    background: white;
-    border: 4px solid #212529;
-    border-radius: 0;
-    box-shadow: 8px 8px 0 #212529;
-}
 
 .modalHeader {
     display: flex;
@@ -57,10 +51,6 @@
     gap: 8px;
 }
 
-.modalCard.retro .modalTitle {
-    color: #212529;
-    font-size: 0.85rem;
-}
 
 .modalCloseBtn {
     width: 28px;
@@ -82,12 +72,6 @@
     color: #ef4444;
 }
 
-.modalCard.retro .modalCloseBtn {
-    background: transparent;
-    border: 2px solid #212529;
-    border-radius: 0;
-    color: #212529;
-}
 
 .alertMessage {
     color: white;
@@ -97,9 +81,6 @@
     word-break: keep-all;
 }
 
-.modalCard.retro .alertMessage {
-    color: #212529;
-}
 
 .actionRow {
     display: flex;
@@ -141,18 +122,4 @@
 
 .cancelBtn:hover {
     background-color: rgba(255, 255, 255, 0.2);
-}
-
-.btnRetro {
-    border: 2px solid #212529 !important;
-    border-radius: 0 !important;
-    color: #212529 !important;
-    background: transparent !important;
-    font-family: inherit !important;
-    box-shadow: none !important;
-}
-
-.confirmRetro {
-    background: #92cc41 !important; 
-    color: #212529 !important;
 }
