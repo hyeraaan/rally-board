@@ -14,6 +14,7 @@
     margin: 4px;
     position: relative;
     border: 2px solid transparent;
+    touch-action: none; /* 터치 기기에서 드래그 시 스크롤 방지 */
 }
 
 @media (max-width: 480px) {
