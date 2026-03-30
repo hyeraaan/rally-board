@@ -1,6 +1,10 @@
 .magnetWrapper {
     width: 80px;
     height: 90px;
+    min-width: 80px; /* 강제 크기 고정 */
+    max-width: 80px;
+    min-height: 90px;
+    max-height: 90px;
     background-color: white;
     border-radius: 8px;
     box-shadow: var(--shadow-magnet);
@@ -10,28 +14,35 @@
     user-select: none;
     transition: transform 0.1s ease, box-shadow 0.1s ease;
     flex-shrink: 0;
+    flex-grow: 0; /* 확장 방지 */
     /* flex container에서 찌그러지지 방지 */
     margin: 4px;
     position: relative;
     border: 2px solid transparent;
     touch-action: none; /* 터치 기기에서 드래그 시 스크롤 방지 */
-    justify-self: center; /* 그리드 내에서 늘어남 방지 */
-    align-self: center;
+    justify-self: center !important; /* 그리드 내에서 늘어남 방지 */
+    align-self: center !important;
 }
 
 @media (max-width: 1200px) {
     .magnetWrapper {
         width: 75px; 
         height: 85px;
+        min-width: 75px;
+        max-width: 75px;
+        min-height: 85px;
+        max-height: 85px;
     }
 }
 
 @media (max-width: 480px) {
     .magnetWrapper {
         width: 60px;
-        /* 65px -> 60px 추가 축소 */
         height: 70px;
-        /* 높이도 비례 축소 */
+        min-width: 60px;
+        max-width: 60px;
+        min-height: 70px;
+        max-height: 70px;
         margin: 1px;
     }
 }
@@ -181,6 +192,10 @@
 :global(.retro-theme) .magnetWrapper {
     width: 80px;
     height: 90px;
+    min-width: 80px !important;
+    max-width: 80px !important;
+    min-height: 90px !important;
+    max-height: 90px !important;
     padding: 0 !important;
     background-color: white;
     display: flex;
@@ -193,15 +208,21 @@
     :global(.retro-theme) .magnetWrapper {
         width: 75px;
         height: 85px;
+        min-width: 75px !important;
+        max-width: 75px !important;
+        min-height: 85px !important;
+        max-height: 85px !important;
     }
 }
 
 @media (max-width: 480px) {
     :global(.retro-theme) .magnetWrapper {
         width: 60px;
-        /* 65px -> 60px 추가 축소 */
         height: 70px;
-        margin: 1px;
+        min-width: 60px !important;
+        max-width: 60px !important;
+        min-height: 70px !important;
+        max-height: 70px !important;
     }
 
     .retroName {
