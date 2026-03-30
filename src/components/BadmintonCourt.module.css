@@ -140,7 +140,7 @@
     place-items: center;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
     .courtWrapper {
         padding: 12px;
         gap: 8px;
