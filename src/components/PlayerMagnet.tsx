@@ -56,9 +56,9 @@ export default function PlayerMagnet({ id, name, tier, matchCount = 0, onSelect,
         transform: CSS.Translate.toString(transform),
         transition: transition || 'transform 200ms cubic-bezier(0.18, 0.67, 0.6, 1.22)',
         opacity: isDragging ? 0.6 : 1, // 원래 있던 자리의 잔상은 낮게 유지
-        zIndex: isDragging ? 999 : (isPopoverOpen ? 100 : 1),
+        zIndex: isDragging ? 2000 : (isPopoverOpen ? 100 : 1),
         // 드래그 중일 때 약간 커지며 그림자 추가 
-        ...(isDragging ? { transform: `${CSS.Translate.toString(transform)} scale(1.05)`, boxShadow: '0 8px 16px rgba(0,0,0,0.3)' } : {})
+        ...(isDragging ? { transform: `${CSS.Translate.toString(transform)} scale(1.05)`, boxShadow: '0 8px 32px rgba(0,0,0,0.5)' } : {})
     };
 
     // 급수에 따른 동적 클래스네임 할당 (CSS Module 활용)

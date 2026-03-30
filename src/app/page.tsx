@@ -13,7 +13,7 @@ import { useTheme } from '@/providers/ThemeProvider';
 import { useLanguage } from '@/providers/LanguageProvider';
 import {
   DndContext, DragEndEvent, DragStartEvent, useDroppable,
-  DragOverlay, useSensors, useSensor, PointerSensor, closestCorners
+  DragOverlay, useSensors, useSensor, PointerSensor, TouchSensor, closestCorners
 } from '@dnd-kit/core';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
 import {
@@ -152,6 +152,12 @@ export default function Home() {
     useSensor(PointerSensor, {
       activationConstraint: {
         distance: 8, // 8px 이상 이동해야 드래그로 인식 (클릭 이벤트 보장)
+      },
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 250, // 0.25초 동안 누르고 있어야 드래그 시작 (스크롤 방지)
+        tolerance: 5, // 누르고 있는 동안 5px 이상 움직이면 드래그 취소 (실수 방지)
       },
     })
   );
@@ -549,8 +555,8 @@ export default function Home() {
           </aside>
         </div>
         <DragOverlay adjustScale={true}>
-          {activePlayer ? (
-            <div style={{ position: 'relative' }}>
+          {activeId && activePlayer ? (
+            <div style={{ position: 'relative', zIndex: 2000 }}>
               {/* 다중 선택 시 겹쳐 보이는 효과 */}
               {selectedIds.length > 1 && selectedIds.includes(activePlayer.id) ? (
                 selectedIds.slice(0, 4).map((id: string, index: number) => {
