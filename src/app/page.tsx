@@ -17,7 +17,7 @@ import {
 } from '@dnd-kit/core';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
 import {
-  Shuffle, Eraser, Globe, Monitor, Gamepad2, History, ChevronLeft, ChevronRight, Play, Trophy, Clock, X, Plus, Minus, Settings
+  Shuffle, Eraser, Globe, Monitor, Gamepad2, History, ChevronLeft, ChevronRight, ChevronUp, ChevronDown, Play, Trophy, Clock, X, Plus, Minus, Settings
 } from 'lucide-react';
 
 import { useBoardStore, Player } from '@/store/useBoardStore';
@@ -656,7 +656,7 @@ export default function Home() {
           title={isWaitingListOpen ? t.closeWaitingListTooltip : t.openWaitingListTooltip}
           aria-label={isWaitingListOpen ? t.closeWaitingListTooltip : t.openWaitingListTooltip}
         >
-          {isWaitingListOpen ? <X size={20} /> : <Monitor size={20} />}
+          {isWaitingListOpen ? <ChevronDown size={24} /> : <ChevronUp size={24} />}
         </button>
       </div>
 
