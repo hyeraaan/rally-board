@@ -154,10 +154,10 @@
         padding: 8px;
     }
     .emptySlot {
-        width: 75px;
-        height: 85px;
-        min-width: 75px;
-        min-height: 85px;
+        width: 90px;
+        height: 100px;
+        min-width: 90px;
+        min-height: 100px;
     }
     .courtField {
         min-height: 220px;
@@ -176,12 +176,16 @@
     .emptySlot {
         width: 70px;
         height: 80px;
+        min-width: 70px;
+        min-height: 80px;
     }
 }
 
 .emptySlot {
-    width: 80px;
-    height: 90px;
+    width: 100px;
+    height: 110px;
+    min-width: 100px;
+    min-height: 110px;
     background-color: white;
     border-radius: 8px;
     border: 1px solid rgba(0, 0, 0, 0.1);
