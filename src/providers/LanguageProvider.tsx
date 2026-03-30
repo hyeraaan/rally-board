@@ -7,6 +7,7 @@ type Language = 'ko' | 'en';
 const translations = {
     ko: {
         appTitle: '랠리보드',
+        documentTitle: '랠리보드 - 배드민턴 자석 보드',
         courtArea: '코트',
         waitingList: '대기 명단',
         waiting: '대기중',
@@ -65,6 +66,7 @@ const translations = {
     },
     en: {
         appTitle: 'Rally Board',
+        documentTitle: 'Rally Board - Badminton Magnet Board',
         courtArea: 'Courts',
         waitingList: 'Waiting',
         waiting: 'Open',

@@ -205,6 +205,17 @@ export default function Home() {
     initializeData();
   }, []);
 
+  // 브라우저 타이틀 동적 업데이트 (L10N + 대회명)
+  useEffect(() => {
+    if (!isMounted) return;
+    const baseTitle = t.documentTitle;
+    if (tournamentTitle) {
+      document.title = `${tournamentTitle} | ${t.appTitle}`;
+    } else {
+      document.title = baseTitle;
+    }
+  }, [isMounted, t.documentTitle, t.appTitle, tournamentTitle]);
+
   const handleStartTournament = () => {
     setIsCountingDown(true);
     setCountdownTime(3);
