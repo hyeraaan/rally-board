@@ -510,7 +510,7 @@ export default function Home() {
                               >
                                 <GroupDragHandle 
                                   id={`group-${groupIndex}`} 
-                                  label={theme === 'retro' ? `MATCH ${groupIndex + 1}` : `Match ${groupIndex + 1}`} 
+                                  label={`Match ${groupIndex + 1}`} 
                                 />
                                 {group.map((player) => (
                                   <PlayerMagnet
