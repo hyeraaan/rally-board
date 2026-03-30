@@ -15,6 +15,15 @@
     position: relative;
     border: 2px solid transparent;
     touch-action: none; /* 터치 기기에서 드래그 시 스크롤 방지 */
+    justify-self: center; /* 그리드 내에서 늘어남 방지 */
+    align-self: center;
+}
+
+@media (max-width: 1200px) {
+    .magnetWrapper {
+        width: 75px; 
+        height: 85px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -176,6 +185,15 @@
     background-color: white;
     display: flex;
     flex-direction: column;
+    justify-self: center !important;
+    align-self: center !important;
+}
+
+@media (max-width: 1200px) {
+    :global(.retro-theme) .magnetWrapper {
+        width: 75px;
+        height: 85px;
+    }
 }
 
 @media (max-width: 480px) {
