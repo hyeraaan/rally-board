@@ -513,26 +513,7 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* 다중 선택 퀵 코트 배치 메뉴 */}
-              {selectedIds.length >= 2 && (
-                <div className={styles.quickAddContainer}>
-                  <span className={styles.quickAddTitle}>
-                    {selectedIds.length}명을 배치할 코트를 선택하세요:
-                  </span>
-                  <div className={styles.quickAddButtons}>
-                    {courts.map((court) => (
-                      <button
-                        key={court.id}
-                        className={theme === 'retro' ? 'nes-btn is-primary' : styles.quickAddBtn}
-                        style={theme === 'retro' ? { padding: '4px 8px', fontSize: '10px', flex: '1', minWidth: '60px' } : undefined}
-                        onClick={() => moveMultiplePlayers(selectedIds, court.id)}
-                      >
-                        {t.courtNumber(court.id)}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
+
 
               {/* 슬라이더 래퍼 */}
               {(() => {
