@@ -135,8 +135,8 @@
     grid-template-columns: 1fr 1fr;
     /* 2대2 배치 */
     grid-template-rows: 1fr 1fr;
-    gap: 16px;
-    padding: 16px;
+    gap: 8px;
+    padding: 8px;
     place-items: center;
     place-content: center; /* 그리드 셀 내에서의 정렬 보강 */
 }
@@ -150,8 +150,8 @@
         font-size: 1.1rem;
     }
     .playersContainer {
-        gap: 8px;
-        padding: 8px;
+        gap: 4px;
+        padding: 4px;
     }
     .emptySlot {
         width: 90px;

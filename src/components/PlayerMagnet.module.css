@@ -16,7 +16,7 @@
     flex-shrink: 0;
     flex-grow: 0; /* 확장 방지 */
     /* flex container에서 찌그러지지 방지 */
-    margin: 6px;
+    margin: 2px;
     position: relative;
     border: 2px solid transparent;
     touch-action: none; /* 터치 기기에서 드래그 시 스크롤 방지 */
